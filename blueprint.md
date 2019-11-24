@@ -1,6 +1,6 @@
 # HANGMAN
     1. For scalability there will be a hangman server class and a hangman client class. Both will
-    differ slightly to the protect the game from "hacks".
+    differ slightly to protect the game from "hacks".
     2. The backend server will handle the request and the hangmanServer object that is created from the request will handle the game logic.
     3. The client side hangmanClient object will handle the requests and changing of the front end.
 

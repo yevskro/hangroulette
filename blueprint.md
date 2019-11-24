@@ -1,13 +1,20 @@
+# HANGMAN
+    1. For scalability there will be a hangman server class and a hangman client class. Both with
+    differ slightly to the protect the game from "hacks".
+    2. The backend server will handle the request and the hangmanServer object that is created from the request will handle the game logic.
+    3. The client side hangmanClient object will handle the requests and changing of the front end.
+
 # BACK END
-DATABASE - POSTGRESQL
-    stored values Session Model - (session id, wins, losses, current word at guess, letters guessed)
-    Session Model will include current word at guess and letters guessed that will be
+## DATABASE - POSTGRESQL
+    1. Session Table - (session id, wins, losses, current word at guess, letters guessed)
+    2. A Session Model will include current word at guess and letters guessed that will be
     used to initiate a HangmanServer object that will play out the game logic.
 
-ROUTES - Intro Page(-> Hangman GamePage)
-         Hangman GamePage
+## ROUTES 
+        Intro Page(-> Hangman GamePage)
+        Hangman GamePage
 
-API LOGIC
+## API LOGIC
     the word to guess is never shared to the client until the game reaches the end
 
     Get hangman_session responds with sessions info (id, wins, losses, letters guessed)
@@ -20,11 +27,8 @@ API LOGIC
             edgecase if a client sends another guess after allowed guesses, respond "error"
             edgecase a client sends a guess when no game is in play, respond "error"
 
-
-
 # FRONT END
-2 PAGES
-    First Page - Introductory Page
+    1. First Page - Introductory Page
         A session textbox and a button that says "Saved Session"
             Sends the session id to the server and fatches the state of a game in session
             a -1 session of an id sends the game on to the second page with a default
@@ -33,7 +37,7 @@ API LOGIC
             Fetches the spaced out and underscored word to guess.
             Word to guess will not be saved on the client for security reasons.
         
-    Second Page - Hangman Game Page
+    2. Second Page - Hangman Game Page
         A text msg "Session ID": with the session id.
         A text msg "Hanged #": and a label that shows the number of losses.
         A text msg "Broke Through#:" and a label that shows the number of wins.
@@ -43,8 +47,9 @@ API LOGIC
         There will be letters of the alphabet under the word Guess. 
             The letters will act as buttons and will be disabled once used up as a guess.
         6 guesses allowed. 
-        There will be a session object that will hold the wins, losses, id, and
-        HangmanClient object that will handle gamelogic with requests.
+        There will be a session object that will hold the wins, losses, id, and a
+        HangmanClient object that will handle gamelogic with requests and changing of
+        the hangman elements.
         
         If the user loses a text will be displayed "HANGED!"
             And a "try again" button under neath.

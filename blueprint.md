@@ -31,7 +31,7 @@
     1. First Page - Introductory Page
         A session textbox and a button that says "Saved Session"
             Sends the session id to the server and fatches the state of a game in session
-            a -1 session of an id sends the game on to the second page with a default
+            a 0 session of an id sends the game on to the second page with a default
                 hangman word to guess.
         A button under that says "Start Game"
             Fetches the spaced out and underscored word to guess.

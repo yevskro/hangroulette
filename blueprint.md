@@ -1,6 +1,8 @@
 # BACK END
 DATABASE - POSTGRESQL
-    stored values (session id, wins, losses, current word at guess, letters guessed)
+    stored values Session Model - (session id, wins, losses, current word at guess, letters guessed)
+    Session Model will include current word at guess and letters guessed that will be
+    used to initiate a HangmanServer object that will play out the game logic.
 
 ROUTES - Intro Page(-> Hangman GamePage)
          Hangman GamePage
@@ -17,6 +19,8 @@ API LOGIC
         When a client sends a guess the server responds with a loss, keepplaying, won, gameover
             edgecase if a client sends another guess after allowed guesses, respond "error"
             edgecase a client sends a guess when no game is in play, respond "error"
+
+
 
 # FRONT END
 2 PAGES
@@ -39,6 +43,9 @@ API LOGIC
         There will be letters of the alphabet under the word Guess. 
             The letters will act as buttons and will be disabled once used up as a guess.
         6 guesses allowed. 
+        There will be a session object that will hold the wins, losses, id, and
+        HangmanClient object that will handle gamelogic with requests.
+        
         If the user loses a text will be displayed "HANGED!"
             And a "try again" button under neath.
             Try again refreshes the game loop.
@@ -50,4 +57,3 @@ API LOGIC
             button that refreshes the game loop.
             Recvs a win message from the server 
             All guessable letters are disabled
-            

@@ -5,8 +5,9 @@
   "main": "0",
   "scripts": {
     "server": "nodemon server/app.js",
-    "client": "npm start --prefix client",
-    "start": "concurrently \"npm run server\" \"npm run client\""
+    "client": "webpack-dev-server --mode development",
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "build": "webpack --mode development"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,23 @@
   },
   "homepage": "https://github.com/wingedking/simplehangman#readme",
   "devDependencies": {
-    "concurrently": "^5.0.0"
+    "concurrently": "^5.0.0",
+    "@babel/cli": "^7.7.4",
+    "@babel/core": "^7.7.4",
+    "@babel/plugin-proposal-class-properties": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
+    "@babel/preset-react": "^7.7.4",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^1.0.1",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": ">=3.1.11"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-hot-loader": "^4.12.18"
   }
 }

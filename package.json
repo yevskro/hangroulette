@@ -4,7 +4,7 @@
   "description": "hangman",
   "main": "0",
   "scripts": {
-    "server": "node server/app.js",
+    "server": "nodemon server/app.js",
     "client": "npm start --prefix client",
     "start": "concurrently \"npm run server\" \"npm run client\""
   },

@@ -1,25 +1,17 @@
 {
-  "name": "hangman_server",
+  "name": "hangserver",
   "version": "1.0.0",
-  "description": "hangman server",
+  "description": "hangserver",
   "main": "app.js",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/wingedking/simplehangman.git"
-  },
-  "keywords": [
-    "express"
-  ],
-  "author": "Yevgeniy Skroznikov",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/wingedking/simplehangman/issues"
-  },
-  "homepage": "https://github.com/wingedking/simplehangman#readme",
-  "dependencies": {
-    "express": "^4.17.1"
-  }
+  "author": "",
+  "license": "ISC",
+  "proxy": "http://localhost:5000/"
 }

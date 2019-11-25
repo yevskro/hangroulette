@@ -1,0 +1,29 @@
+{
+  "name": "hangman",
+  "version": "1.0.0",
+  "description": "hangman",
+  "main": "0",
+  "scripts": {
+    "server": "node server/app.js",
+    "client": "npm start --prefix client",
+    "start": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wingedking/simplehangman.git"
+  },
+  "keywords": [
+    "react",
+    "express",
+    "postgresql"
+  ],
+  "author": "Yevgeniy Skroznikov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wingedking/simplehangman/issues"
+  },
+  "homepage": "https://github.com/wingedking/simplehangman#readme",
+  "devDependencies": {
+    "concurrently": "^5.0.0"
+  }
+}

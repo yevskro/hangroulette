@@ -28,7 +28,8 @@ module.exports = {
     contentBase: path.join(__dirname, "public/"),
     port: 3000,
     publicPath: "http://localhost:3000/dist/",
-    hotOnly: true
+    hotOnly: true,
+    proxy: {"/game": "http://localhost:5000"}
   },
   plugins: [new webpack.HotModuleReplacementPlugin()]
 };

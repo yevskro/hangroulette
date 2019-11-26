@@ -1,23 +1,19 @@
 import React, { Component} from "react";
-import {hot} from "react-hot-loader";
+import { hot } from "react-hot-loader";
+import { render } from "react-dom";
+import { BrowserRouter, Route, Link, Switch } from  "react-router-dom";
 import "./App.css";
 
-class App extends Component{
-  componentDidMount = () => {
-    fetch(`/game`, {
-      headers:{
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-      }})
-      .then(response => console.log(response))  
-  }
-  render(){
-    return(
-      <div className="App">
-        <h1> Hello, World!! </h1>
-      </div>
-    );
-  }
+const App = () => {
+  <div className="App">
+    <h1> Hello, World!! </h1>
+  </div>
 }
+
+render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+);
 
 export default hot(module)(App);

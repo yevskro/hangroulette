@@ -4,11 +4,12 @@ import { render } from "react-dom";
 import { BrowserRouter, Route, Link, Switch } from  "react-router-dom";
 import "./App.css";
 
-const App = () => {
+const App = () => (
   <div className="App">
-    <h1> Hello, World!! </h1>
+    <Route exact path="/" component={} />
+    <Route path="/game" component={} />
   </div>
-}
+);
 
 render(
   <BrowserRouter>

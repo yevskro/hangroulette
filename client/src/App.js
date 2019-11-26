@@ -1,8 +1,8 @@
 import React, { Component} from "react";
 import { Route } from  "react-router-dom";
 import "./App.css";
-import Game from '../scenes/Game'
-import Intro from '../scenes/Intro'
+import Game from './scenes/Game'
+import Intro from './scenes/Intro'
 
 const App = () => (
   <div className="App">

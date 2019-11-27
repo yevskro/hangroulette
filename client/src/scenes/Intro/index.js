@@ -8,6 +8,7 @@ class Intro extends Component {
 
     }
     render(){
+        console.log("wtf is going on")
         return (
             <div>
                 <form onSubmit={this.handleSessionInput}>

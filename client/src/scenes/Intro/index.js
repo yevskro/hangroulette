@@ -8,10 +8,8 @@ class Intro extends Component {
 
     }
     render(){
-        console.log("boo")
         return (
             <div>
-                hello
                 <form onSubmit={this.handleSessionInput}>
                     <input></input>
                 </form>

@@ -5,8 +5,8 @@ import Intro from './scenes/Intro'
 
 const App = () => (
   <div className="App">
-    <Route exact path="/" component={Game} />
-    <Route exact path="/game" component={Intro} />
+    <Route exact path="/" component={Intro} />
+    <Route exact path="/game" component={Game} />
   </div>
 );
 

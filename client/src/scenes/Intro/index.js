@@ -1,21 +1,24 @@
 import React, { Component} from "react";
 
 class Intro extends Component {
-    handleNewSession = () => {
-
+    handleNewSession = e => {
+        e.preventDefault()
+        console.log("new session")
     }
-    handleSessionInput = () => {
-
+    handleSessionInput = e => {
+        e.preventDefault()
+        debugger
     }
     render(){
-        console.log("wtf is going on")
         return (
             <div>
                 <form onSubmit={this.handleSessionInput}>
-                    <input></input>
+                    <input placeholder="Session #"></input>
+                    <br/>
+                    <input type="submit" value="Continue Game"/>
                 </form>
                 <form onSubmit={this.handleNewSession}>
-                    <input></input>
+                    <input type="submit" value="New Game"/>
                 </form>
             </div>
         )

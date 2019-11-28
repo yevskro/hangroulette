@@ -1,5 +1,5 @@
 import React, { Component} from "react";
-import ValidateSession from './services/validate';
+import ValidateSession from '../../services/validate';
 import sessionService from '../../services/session'
 
 class Intro extends Component {

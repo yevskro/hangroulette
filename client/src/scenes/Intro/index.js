@@ -38,8 +38,8 @@ class Intro extends Component {
 
         return (
             <div>
-                <FormSessionGet sessionId={sessionId} onSubmit={this.handleSubmitSession} handleChangeSession={this.handleChangeSession}/>
-                <FormSessionNew onSubmit={this.handleSubmitNew} />
+                <FormSessionGet submitValue="Continue Game" sessionId={sessionId} onSubmit={this.handleSubmitSession} handleChangeSession={this.handleChangeSession}/>
+                <FormSessionNew submitValue="New Game" onSubmit={this.handleSubmitNew} />
                 <Error errorMsg={errorMsg}/>
             </div>
         )

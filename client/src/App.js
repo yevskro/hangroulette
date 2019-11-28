@@ -5,14 +5,11 @@ import Session from './scenes/Session'
 import Intro from './scenes/Intro'
 import { withCookies, useCookies } from 'react-cookie';
 
-const App = () => {
-  const [ cookies ] = useCookies()
-  const sessionId = cookies.session || ""
- 
+const App = (props) => {
   return <div className="App">
-          <Route exact path="/" render={(props) => <Intro {...props} sessionId={sessionId}/>} />
+          <Route exact path="/" render={(p) => <Intro {...p} cookies={props.cookies}/>} />
           <Route exact path="/session" component={Session} />
         </div>
 };
 
-export default App;
+export default withCookies(App);

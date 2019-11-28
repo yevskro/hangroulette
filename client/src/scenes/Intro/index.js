@@ -1,5 +1,4 @@
 import React, { Component} from "react";
-import sessionService from '../../services/session'
 import SessionIdModel from './models/SessionId'
 
 class Intro extends Component {
@@ -10,7 +9,6 @@ class Intro extends Component {
         this.state = {
             cookies: this.props.cookies,
             sessionIdObj: sessionIdObj,
-            errorMsg: ""
         }    
     }
 

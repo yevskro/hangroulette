@@ -4,30 +4,26 @@ class SessionIdModel{
         this.errorMsg = ""
 
         this.setId = (id) => {
-            const validate = SessionIdModel.validateId(id)
-            if(!validate.valid)
-                return {errorMsg: validate.errorMsg}
-            _id = id
+            this.validateId(id)
+            if(!this.errorMsg)
+                _id = id
             return this
         }
+
         this.getId = () => {
             return _id
         }
 
-        const error = this.setId(id)
-        if(error.errorMsg){
-            this.errorMsg = error.errorMsg
-        }
-
-        _id = id
+        this.setId(id)
     }
 
-    static validateId = id => {
+    validateId = id => {
         const hasOnlyNumbers = /^[0-9]*$/
         if(hasOnlyNumbers.test(id)){
-            return {valid: true, errorMsg: ""}
+            this.errorMsg = ""
+            return
         }
-        return {valid: false, errorMsg: "invalid sessionid"}
+        this.errorMsg = "invalid sessionid"
     }
 }
 

@@ -1,6 +1,8 @@
 import React, { Component} from "react";
 import SessionIdModel from '../../models/SessionId'
 import Error from './components/Error'
+import FormSessionGet from './components/FormSessionGet'
+import FormSessionNew from './components/FormSessionNew'
 
 class Intro extends Component {
     constructor(props){
@@ -36,14 +38,8 @@ class Intro extends Component {
 
         return (
             <div>
-                <form onSubmit={this.handleSubmitSession}>
-                    <input value={sessionId} placeholder="Session #" onChange={this.handleChangeSession}></input>
-                    <br/>
-                    <input type="submit" value="Continue Game"/>
-                </form>
-                <form onSubmit={this.handleSubmitNew}>
-                    <input type="submit" value="New Game"/>
-                </form>
+                <FormSessionGet sessionId={sessionId} onSubmit={this.handleSubmitSession} handleChangeSession={this.handleChangeSession}/>
+                <FormSessionNew onSubmit={this.handleSubmitNew} />
                 <Error errorMsg={errorMsg}/>
             </div>
         )

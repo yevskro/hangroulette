@@ -1,13 +1,15 @@
 import React, { Component} from "react";
-import ValidateSession from '../../services/validate';
 import sessionService from '../../services/session'
+import SessionIdModel from './models/SessionId'
 
 class Intro extends Component {
     constructor(props){
         super(props)
+        const sessionIdObj = new SessionIdModel(this.props.cookies.get("sessionId"))
+        
         this.state = {
             cookies: this.props.cookies,
-            sessionId: this.props.cookies.get("sessionId") || "",
+            sessionIdObj: sessionIdObj,
             errorMsg: ""
         }    
     }
@@ -19,31 +21,20 @@ class Intro extends Component {
 
     handleSubmitSession = e => {
         e.preventDefault()
-        const { sessionId } = this.state
-        const validation = ValidateSession.validateSession(sessionId)
-        if(validation.errorMsg){
-            this.setState(Object.assign({},this.state, {errorMsg: validation.errorMsg}))
-            return      
-        }
-
-        const session = sessionService.getSession(sessionId)
-        if(session.errorMsg){
-            this.setState(Object.assign({},this.state, {errorMsg: validation.errorMsg}))
-            return   
-        }
-
-        this.props.cookies.set("sessionId", sessionId)
-        this.props.history.push({pathname: `/session`, state:{session: session}})
+        const { sessionIdObj } = this.state
+        this.props.cookies.set("sessionId", sessionIdObj.getId())
+        this.props.history.push(`/session`)
     }
     
     handleChangeSession = e => {
-        this.setState({
-            sessionId: e.target.value
-        })
+        this.setState({sessionIdObj: this.state.sessionIdObj.setId(e.target.value)})
     }
 
     render(){
-        const { sessionId, errorMsg } = this.state
+        const { sessionIdObj } = this.state
+        const { errorMsg } = sessionIdObj
+        const sessionId = sessionIdObj.getId()
+
         return (
             <div>
                 <form onSubmit={this.handleSubmitSession}>

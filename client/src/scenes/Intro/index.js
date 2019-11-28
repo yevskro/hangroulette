@@ -1,5 +1,5 @@
 import React, { Component} from "react";
-import SessionIdModel from './models/SessionId'
+import SessionIdModel from '../../models/SessionId'
 
 class Intro extends Component {
     constructor(props){

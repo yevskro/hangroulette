@@ -1,8 +1,5 @@
 class SessionIdModel{
     constructor(id){
-        let _id = "" 
-        this.errorMsg = ""
-
         this.setId = (id) => {
             this.validateId(id)
             if(!this.errorMsg)
@@ -14,16 +11,21 @@ class SessionIdModel{
             return _id
         }
 
-        this.setId(id)
-    }
-
-    validateId = id => {
-        const hasOnlyNumbers = /^[0-9]*$/
-        if(hasOnlyNumbers.test(id)){
-            this.errorMsg = ""
-            return
+        this.validateId = id => {
+            const hasOnlyNumbers = /^[0-9]*$/
+            if(hasOnlyNumbers.test(id)){
+                this.errorMsg = ""
+                return this
+            }
+            this.errorMsg = "invalid sessionid"
         }
-        this.errorMsg = "invalid sessionid"
+
+        let _id = "" 
+        this.errorMsg = ""
+
+        if(id !== undefined){
+            this.setId(id)
+        }
     }
 }
 

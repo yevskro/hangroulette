@@ -1,5 +1,6 @@
 import React, { Component} from "react";
 import SessionIdModel from '../../models/SessionId'
+import Error from './components/Error'
 
 class Intro extends Component {
     constructor(props){
@@ -43,7 +44,7 @@ class Intro extends Component {
                 <form onSubmit={this.handleSubmitNew}>
                     <input type="submit" value="New Game"/>
                 </form>
-                <div className="error">{errorMsg}</div>
+                <Error errorMsg={errorMsg}/>
             </div>
         )
     }

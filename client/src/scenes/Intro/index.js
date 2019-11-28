@@ -1,4 +1,4 @@
-import React, { Component} from "react";
+import React, { Component } from "react";
 import SessionIdModel from '../../models/SessionId'
 import Error from './components/Error'
 import FormSessionGet from './components/FormSessionGet'

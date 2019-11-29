@@ -23,18 +23,18 @@ class Intro extends Component {
     handleSubmitSession = e => {
         e.preventDefault()
         const { sessionIdObj } = this.state
-        this.props.cookies.set("sessionId", sessionIdObj.getId())
+        this.props.cookies.set("sessionId", sessionIdObj.get())
         this.props.history.push(`/session`)
     }
     
     handleChangeSession = e => {
-        this.setState({sessionIdObj: this.state.sessionIdObj.setId(e.target.value)})
+        this.setState({sessionIdObj: this.state.sessionIdObj.set(e.target.value)})
     }
 
     render(){
         const { sessionIdObj } = this.state
         const { error }  = sessionIdObj
-        const sessionId = sessionIdObj.getId()
+        const sessionId = sessionIdObj.get()
 
         return (
             <div>

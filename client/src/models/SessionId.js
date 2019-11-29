@@ -4,19 +4,19 @@ class SessionIdModel{
     constructor(id){
         /* ENCAPSULATED CLASS FUNCTION SETUP */
         /*************************************/
-        this.setId = (id) => {
-            if(!this.validateId(id).error.msg){
+        this.set = (id) => {
+            if(!this.validate(id).error.msg){
                 _id = id
             }
 
             return this
         }
 
-        this.getId = () => {
+        this.get = () => {
             return _id
         }
 
-        this.validateId = id => {
+        this.validate = (id) => {
             this.error.clear()
             const regOnlyNumbers = /^[0-9]*$/
 
@@ -34,7 +34,7 @@ class SessionIdModel{
         this.error = Error()
 
         if(id !== undefined){
-            this.setId(id)
+            this.set(id)
         }
     }
 }

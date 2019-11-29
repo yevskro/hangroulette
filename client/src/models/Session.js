@@ -85,3 +85,5 @@ class SessionModel {
         let _objGame = objGame
     }
 }
+
+export default SessionModel

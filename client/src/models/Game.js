@@ -25,7 +25,7 @@ class GameModel {
 
         this.validateWord = (word) => {
             this.error.clear()
-            const regCharSet = /^[a-zA-Z]/
+            const regCharSet = /^[a-zA-Z\s_]/
 
             if(!regCharSet.test(word)){
                 this.error.set("invalid character")

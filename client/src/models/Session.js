@@ -1,6 +1,6 @@
-import SessionIdModel from './SessionId'
-import GameModel from './Game'
-import Error from "../helpers/error"
+import SessionIdModel   from './SessionId'
+import GameModel        from './Game'
+import Error            from "../helpers/error"
 
 class SessionModel {
     constructor(objSessionId, score, objGame){
@@ -75,15 +75,15 @@ class SessionModel {
         /*************************/
         /* constructor must be initiated with all parameters met */
         
-        this.error = new Error()
+        this.error          = new Error()
 
         if (this.validateConstructorArguements(objSessionId, score, objGame).error.msg){
             return this
         }
 
-        let _score = score
-        let _objSessionId = objSessionId
-        let _objGame = objGame
+        let _score          = score
+        let _objSessionId   = objSessionId
+        let _objGame        = objGame
     }
 }
 

@@ -4,14 +4,6 @@ class SessionIdModel{
     constructor(id){
         /* ENCAPSULATED CLASS FUNCTION SETUP */
         /*************************************/
-        this.set = (id) => {
-            if(!this.validate(id).error.msg){
-                _id = id
-            }
-
-            return this
-        }
-
         this.get = () => {
             return _id
         }
@@ -20,6 +12,10 @@ class SessionIdModel{
             this.error.clear()
             const regOnlyNumbers = /^[0-9]*$/
 
+            if(id === ""){
+                return this
+            }
+            
             if(!(regOnlyNumbers.test(id))){
                 this.error.set("invalid sessionid")
             }
@@ -33,8 +29,12 @@ class SessionIdModel{
         let _id = "" 
         this.error = new Error()
 
-        if(id !== undefined){
-            this.set(id)
+        if(id === undefined){
+            return this
+        }
+
+        if(!this.validate(id).error.msg){
+            _id = id
         }
     }
 }

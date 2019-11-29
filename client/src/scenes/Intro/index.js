@@ -28,13 +28,14 @@ class Intro extends Component {
     }
     
     handleChangeSession = e => {
-        this.setState({objSessionId: this.state.objSessionId.set(e.target.value)})
+        const objNewSessionId = new SessionIdModel(e.target.value)
+        this.setState({objSessionId: objNewSessionId})
     }
 
     render(){
-        const { objSessionId } = this.state
-        const { error }  = objSessionId
-        const sessionId = objSessionId.get()
+        const { objSessionId }  = this.state
+        const { error }         = objSessionId
+        const sessionId         = objSessionId.get()
 
         return (
             <div>

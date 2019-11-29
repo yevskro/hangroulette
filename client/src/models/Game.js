@@ -4,18 +4,15 @@ class GameModel {
     constructor(guesses, word){
         /* ENCAPSULATED CLASS FUNCTION SETUP */
         /*************************************/
-        update = (guess, word) => {
-            if(this.validateGuess(guess).error.msg || this.validateWord(word).error.msg){
-                return this
-            }
-
-            _guesses += guess
-            _word = word
-
-            return this
+        this.getGuesses = () => {
+            return _guesses
         }
 
-        validateGuess = (guess) => {
+        this.getWord = () => {
+            return _word
+        }
+
+        this.validateGuess = (guess) => {
             this.error.clear()
             const regOneLetter = /^[a-zA-Z]{1}$/
 
@@ -26,9 +23,9 @@ class GameModel {
             return this
         }
 
-        validateWord = (word) => {
+        this.validateWord = (word) => {
             this.error.clear()
-            const regCharSet = /^[a-zA-Z] _/
+            const regCharSet = /^[a-zA-Z]/
 
             if(!regCharSet.test(word)){
                 this.error.set("invalid character")
@@ -38,7 +35,7 @@ class GameModel {
             return this.validateSingleSpaced(word)
         }
 
-        validateSingleSpaced = (word) => {
+        this.validateSingleSpaced = (word) => {
             this.error.clear()
             let singleSpaced = word.split(" ").every(word => word !== "")
 
@@ -49,12 +46,18 @@ class GameModel {
             return this
         }
 
-        validateGuesses = (guesses) => {
+        this.validateGuesses = (guesses) => {
             this.error.clear()
+            const regCharSet = /^[a-zA-Z]/
             const regLengthAndCharSet = /^[a-zA-Z]{0,6}$/
 
-            if(!regLengthAndCharSet.test(guesses)){
-                this.error.set("invalid guesses")
+            if(!regLengthAndCharSet.test(guesses.wrong)){
+                this.error.set("invalid guesses: wrong")
+                return this
+            }
+
+            if(!regCharSet.test(guesses.correct)){
+                this.error.set("invalid guesses: correct")
             }
 
             return this
@@ -62,16 +65,17 @@ class GameModel {
 
         /* MAIN CONSTRUCTOR CODE */
         /*************************/
-
-        let _guesses = ""
+        let _guesses = {correct: "", wrong: ""}
         let _word = "" 
-        let error = new Error()
 
-        if(guesses !== undefined && !validateGuesses(guesses).error.msg){
+
+        this.error = new Error()
+
+        if(guesses !== undefined && !this.validateGuesses(guesses).error.msg){
             _guesses = guesses
         }
 
-        if(word !== undefined && !validateWord(word).error.msg){
+        if(word !== undefined && !this.validateWord(word).error.msg){
             _word = word
         }
 

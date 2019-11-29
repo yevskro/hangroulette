@@ -3,47 +3,30 @@ import GameModel from './Game'
 import Error from "../helpers/error"
 
 class SessionModel {
-    constructor(sessionIdObj, wins, losses, gameObj){
+    constructor(objSessionId, score, objGame){
         /* ENCAPSULATED CLASS FUNCTION SETUP */
         /*************************************/
-        getWin = () => {
-            return _wins
+        this.getWin = () => {
+            return _score.wins
         }
 
-        getLosses = () => {
-            return _losses
+        this.getLosses = () => {
+            return _score.losses
         }
 
-        getObjSessionId = () => {
+        this.getScore = () => {
+            return _score
+        }
+
+        this.getObjSessionId = () => {
             return _objSessionId
         }
 
-        getObjGame = () => {
+        this.getObjGame = () => {
             return _objGame
         }
 
-        setObjGame = (objGame) => {
-            if(!this.validateGame(objGame).error.msg){
-                _objGame = objGame
-            }
-            return this
-        }
-        
-        setWins = (wins) => {
-            if(!this.validateScoreNumber(wins).error.msg){
-                _wins = wins
-            }
-            return this
-        }
-
-        setLosses = (losses) => {
-            if(!this.validateScoreNumber(losses).error.msg){
-                _losses = losses
-            }
-            return this
-        }
-
-        validateScoreNumber = (number) => {
+        this.validateScoreNumber = (number) => {
             this.error.clear()
             if(typeof(number) !== "number"){
                 this.error.set("not a number")
@@ -57,7 +40,7 @@ class SessionModel {
             return this
         }
 
-        validateGame = (objGame) => {
+        this.validateGame = (objGame) => {
             this.error.clear()
             if(!(objGame instanceof GameModel)){
                 this.error.set("game object must be an instance of GameModel")
@@ -66,7 +49,7 @@ class SessionModel {
             return this
         } 
 
-        validateConstructorArguements = (objSessionId, wins, losses, objGame) => {
+        this.validateConstructorArguements = (objSessionId, score, objGame) => {
             this.error.clear()
             if(!(objSessionId instanceof SessionIdModel)){
                 this.error.set("sessionid object must be an instance of SessionIdModel")
@@ -77,12 +60,12 @@ class SessionModel {
                 return this
             }
 
-            if(this.validateScoreNumber(wins).error.msg){
+            if(this.validateScoreNumber(score.wins).error.msg){
                 this.error.add(": wins")
                 return this
             }
     
-            if(this.validateScoreNumber(losses).error.msg){
+            if(this.validateScoreNumber(score.losses).error.msg){
                 this.error.add(": losses")
                 return this
             }
@@ -94,12 +77,11 @@ class SessionModel {
         
         this.error = new Error()
 
-        if (this.validateConstructorArguements(objSessionId, wins, losses, objGame).error.msg){
+        if (this.validateConstructorArguements(objSessionId, score, objGame).error.msg){
             return this
         }
 
-        let _wins = wins
-        let _losses = losses
+        let _score = score
         let _objSessionId = objSessionId
         let _objGame = objGame
     }

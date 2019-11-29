@@ -3,9 +3,10 @@ class SessionIdModel{
         /* ENCAPSULATED CLASS FUNCTION SETUP */
         /*************************************/
         this.setId = (id) => {
-            this.validateId(id)
-            if(!this.errorMsg)
+            if(!this.validateId(id).errorMsg){
                 _id = id
+            }
+
             return this
         }
 
@@ -14,11 +15,13 @@ class SessionIdModel{
         }
 
         this.validateId = id => {
-            const regOnlyNumbers = /^[0-9]*$/
             this.errorMsg = ""
+            const regOnlyNumbers = /^[0-9]*$/
+
             if(!(regOnlyNumbers.test(id))){
                 this.errorMsg = "invalid sessionid"
             }
+            
             return this
         }
 
@@ -26,8 +29,7 @@ class SessionIdModel{
         /*************************/
 
         let _id = "" 
-        this.errorMsg = ""
-
+        
         if(id !== undefined){
             this.setId(id)
         }

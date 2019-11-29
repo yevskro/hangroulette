@@ -3,9 +3,10 @@ class GameModel {
         /* ENCAPSULATED CLASS FUNCTION SETUP */
         /*************************************/
         update = (guess, word) => {
-            if(this.validateGuess(guess).errorMsg || this.validateWord(word).errorMsg)
+            if(this.validateGuess(guess).errorMsg || this.validateWord(word).errorMsg){
                 return this
-
+            }
+            
             _guesses += guess
             _word = word
 

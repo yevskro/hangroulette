@@ -13,18 +13,6 @@ class SessionModel {
             _losses += 1
             return this
         }
-        
-        validPositiveNumber = (number) => {
-            this.errorMsg = ""
-            if(typeof(number) !== "number"){
-                this.errorMsg = "not a number"
-            }
-            else if(number < 0){
-                this.errorMsg = "number must be positive"
-            }
-
-            return this
-        }
 
         getWin = () => {
             return _wins
@@ -42,31 +30,49 @@ class SessionModel {
             return _gameObj
         }
         
+        validPositiveNumber = (number) => {
+            this.errorMsg = ""
+            if(typeof(number) !== "number"){
+                this.errorMsg = "not a number"
+            }
+            else if(number < 0){
+                this.errorMsg = "number must be positive"
+            }
+
+            return this
+        }
+        
+        validateConstructorArguements = (sessionIdObj, wins, losses, gameObj) => {
+            this.errorMsg = ""
+            if(!(sessionIdObj instanceof SessionIdModel)){
+                this.errorMsg = "sessionIdObj must be an instace of SessionIdModel"
+                return this
+            }
+    
+            if(!(gameObj instanceof gameObj)){
+                this.errorMsg = "gameObj must be an instance of GameModel"
+                return this
+            }
+    
+            if(this.validPositiveNumber(wins).errorMsg){
+                this.errorMsg += ": wins"
+                return this
+            }
+    
+            if(this.validPositiveNumber(losses).errorMsg){
+                this.errorMsg += ": losses"
+                return this
+            }
+            return this
+        }
         /* MAIN CONSTRUCTOR CODE */
         /*************************/
         /* constructor must be initiated with all parameters met */
         
-        if(!(sessionIdObj instanceof SessionIdModel)){
-            this.errorMsg = "sessionIdObj must be an instace of SessionIdModel"
+        if (this.validateConstructorArguements(sessionIdObj, wins, losses, gameObj).errorMsg){
             return this
         }
 
-        if(!(gameObj instanceof gameObj)){
-            this.errorMsg = "gameObj must be an instance of GameModel"
-            return this
-        }
-
-        if(this.validPositiveNumber(wins).errorMsg){
-            this.errorMsg += ": wins"
-            return this
-        }
-
-        if(this.validPositiveNumber(losses).errorMsg){
-            this.errorMsg += ": losses"
-            return this
-        }
-
-        this.errorMsg = ""
         let _wins = wins
         let _losses = losses
         let _sessionIdObj = sessionIdObj

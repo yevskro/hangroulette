@@ -47,12 +47,12 @@ class SessionModel {
         validateConstructorArguements = (objSessionId, wins, losses, objGame) => {
             this.error.clear()
             if(!(objSessionId instanceof SessionIdModel)){
-                this.error.set("sessionIdObj must be an instace of SessionIdModel")
+                this.error.set("sessionid object must be an instace of SessionIdModel")
                 return this
             }
     
             if(!(objGame instanceof GameModel)){
-                this.error.set("gameObj must be an instance of GameModel")
+                this.error.set("game object must be an instance of GameModel")
                 return this
             }
     

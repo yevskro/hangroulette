@@ -32,13 +32,13 @@ class SessionModel {
             return _objGame
         }
         
-        validPositiveNumber = (number) => {
+        validateScoreNumber = (number) => {
             this.error.clear()
             if(typeof(number) !== "number"){
                 this.error.set("not a number")
             }
             else if(number < 0){
-                this.error.set("number must be positive")
+                this.error.set("number must be 0 or positive")
             }
 
             return this
@@ -56,12 +56,12 @@ class SessionModel {
                 return this
             }
     
-            if(this.validPositiveNumber(wins).error.msg){
+            if(this.validateScoreNumber(wins).error.msg){
                 this.error.add(": wins")
                 return this
             }
     
-            if(this.validPositiveNumber(losses).error.msg){
+            if(this.validateScoreNumber(losses).error.msg){
                 this.error.add(": losses")
                 return this
             }

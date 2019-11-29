@@ -1,8 +1,13 @@
 import React, { Component } from 'react'
+import SessionIdModel from '../../models/SessionId'
 
 class Session extends Component {
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
+        const sessionIdObj = new SessionIdModel(this.props.cookies.get("sessionId"))             
+        this.state = {
+            sessionObj: {sessionIdObj: sessionIdObj}
+        }
     }
 
     componentDidMount(){
@@ -10,7 +15,8 @@ class Session extends Component {
     }
 
     render(){
-        return <div></div>
+        console.log(this.props)
+        return <div>session</div>
     }
 }
 

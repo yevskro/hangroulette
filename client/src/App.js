@@ -8,7 +8,7 @@ import { withCookies, useCookies } from 'react-cookie';
 const App = (props) => {
   return <div className="App">
           <Route exact path="/" render={(p) => <Intro {...p} cookies={props.cookies}/>} />
-          <Route exact path="/session" component={Session} />
+          <Route exact path="/session" render={(p) => <Session {...p} cookies={props.cookies} />} />
         </div>
 };
 

@@ -7,11 +7,11 @@ import FormSessionNew from './components/FormSessionNew'
 class Intro extends Component {
     constructor(props){
         super(props)
-        const sessionIdObj = new SessionIdModel(this.props.cookies.get("sessionId"))
+        const objSessionId = new SessionIdModel(this.props.cookies.get("sessionId"))
         
         this.state = {
             cookies: this.props.cookies,
-            sessionIdObj: sessionIdObj,
+            objSessionId: objSessionId,
         }    
     }
 
@@ -22,25 +22,25 @@ class Intro extends Component {
 
     handleSubmitSession = e => {
         e.preventDefault()
-        const { sessionIdObj } = this.state
-        this.props.cookies.set("sessionId", sessionIdObj.get())
+        const { objSessionId } = this.state
+        this.props.cookies.set("sessionId", objSessionId.get())
         this.props.history.push(`/session`)
     }
     
     handleChangeSession = e => {
-        this.setState({sessionIdObj: this.state.sessionIdObj.set(e.target.value)})
+        this.setState({objSessionId: this.state.objSessionId.set(e.target.value)})
     }
 
     render(){
-        const { sessionIdObj } = this.state
-        const { error }  = sessionIdObj
-        const sessionId = sessionIdObj.get()
+        const { objSessionId } = this.state
+        const { error }  = objSessionId
+        const sessionId = objSessionId.get()
 
         return (
             <div>
                 <FormSessionGet submitValue="Continue Game" sessionId={sessionId} onSubmit={this.handleSubmitSession} handleChangeSession={this.handleChangeSession}/>
                 <FormSessionNew submitValue="New Game" onSubmit={this.handleSubmitNew} />
-                <Error errorMsg={error.msg}/>
+                <Error error={error.msg}/>
             </div>
         )
     }

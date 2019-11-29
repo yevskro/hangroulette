@@ -1,6 +1,6 @@
 class Error{
     constructor(){
-        this.error = ""
+        this.msg = ""
     }
 
     set(msg){
@@ -17,3 +17,5 @@ class Error{
         console.log(msg)
     }
 }
+
+export default Error

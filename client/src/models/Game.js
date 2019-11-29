@@ -1,4 +1,4 @@
-import Error from "../services/error"
+import Error from "../helpers/error"
 
 class GameModel {
     constructor(guesses, word){
@@ -65,7 +65,7 @@ class GameModel {
 
         let _guesses = ""
         let _word = "" 
-        let error = Error()
+        let error = new Error()
 
         if(guesses !== undefined && !validateGuesses(guesses).error.msg){
             _guesses = guesses

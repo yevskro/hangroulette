@@ -1,4 +1,4 @@
-import Error from "../services/error"
+import Error from "../helpers/error"
 
 class SessionIdModel{
     constructor(id){
@@ -31,7 +31,7 @@ class SessionIdModel{
         /*************************/
 
         let _id = "" 
-        this.error = Error()
+        this.error = new Error()
 
         if(id !== undefined){
             this.set(id)

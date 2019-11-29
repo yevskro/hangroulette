@@ -1,6 +1,6 @@
 import SessionIdModel from './SessionId'
 import GameModel from './Game'
-import Error from "../services/error"
+import Error from "../helpers/error"
 
 class SessionModel {
     constructor(sessionIdObj, wins, losses, gameObj){
@@ -36,8 +36,10 @@ class SessionModel {
             this.error.clear()
             if(typeof(number) !== "number"){
                 this.error.set("not a number")
+                return this
             }
-            else if(number < 0){
+
+            if(number < 0){
                 this.error.set("number must be 0 or positive")
             }
 
@@ -47,7 +49,7 @@ class SessionModel {
         validateConstructorArguements = (objSessionId, wins, losses, objGame) => {
             this.error.clear()
             if(!(objSessionId instanceof SessionIdModel)){
-                this.error.set("sessionid object must be an instace of SessionIdModel")
+                this.error.set("sessionid object must be an instance of SessionIdModel")
                 return this
             }
     
@@ -71,7 +73,7 @@ class SessionModel {
         /*************************/
         /* constructor must be initiated with all parameters met */
         
-        this.error = Error()
+        this.error = new Error()
 
         if (this.validateConstructorArguements(objSessionId, wins, losses, objGame).error.msg){
             return this

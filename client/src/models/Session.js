@@ -1,4 +1,5 @@
 import SessionIdModel from './SessionId'
+import GameModel from './Game'
 import Error from "../services/error"
 
 class SessionModel {
@@ -23,12 +24,12 @@ class SessionModel {
             return _losses
         }
 
-        getSessionIdObj = () => {
-            return _sessionIdObj
+        getObjSessionId = () => {
+            return _objSessionId
         }
 
-        getGameObj = () => {
-            return _gameObj
+        getObjGame = () => {
+            return _objGame
         }
         
         validPositiveNumber = (number) => {
@@ -43,14 +44,14 @@ class SessionModel {
             return this
         }
 
-        validateConstructorArguements = (sessionIdObj, wins, losses, gameObj) => {
+        validateConstructorArguements = (objSessionId, wins, losses, objGame) => {
             this.error.clear()
-            if(!(sessionIdObj instanceof SessionIdModel)){
+            if(!(objSessionId instanceof SessionIdModel)){
                 this.error.set("sessionIdObj must be an instace of SessionIdModel")
                 return this
             }
     
-            if(!(gameObj instanceof gameObj)){
+            if(!(objGame instanceof GameModel)){
                 this.error.set("gameObj must be an instance of GameModel")
                 return this
             }
@@ -72,13 +73,13 @@ class SessionModel {
         
         this.error = Error()
 
-        if (this.validateConstructorArguements(sessionIdObj, wins, losses, gameObj).error.msg){
+        if (this.validateConstructorArguements(objSessionId, wins, losses, objGame).error.msg){
             return this
         }
 
         let _wins = wins
         let _losses = losses
-        let _sessionIdObj = sessionIdObj
-        let _gameObj = gameObj
+        let _objSessionId = objSessionId
+        let _objGame = objGame
     }
 }

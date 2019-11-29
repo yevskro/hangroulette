@@ -26,15 +26,15 @@ class SessionIdModel{
         /* MAIN CONSTRUCTOR CODE */
         /*************************/
 
-        let _id = "" 
-        this.error = new Error()
+        let _id     = "" 
+        this.error  = new Error()
 
         if(id === undefined){
             return this
         }
 
         if(!this.validate(id).error.msg){
-            _id = id
+            _id     = id
         }
     }
 }

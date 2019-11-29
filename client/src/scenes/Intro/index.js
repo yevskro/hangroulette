@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import SessionIdModel from '../../models/SessionId'
-import Error from './components/Error'
-import FormSessionGet from './components/FormSessionGet'
-import FormSessionNew from './components/FormSessionNew'
+import Error            from './components/Error'
+import FormSessionGet   from './components/FormSessionGet'
+import FormSessionNew   from './components/FormSessionNew'
 
 class Intro extends Component {
     constructor(props){

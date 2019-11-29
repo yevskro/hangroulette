@@ -22,7 +22,7 @@ class Session extends Component {
         const jsonSession   = serviceSession.getSession(this.state.objSession.getObjSessionId().get())
         const score         = {wins: jsonSession.wins, losses: jsonSession.losses}
         const guesses       = {correct: jsonSession.correct, wrong: jsonSession.wrong}
-        const objGame       = new GameModel(jsonSession.guesses, jsonSession.word)
+        const objGame       = new GameModel(guesses, jsonSession.word)
         const objNewSession = new SessionModel(this.state.objSession.getObjSessionId(), score, objGame)
 
         this.setState = {

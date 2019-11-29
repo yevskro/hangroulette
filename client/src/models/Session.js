@@ -6,16 +6,6 @@ class SessionModel {
     constructor(sessionIdObj, wins, losses, gameObj){
         /* ENCAPSULATED CLASS FUNCTION SETUP */
         /*************************************/
-        win = () => {
-            _wins += 1
-            return this
-        }
-
-        loose = () => {
-            _losses += 1
-            return this
-        }
-
         getWin = () => {
             return _wins
         }
@@ -31,7 +21,28 @@ class SessionModel {
         getObjGame = () => {
             return _objGame
         }
+
+        setObjGame = (objGame) => {
+            if(!this.validateGame(objGame).error.msg){
+                _objGame = objGame
+            }
+            return this
+        }
         
+        setWins = (wins) => {
+            if(!this.validateScoreNumber(wins).error.msg){
+                _wins = wins
+            }
+            return this
+        }
+
+        setLosses = (losses) => {
+            if(!this.validateScoreNumber(losses).error.msg){
+                _losses = losses
+            }
+            return this
+        }
+
         validateScoreNumber = (number) => {
             this.error.clear()
             if(typeof(number) !== "number"){
@@ -46,18 +57,26 @@ class SessionModel {
             return this
         }
 
+        validateGame = (objGame) => {
+            this.error.clear()
+            if(!(objGame instanceof GameModel)){
+                this.error.set("game object must be an instance of GameModel")
+                return this
+            }
+            return this
+        } 
+
         validateConstructorArguements = (objSessionId, wins, losses, objGame) => {
             this.error.clear()
             if(!(objSessionId instanceof SessionIdModel)){
                 this.error.set("sessionid object must be an instance of SessionIdModel")
                 return this
             }
-    
-            if(!(objGame instanceof GameModel)){
-                this.error.set("game object must be an instance of GameModel")
+
+            if(this.validateGame(objGame).error.msg){
                 return this
             }
-    
+
             if(this.validateScoreNumber(wins).error.msg){
                 this.error.add(": wins")
                 return this

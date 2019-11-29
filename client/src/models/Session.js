@@ -1,4 +1,5 @@
 import SessionIdModel from './SessionId'
+import Error from "../services/error"
 
 class SessionModel {
     constructor(sessionIdObj, wins, losses, gameObj){
@@ -31,36 +32,36 @@ class SessionModel {
         }
         
         validPositiveNumber = (number) => {
-            this.errorMsg = ""
+            this.error.clear()
             if(typeof(number) !== "number"){
-                this.errorMsg = "not a number"
+                this.error.set("not a number")
             }
             else if(number < 0){
-                this.errorMsg = "number must be positive"
+                this.error.set("number must be positive")
             }
 
             return this
         }
-        
+
         validateConstructorArguements = (sessionIdObj, wins, losses, gameObj) => {
-            this.errorMsg = ""
+            this.error.clear()
             if(!(sessionIdObj instanceof SessionIdModel)){
-                this.errorMsg = "sessionIdObj must be an instace of SessionIdModel"
+                this.error.set("sessionIdObj must be an instace of SessionIdModel")
                 return this
             }
     
             if(!(gameObj instanceof gameObj)){
-                this.errorMsg = "gameObj must be an instance of GameModel"
+                this.error.set("gameObj must be an instance of GameModel")
                 return this
             }
     
-            if(this.validPositiveNumber(wins).errorMsg){
-                this.errorMsg += ": wins"
+            if(this.validPositiveNumber(wins).error.msg){
+                this.error.add(": wins")
                 return this
             }
     
-            if(this.validPositiveNumber(losses).errorMsg){
-                this.errorMsg += ": losses"
+            if(this.validPositiveNumber(losses).error.msg){
+                this.error.add(": losses")
                 return this
             }
             return this
@@ -69,7 +70,9 @@ class SessionModel {
         /*************************/
         /* constructor must be initiated with all parameters met */
         
-        if (this.validateConstructorArguements(sessionIdObj, wins, losses, gameObj).errorMsg){
+        this.error = Error()
+
+        if (this.validateConstructorArguements(sessionIdObj, wins, losses, gameObj).error.msg){
             return this
         }
 

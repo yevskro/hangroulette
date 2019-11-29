@@ -33,14 +33,14 @@ class Intro extends Component {
 
     render(){
         const { sessionIdObj } = this.state
-        const { errorMsg } = sessionIdObj
+        const { error }  = sessionIdObj
         const sessionId = sessionIdObj.getId()
 
         return (
             <div>
                 <FormSessionGet submitValue="Continue Game" sessionId={sessionId} onSubmit={this.handleSubmitSession} handleChangeSession={this.handleChangeSession}/>
                 <FormSessionNew submitValue="New Game" onSubmit={this.handleSubmitNew} />
-                <Error errorMsg={errorMsg}/>
+                <Error errorMsg={error.msg}/>
             </div>
         )
     }

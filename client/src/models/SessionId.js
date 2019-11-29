@@ -1,9 +1,11 @@
+import Error from "../services/error"
+
 class SessionIdModel{
     constructor(id){
         /* ENCAPSULATED CLASS FUNCTION SETUP */
         /*************************************/
         this.setId = (id) => {
-            if(!this.validateId(id).errorMsg){
+            if(!this.validateId(id).error.msg){
                 _id = id
             }
 
@@ -15,13 +17,13 @@ class SessionIdModel{
         }
 
         this.validateId = id => {
-            this.errorMsg = ""
+            this.error.clear()
             const regOnlyNumbers = /^[0-9]*$/
 
             if(!(regOnlyNumbers.test(id))){
-                this.errorMsg = "invalid sessionid"
+                this.error.set("invalid sessionid")
             }
-            
+
             return this
         }
 
@@ -29,7 +31,8 @@ class SessionIdModel{
         /*************************/
 
         let _id = "" 
-        
+        this.error = Error()
+
         if(id !== undefined){
             this.setId(id)
         }

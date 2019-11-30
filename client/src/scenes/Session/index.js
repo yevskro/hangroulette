@@ -41,7 +41,7 @@ class Session extends Component {
         }
     }
 
-    setStateFromSessionJson = (jsonsession) => {
+    setStateFromSessionJson = (jsonSession) => {
         const mdlSession = this.createSessionFromJson(jsonSession)
         this.setState({mdlSession})
     }
@@ -70,7 +70,7 @@ class Session extends Component {
         const word          = mdlGame.word()
       
         return <div>
-                <SessionBoard id        ={id} 
+                <SessionBoard id        ={id}
                               mdlScore  ={mdlScore}/>
 
                 <GameClient gameStatus  ={mdlGame.gameStatus()} 

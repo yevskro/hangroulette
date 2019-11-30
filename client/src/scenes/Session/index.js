@@ -72,14 +72,14 @@ class Session extends Component {
         return <div>
                 <SessionBoard id        ={id} 
                               mdlScore  ={mdlScore}/>
-                              
-                <GameClient onAddPlayer ={this.onGameAddPlayer} 
-                            gameStatus  ={mdlGame.gameStatus()} 
+
+                <GameClient gameStatus  ={mdlGame.gameStatus()} 
                             mdlGuesses  ={mdlGuesses} 
                             mdlPlayers  ={mdlPlayers} 
                             word        ={word} 
                             onGuess     ={this.onGameGuess} 
-                            onNew       ={this.onGameNew}/>
+                            onNew       ={this.onGameNew}
+                            onAddPlayer ={this.onGameAddPlayer}/>
             </div>
     }
 }

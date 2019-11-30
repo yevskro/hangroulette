@@ -10,8 +10,8 @@ class Intro extends Component {
         const mdlSessionId = new SessionIdModel(this.props.cookies.get("sessionId"))
         
         this.state = {
-            cookies: this.props.cookies,
             mdlSessionId: mdlSessionId,
+            error: ""
         }    
     }
 
@@ -28,20 +28,25 @@ class Intro extends Component {
     }
     
     handleChangeSession = e => {
-        const mdlNewSessionId = new SessionIdModel(e.target.value)
-        this.setState({mdlSessionId: mdlNewSessionId})
+        try{
+            const mdlNewSessionId = new SessionIdModel(e.target.value)
+            this.setState({mdlSessionId: mdlNewSessionId})
+        } 
+        catch(e) {
+            this.setState({error: "invalid sessionid input"})
+        }
     }
 
     render(){
-        const { mdlSessionId }  = this.state
-        const { error }         = mdlSessionId
+        const { mdlSessionId, 
+                error }         = this.state
         const sessionId         = mdlSessionId.id()
 
         return (
             <div>
                 <FormSessionGet submitValue="Continue Game" sessionId={sessionId} onSubmit={this.handleSubmitSession} handleChangeSession={this.handleChangeSession}/>
                 <FormSessionNew submitValue="New Game" onSubmit={this.handleSubmitNew} />
-                <Error error={error.msg}/>
+                <Error error={error}/>
             </div>
         )
     }

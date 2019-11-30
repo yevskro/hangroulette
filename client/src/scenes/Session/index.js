@@ -14,27 +14,33 @@ import GameClient           from './scenes/GameClient'
 class Session extends Component {
     constructor(props){
         super(props)
-        const mdlSessionId      = new SessionIdModel(this.props.cookies.get("sessionId"))
-        const mdlGameGuesses    = new GuessesModel("loading", "")
-        const mdlGame           = new GameModel(mdlGameGuesses, GAMESTATUS.LOADING)  
-        const mdlScore          = new ScoreModel(0, 0)     
-        const mdlSession        = new SessionModel(mdlSessionId, mdlScore, mdlGame)
+        const jsonSession       = { sessionId: this.props.cookies.get("sessionId"),
+                                    wins: 0, losses: 0,
+                                    correct: "", wrong: "",
+                                    word: "loading",
+                                    status: GAMESTATUS.LOADING }  
+        const mdlSession        = this.createSessionFromJson(jsonSession)
         
         this.state = {
             mdlSession: mdlSession
         }
     }
 
-    componentDidMount(){/*
-        const jsonSession   = serviceSession.getSession(this.state.objSession.getObjSessionId().get())
-        const objScore      = new ScoreModel(jsonSession.wins, jsonSession.losses)
-        const objGuesses    = new GuessesModel(jsonSession.correct, jsonSession.wrong)
-        const objGame       = new GameModel(objGuesses, jsonSession.word)
-        const objNewSession = new SessionModel(this.state.objSession.getObjSessionId(), objScore, objGame)
+    createSessionFromJson(jsonSession){
+        const mdlSessionId      = new SessionIdModel(jsonSession.sessionId)
+        const mdlGameGuesses    = new GuessesModel(jsonSession.correct, jsonSession.wrong)
+        const mdlGame           = new GameModel(mdlGameGuesses, jsonSession.word, jsonSession.gameStatus)  
+        const mdlScore          = new ScoreModel(jsonSession.wins, jsonSession.losses)   
+        console.log(jsonSession) 
+        return new SessionModel(mdlSessionId, mdlScore, mdlGame)       
+    }
+    componentDidMount(){
+        const jsonSession   = serviceSession.getSession(this.state.mdlSession.id())
+        const mdlNewSession = this.createSessionFromJson(jsonSession)
 
         this.setState = {
-            objSession: objNewSession
-        }*/
+            mdlSession: mdlNewSession
+        }
     }
 
     onGameGuess(guess){

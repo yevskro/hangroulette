@@ -70,14 +70,16 @@ class Session extends Component {
         const word          = mdlGame.word()
       
         return <div>
-                <SessionBoard id={id} mdlScore={mdlScore}/>
-                <GameClient onAddPlayer={this.onGameAddPlayer} 
-                            gameStatus={mdlGame.gameStatus()} 
-                            mdlGuesses={mdlGuesses} 
-                            mdlPlayers={mdlPlayers} 
-                            word={word} 
-                            onGuess={this.onGameGuess} 
-                            onNew={this.onGameNew}/>
+                <SessionBoard id        ={id} 
+                              mdlScore  ={mdlScore}/>
+                              
+                <GameClient onAddPlayer ={this.onGameAddPlayer} 
+                            gameStatus  ={mdlGame.gameStatus()} 
+                            mdlGuesses  ={mdlGuesses} 
+                            mdlPlayers  ={mdlPlayers} 
+                            word        ={word} 
+                            onGuess     ={this.onGameGuess} 
+                            onNew       ={this.onGameNew}/>
             </div>
     }
 }

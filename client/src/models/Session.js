@@ -42,8 +42,8 @@ export class ScoreModel {
             return this
         }
 
-        const _wins = wins
-        const _losses = losses
+        const _wins     = wins
+        const _losses   = losses
     }
 }
 

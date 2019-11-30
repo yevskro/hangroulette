@@ -9,6 +9,8 @@ export const GAMESTATUS = {
 
 export class GuessesModel {
     constructor(correct, wrong){
+        /* ENCAPSULATED CLASS FUNCTION SETUP */
+        /*************************************/
         this.validateGuesses = (correct, wrong) => {
             this.error.clear()
             const regCharSet            = /^[a-zA-Z]/
@@ -33,6 +35,8 @@ export class GuessesModel {
         this.getWrong = () => {
             return _wrong
         }
+        /* MAIN CONSTRUCTOR CODE */
+        /*************************/
 
         this.error = new Error()
         if(this.validateGuesses(correct, wrong).error.msg){

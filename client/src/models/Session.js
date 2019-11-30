@@ -4,6 +4,8 @@ import Error            from "../helpers/error"
 
 export class ScoreModel {
     constructor(wins, losses){
+    ]   /* ENCAPSULATED CLASS FUNCTION SETUP */
+        /*************************************/
         this.validateScoreNumber = (number) => {
             this.error.clear()
             if(typeof(number) !== "number"){
@@ -26,6 +28,8 @@ export class ScoreModel {
             return losses
         }
 
+        /* MAIN CONSTRUCTOR CODE */
+        /*************************/
         this.error = new Error()
 
         if(this.validateScoreNumber(wins).error.msg){

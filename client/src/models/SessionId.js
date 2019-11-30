@@ -1,5 +1,3 @@
-import Error from "../helpers/error"
-
 class SessionIdModel{
     constructor(id){
         /* ENCAPSULATED CLASS FUNCTION SETUP */
@@ -9,15 +7,10 @@ class SessionIdModel{
         }
 
         this.validate = (id) => {
-            this.error.clear()
             const regOnlyNumbers = /^[0-9]*$/
 
-            if(id === ""){
-                return this
-            }
-            
-            if(!(regOnlyNumbers.test(id))){
-                this.error.set("invalid sessionid")
+            if(id !== "" && !(regOnlyNumbers.test(id)) || id === undefined){
+                throw new Error(`invalid sessionid{${id}}`)
             }
 
             return this
@@ -26,16 +19,7 @@ class SessionIdModel{
         /* MAIN CONSTRUCTOR CODE */
         /*************************/
 
-        this.error  = new Error()
-
-        if(id === undefined){
-            return this
-        }
-
-        if(this.validate(id).error.msg){
-            return this
-        }
-
+        this.validate(id)
         const _id = id
     }
 }

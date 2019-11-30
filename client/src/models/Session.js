@@ -1,20 +1,17 @@
 import SessionIdModel   from './SessionId'
 import GameModel        from './Game'
-import Error            from "../helpers/error"
 
 export class ScoreModel {
     constructor(wins, losses){
         /* ENCAPSULATED CLASS FUNCTION SETUP */
         /*************************************/
         this.validateScoreNumber = (number) => {
-            this.error.clear()
             if(typeof(number) !== "number"){
-                this.error.set("not a number")
-                return this
+                throw new Error(`invalid score{${number}}`)
             }
 
             if(number < 0){
-                this.error.set("number must be 0 or positive")
+                throw new Error(`score must be 0 or positive{${number}}`)
             }
 
             return this
@@ -30,18 +27,8 @@ export class ScoreModel {
 
         /* MAIN CONSTRUCTOR CODE */
         /*************************/
-        this.error = new Error()
-
-        if(this.validateScoreNumber(wins).error.msg){
-            this.error.add(": wins")
-            return this
-        }
-
-        if(this.validateScoreNumber(losses).error.msg){
-            this.error.add(": losses")
-            return this
-        }
-
+        this.validateScoreNumber(wins)
+        this.validateScoreNumber(losses)
         const _wins     = wins
         const _losses   = losses
     }
@@ -62,7 +49,7 @@ export default class SessionModel {
         this.id = () => {
             return this.mdlSessionId().id()
         }
-        
+
         this.mdlScore = () => {
             return _mdlScore
         }
@@ -76,28 +63,21 @@ export default class SessionModel {
         }
 
         this.validateGame = (mdlGame) => {
-            this.error.clear()
             if(!(mdlGame instanceof GameModel)){
-                this.error.set("game object must be an instance of GameModel")
-                return this
+                throw new Error(`game object must be an instance of GameModel{${mdlGame}}`)
             }
             return this
         } 
 
         this.validateConstructorArguements = (mdlSessionId, mdlScore, mdlGame) => {
-            this.error.clear()
             if(!(mdlSessionId instanceof SessionIdModel)){
-                this.error.set("sessionid object must be an instance of SessionIdModel")
-                return this
+                throw new Error(`sessionid object must be an instance of SessionIdModel{${mdlSessionId}}`)
             }
 
-            if(this.validateGame(mdlGame).error.msg){
-                return this
-            }
+            this.validateGame(mdlGame)
 
             if(!(mdlScore instanceof ScoreModel)){
-                this.error.set("objscore object must be an instance of ScoreModel")
-                return this
+                throw new Error(`objscore object must be an instance of ScoreModel{${mdlScore}}`)
             }
 
             return this
@@ -106,12 +86,8 @@ export default class SessionModel {
         /*************************/
         /* constructor must be initiated with all parameters met */
         
-        this.error              = new Error()
-
-        if (this.validateConstructorArguements(mdlSessionId, mdlScore, mdlGame).error.msg){
-            return this
-        }
-
+        this.validateConstructorArguements(mdlSessionId, mdlScore, mdlGame)
+        
         const _mdlScore         = mdlScore
         const _mdlSessionId     = mdlSessionId
         const _mdlGame          = mdlGame

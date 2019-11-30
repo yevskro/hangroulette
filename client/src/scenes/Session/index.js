@@ -14,11 +14,7 @@ import GameClient           from './scenes/GameClient'
 class Session extends Component {
     constructor(props){
         super(props)
-        const jsonSession       = { sessionId: this.props.cookies.get("sessionId"),
-                                    wins: 0, losses: 0,
-                                    correct: "", wrong: "",
-                                    word: "loading",
-                                    status: GAMESTATUS.LOADING }  
+        const jsonSession       = sessionService.emptySession() 
         const mdlSession        = this.createSessionFromJson(jsonSession)
         
         this.state = {
@@ -34,8 +30,9 @@ class Session extends Component {
         console.log(jsonSession) 
         return new SessionModel(mdlSessionId, mdlScore, mdlGame)       
     }
+    
     componentDidMount(){
-        const jsonSession   = serviceSession.getSession(this.state.mdlSession.id())
+        const jsonSession   = serviceSession.getSession(this.props.cookies.get("sessionId"))
         const mdlNewSession = this.createSessionFromJson(jsonSession)
 
         this.setState = {

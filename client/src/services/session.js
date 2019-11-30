@@ -8,6 +8,14 @@ class SessionService {
     postGuess = () => {
         return {status: correct, word: "__e"}
     }
+
+    emptySession = () => {
+        return { sessionId: "",
+        wins: 0, losses: 0,
+        correct: "", wrong: "",
+        word: "loading",
+        status: GAMESTATUS.LOADING } 
+    }
 }
 
 const sessionService = new SessionService()

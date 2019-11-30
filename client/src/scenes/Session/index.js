@@ -37,7 +37,7 @@ class Session extends Component {
 
     componentDidMount(){
         const jsonSession   = serviceSession.getSession(this.props.cookies.get("sessionId"))
-        const mdlSession = this.createSessionFromJson(jsonSession)
+        const mdlSession    = this.createSessionFromJson(jsonSession)
         this.setState({mdlSession})
     }
 
@@ -48,7 +48,7 @@ class Session extends Component {
 
     onGameNew(){
         const jsonSession   = serviceSession.getNewGame(this.state.mdlSession.id())
-        const mdlSession = this.createSessionFromJson(jsonSession)
+        const mdlSession    = this.createSessionFromJson(jsonSession)
         this.setState({mdlSession})
     }
 

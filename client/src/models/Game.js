@@ -9,6 +9,15 @@ export class GuessesModel {
     constructor(correct, wrong){
         /* ENCAPSULATED CLASS FUNCTION SETUP */
         /*************************************/
+        this.validateGuess = (guess) => {
+            const regOneLetter = /^[a-zA-Z]{1}$/
+
+            if(!regOneLetter.test(guess)){
+                throw new Error("guess must be one letter a-z")
+            }
+            return this
+        }
+
         this.validateGuesses = (correct, wrong) => {
             const regCharSet            = /^[a-zA-Z]/
             const regLengthAndCharSet   = /^[a-zA-Z]{0,6}$/
@@ -44,6 +53,10 @@ export default class GameModel {
     constructor(mdlGuesses, word, gameStatus){
         /* ENCAPSULATED CLASS FUNCTION SETUP */
         /*************************************/
+        this.gameStatus = () => {
+            return _gameStatus
+        }
+
         this.mdlGuesses = () => {
             return _mdlGuesses
         }
@@ -97,15 +110,3 @@ export default class GameModel {
         const _gameStatus = gameStatus
     }
 }
-
-        /*
-        this.validateGuess = (guess) => {
-            this.error.clear()
-            const regOneLetter = /^[a-zA-Z]{1}$/
-
-            if(!regOneLetter.test(guess)){
-                this.error.set("guess must be one letter a-z")
-            }
-
-            return this
-        }*/

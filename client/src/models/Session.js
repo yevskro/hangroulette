@@ -4,7 +4,7 @@ import Error            from "../helpers/error"
 
 export class ScoreModel {
     constructor(wins, losses){
-       /* ENCAPSULATED CLASS FUNCTION SETUP */
+        /* ENCAPSULATED CLASS FUNCTION SETUP */
         /*************************************/
         this.validateScoreNumber = (number) => {
             this.error.clear()

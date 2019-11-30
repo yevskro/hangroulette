@@ -51,21 +51,39 @@ export class GuessesModel {
 
 export class PlayersModel {
     constructor(players, turn){
+        /* ENCAPSULATED CLASS FUNCTION SETUP */
+        /*************************************/
         this.players = () => {
-
+            return _players
         }
         this.turn = () => {
-
+            return _turn
         }
 
-        this.validatePlayers = () => {
-
+        this.validatePlayers = (players) => {
+            if(typeof(players) !== 'number'){
+                throw new Error(`players must be a number{${players}}`)
+            }
+            if(players <= 0 || players >= 3){
+                throw new Error(`minumum 1 player and maximum of 3 players allowed{${players}}`)
+            }
+            return this
         }
 
-        this.validateTurn = () => {
-
+        this.validateTurn = (turn, players) => {
+            if(typeof(turn) !== 'number'){
+                throw new Error(`turn must be a number{${turn}}`)
+            }
+            if(turn <= 0 || turn > players){
+                throw new Error(`turn is out of scope from players{${turn}}`)
+            }
+            return this
         }
-        
+        /* MAIN CONSTRUCTOR CODE */
+        /*************************/
+        this.validateTurn(turn, this.validatePlayers(players))
+        _turn       = turn
+        _players    = players
     }
 }
 
@@ -119,10 +137,26 @@ export default class GameModel {
                     throw new Error(`invalid gamestatus{${gameStatus}}`)
             }
         }
+
+        this.validateMdlGuesses = (mdlGuesses) => {
+            if(!(mdlGuesses instanceof GuessesModel){
+                throw new Error(`mdlGuesses must be an instance of GuessesModel{${mdlGuesses}}`)
+            }
+        }
+
+        this.validateMdlPlayers = (mdlPlayers) => {
+            if(!(mdlPlayers instanceof PlayersModel)){
+                throw new Error(`mdlPlayers must be an instance of PlayersModel{${mdlPlayers}}`)
+            }
+        }
         /* MAIN CONSTRUCTOR CODE */
         /*************************/
+        this.validateMdlGuesses(mdlGuesses)
         const _mdlGuesses = mdlGuesses
 
+        this.validateMdlPlayers(mdlPlayers)
+        const _mdlPlayers = mdlPlayers
+        
         this.validateWord(word)
         const _word = word
 

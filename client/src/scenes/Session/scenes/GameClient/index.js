@@ -12,13 +12,17 @@ class GameClient extends Component{
     }
 
     newGameButton = () => {
-        if(this.props.gameStatus === GAMESTATUS.PLAYING){
-            return <div></div>
+        switch(this.props.gameStatus){
+            case GAMESTATUS.LOADING:
+            case GAMESTATUS.PLAYING:
+                return <React.Fragment></React.Fragment>
+            default:
+                return <div><button onClick={this.props.onNew}>New Game</button></div>
         }
-        return <div><button onClick={this.props.onNew}>New Game</button></div>
     }
 
     guessButtons = () => {
+        /* Loop through ASCII codes 'a to z' = '97 to 122' */
         return [...Array(122-97)].map( (element, index) => {
             const char = String.fromCharCode(index + 97)
             return <button className="btn-guess" key={`guess-${char}`} onClick={this.onGuess}>{char}</button>

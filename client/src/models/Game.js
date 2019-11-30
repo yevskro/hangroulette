@@ -49,8 +49,28 @@ export class GuessesModel {
     }
 } 
 
+export class PlayersModel {
+    constructor(players, turn){
+        this.players = () => {
+
+        }
+        this.turn = () => {
+
+        }
+
+        this.validatePlayers = () => {
+
+        }
+
+        this.validateTurn = () => {
+
+        }
+        
+    }
+}
+
 export default class GameModel {
-    constructor(mdlGuesses, word, gameStatus){
+    constructor(mdlGuesses, player, mdlPlayers, word, gameStatus){
         /* ENCAPSULATED CLASS FUNCTION SETUP */
         /*************************************/
         this.gameStatus = () => {

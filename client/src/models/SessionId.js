@@ -4,7 +4,7 @@ class SessionIdModel{
     constructor(id){
         /* ENCAPSULATED CLASS FUNCTION SETUP */
         /*************************************/
-        this.get = () => {
+        this.id = () => {
             return _id
         }
 

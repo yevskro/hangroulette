@@ -3,7 +3,7 @@ import { ScoreModel } from '../../../models/Session'
 
 const SessionBoard = (p) => 
     <div className="SessionBoard">
-        {p.id} {p.score.getWins()} {p.score.getLosses()}
+        {p.id} {p.mdlScore.wins()} {p.mdlScore.losses()}
     </div>
 
 export default SessionBoard

@@ -28,11 +28,11 @@ export class GuessesModel {
             return this
         }
 
-        this.getCorrect = () => {
+        this.correct = () => {
             return _correct
         }
         
-        this.getWrong = () => {
+        this.wrong = () => {
             return _wrong
         }
         /* MAIN CONSTRUCTOR CODE */
@@ -52,11 +52,11 @@ export default class GameModel {
     constructor(mdlGuesses, word, gameStatus){
         /* ENCAPSULATED CLASS FUNCTION SETUP */
         /*************************************/
-        this.getGuesses = () => {
+        this.mdlGuesses = () => {
             return _mdlGuesses
         }
 
-        this.getWord = () => {
+        this.word = () => {
             return _word
         }
 

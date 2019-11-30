@@ -55,15 +55,15 @@ class Session extends Component {
     }
 
     render(){
-        const id            = this.state.mdlSession.getMdlSessionId().get()
-        const mdlScore      = this.state.mdlSession.getMdlScore()
-        const mdlGame       = this.state.mdlSession.getMdlGame()
-        const mdlGuesses    = mdlGame.getGuesses()
-        const word          = mdlGame.getWord()
+        const id            = this.state.mdlSession.mdlSessionId().id()
+        const mdlScore      = this.state.mdlSession.mdlScore()
+        const mdlGame       = this.state.mdlSession.mdlGame()
+        const mdlGuesses    = mdlGame.mdlGuesses()
+        const word          = mdlGame.word()
 
         return <div>
-                <SessionBoard id={id} score={mdlScore}/>
-                <GameClient guesses={mdlGuesses} word={word} onGameGuess={this.onGameGuess} onGameNew={this.onGameNew}/>
+                <SessionBoard id={id} mdlScore={mdlScore}/>
+                <GameClient mdlGuesses={mdlGuesses} word={word} onGameGuess={this.onGameGuess} onGameNew={this.onGameNew}/>
             </div>
     }
 }

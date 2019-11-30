@@ -23,19 +23,19 @@ class Intro extends Component {
     handleSubmitSession = e => {
         e.preventDefault()
         const { mdlSessionId } = this.state
-        this.props.cookies.set("sessionId", mdlSessionId.get())
+        this.props.cookies.set("sessionId", mdlSessionId.id())
         this.props.history.push(`/session`)
     }
     
     handleChangeSession = e => {
         const mdlNewSessionId = new SessionIdModel(e.target.value)
-        this.setState({objSessionId: mdlNewSessionId})
+        this.setState({mdlSessionId: mdlNewSessionId})
     }
 
     render(){
         const { mdlSessionId }  = this.state
         const { error }         = mdlSessionId
-        const sessionId         = mdlSessionId.get()
+        const sessionId         = mdlSessionId.id()
 
         return (
             <div>

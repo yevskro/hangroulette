@@ -20,12 +20,12 @@ export class ScoreModel {
             return this
         }
 
-        this.getWins = () => {
-            return wins
+        this.wins = () => {
+            return _wins
         }
 
-        this.getLosses = () => {
-            return losses
+        this.losses = () => {
+            return _losses
         }
 
         /* MAIN CONSTRUCTOR CODE */
@@ -51,23 +51,27 @@ export default class SessionModel {
     constructor(mdlSessionId, mdlScore, mdlGame){
         /* ENCAPSULATED CLASS FUNCTION SETUP */
         /*************************************/
-        this.getWins = () => {
-            return _mdlScore.getWins()
+        this.wins = () => {
+            return _mdlScore.wins()
         }
 
-        this.getLosses = () => {
-            return _mdlScore.getLosses()
+        this.losses = () => {
+            return _mdlScore.losses()
         }
 
-        this.getMdlScore = () => {
+        this.id = () => {
+            return this.mdlSessionId().id()
+        }
+        
+        this.mdlScore = () => {
             return _mdlScore
         }
 
-        this.getMdlSessionId = () => {
+        this.mdlSessionId = () => {
             return _mdlSessionId
         }
 
-        this.getMdlGame = () => {
+        this.mdlGame = () => {
             return _mdlGame
         }
 

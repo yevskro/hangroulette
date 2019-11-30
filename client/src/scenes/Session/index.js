@@ -14,29 +14,36 @@ import GameClient           from './scenes/GameClient'
 class Session extends Component {
     constructor(props){
         super(props)
-        const jsonSession       = sessionService.emptySession() 
+        const jsonSession       = serviceSession.emptySession() 
         const mdlSession        = this.createSessionFromJson(jsonSession)
         
         this.state = {
-            mdlSession: mdlSession
+            mdlSession: mdlSession,
+            error: ""
         }
     }
 
     createSessionFromJson(jsonSession){
         const mdlSessionId      = new SessionIdModel(jsonSession.sessionId)
         const mdlGameGuesses    = new GuessesModel(jsonSession.correct, jsonSession.wrong)
-        const mdlGame           = new GameModel(mdlGameGuesses, jsonSession.word, jsonSession.gameStatus)  
+        const mdlGame           = new GameModel(mdlGameGuesses, jsonSession.word, jsonSession.status)  
         const mdlScore          = new ScoreModel(jsonSession.wins, jsonSession.losses)   
-        console.log(jsonSession) 
         return new SessionModel(mdlSessionId, mdlScore, mdlGame)       
     }
-    
-    componentDidMount(){
-        const jsonSession   = serviceSession.getSession(this.props.cookies.get("sessionId"))
-        const mdlNewSession = this.createSessionFromJson(jsonSession)
 
-        this.setState = {
-            mdlSession: mdlNewSession
+    componentDidMount(){
+        try{
+            const jsonSession   = serviceSession.getSession(this.props.cookies.get("sessionId"))
+            const mdlNewSession = this.createSessionFromJson(jsonSession)
+
+            this.setState({
+                mdlSession: mdlNewSession
+            })
+        }
+        catch(e){
+            this.setState({
+                error: "could not get session"
+            })
         }
     }
 
@@ -63,10 +70,12 @@ class Session extends Component {
         const mdlGame       = this.state.mdlSession.mdlGame()
         const mdlGuesses    = mdlGame.mdlGuesses()
         const word          = mdlGame.word()
-
+        const { error }     = this.state
+        
         return <div>
                 <SessionBoard id={id} mdlScore={mdlScore}/>
                 <GameClient mdlGuesses={mdlGuesses} word={word} onGameGuess={this.onGameGuess} onGameNew={this.onGameNew}/>
+                <div className="error">{error}</div>
             </div>
     }
 }

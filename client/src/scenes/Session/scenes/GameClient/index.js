@@ -11,6 +11,10 @@ class GameClient extends Component{
         this.props.onGuess(e.target.innerHTML)
     }
 
+    onAddPlayer = () => {
+        this.props.onAddPlayer()
+    }
+
     newGameButton = () => {
         switch(this.props.gameStatus){
             case GAMESTATUS.LOADING:
@@ -39,6 +43,7 @@ class GameClient extends Component{
             {newGameButton}
             <div>Players:{this.props.mdlPlayers.players()}</div>
             <div>Turn:{this.props.mdlPlayers.turn()}</div>
+            <button onClick={this.props.onAddPlayer}>Add Player</button>
         </div>
     }
 }

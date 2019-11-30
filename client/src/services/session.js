@@ -15,6 +15,10 @@ class SessionService {
         return {sessionId: 1, wins: 2, losses: 2, correct: 'ekw', wrong: '', word: "wee weeeee wweeee okokok", status: GAMESTATUS.WON,player: 1, players: 1, turn: 1}
     }
 
+    postAddPlayer = () => {
+        return {sessionId: 1, wins: 2, losses: 2, correct: 'ekw', wrong: '', word: "wee weeeee wweeee okokok", status: GAMESTATUS.WON,player: 1, players: 2, turn: 2}       
+    }
+
     emptySession = () => {
         return { sessionId: "",
         wins: 0, losses: 0,

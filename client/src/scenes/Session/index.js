@@ -49,6 +49,12 @@ class Session extends Component {
         this.setState({mdlSession})
     }
 
+    onGameAddPlayer = () => {
+        const jsonSession   = serviceSession.postAddPlayer()
+        const mdlSession    = this.createSessionFromJson(jsonSession)
+        this.setState({mdlSession})
+    }
+
     onGameNew = () => {
         const jsonSession   = serviceSession.getNewGame(this.state.mdlSession.id())
         const mdlSession    = this.createSessionFromJson(jsonSession)
@@ -65,7 +71,13 @@ class Session extends Component {
       
         return <div>
                 <SessionBoard id={id} mdlScore={mdlScore}/>
-                <GameClient gameStatus={mdlGame.gameStatus()} mdlGuesses={mdlGuesses} mdlPlayers={mdlPlayers} word={word} onGuess={this.onGameGuess} onNew={this.onGameNew}/>
+                <GameClient onAddPlayer={this.onGameAddPlayer} 
+                            gameStatus={mdlGame.gameStatus()} 
+                            mdlGuesses={mdlGuesses} 
+                            mdlPlayers={mdlPlayers} 
+                            word={word} 
+                            onGuess={this.onGameGuess} 
+                            onNew={this.onGameNew}/>
             </div>
     }
 }

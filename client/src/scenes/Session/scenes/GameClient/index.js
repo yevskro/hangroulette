@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { GAMESTATUS } from '../../../../models/Game'
 
+/* TODO: clean up code and refactor components */
+
 class GameClient extends Component{
     constructor(props){
         super(props)

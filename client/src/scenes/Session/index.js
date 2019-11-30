@@ -4,7 +4,8 @@ import SessionModel, {
         ScoreModel 
         }                   from '../../models/Session'
 import GameModel, { 
-         GuessesModel, 
+         GuessesModel,
+         PlayersModel 
         }                   from '../../models/Game'
 import serviceSession       from '../../services/session'
 import SessionBoard         from './components/SessionBoard'
@@ -31,11 +32,13 @@ class Session extends Component {
         try{
             const mdlSessionId      = new SessionIdModel(jsonSession.sessionId)
             const mdlGameGuesses    = new GuessesModel(jsonSession.correct, jsonSession.wrong)
-            const mdlGame           = new GameModel(mdlGameGuesses, jsonSession.word, jsonSession.status)  
+            const mdlPlayers        = new PlayersModel(jsonSession.players, jsonSession.turn)
+            const mdlGame           = new GameModel(mdlGameGuesses, mdlPlayers, jsonSession.player, jsonSession.word, jsonSession.status)  
             const mdlScore          = new ScoreModel(jsonSession.wins, jsonSession.losses)   
             return new SessionModel(mdlSessionId, mdlScore, mdlGame)
         }
         catch(e){
+            console.log(e)
             return this.createSessionFromJson(serviceSession.errorSession())
         }
     }
@@ -56,12 +59,13 @@ class Session extends Component {
         const id            = this.state.mdlSession.id()
         const mdlScore      = this.state.mdlSession.mdlScore()
         const mdlGame       = this.state.mdlSession.mdlGame()
+        const mdlPlayers    = mdlGame.mdlPlayers()
         const mdlGuesses    = mdlGame.mdlGuesses()
         const word          = mdlGame.word()
       
         return <div>
                 <SessionBoard id={id} mdlScore={mdlScore}/>
-                <GameClient gameStatus={mdlGame.gameStatus()} mdlGuesses={mdlGuesses} word={word} onGuess={this.onGameGuess} onNew={this.onGameNew}/>
+                <GameClient gameStatus={mdlGame.gameStatus()} mdlGuesses={mdlGuesses} mdlPlayers={mdlPlayers} word={word} onGuess={this.onGameGuess} onNew={this.onGameNew}/>
             </div>
     }
 }

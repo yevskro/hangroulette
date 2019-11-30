@@ -82,13 +82,13 @@ export class PlayersModel {
         /* MAIN CONSTRUCTOR CODE */
         /*************************/
         this.validateTurn(turn, this.validatePlayers(players))
-        _turn       = turn
-        _players    = players
+        const _turn       = turn
+        const _players    = players
     }
 }
 
 export default class GameModel {
-    constructor(mdlGuesses, player, mdlPlayers, word, gameStatus){
+    constructor(mdlGuesses, mdlPlayers, player, word, gameStatus){
         /* ENCAPSULATED CLASS FUNCTION SETUP */
         /*************************************/
         this.gameStatus = () => {
@@ -97,6 +97,10 @@ export default class GameModel {
 
         this.mdlGuesses = () => {
             return _mdlGuesses
+        }
+
+        this.mdlPlayers = () => {
+            return _mdlPlayers
         }
 
         this.word = () => {
@@ -139,7 +143,7 @@ export default class GameModel {
         }
 
         this.validateMdlGuesses = (mdlGuesses) => {
-            if(!(mdlGuesses instanceof GuessesModel){
+            if(!(mdlGuesses instanceof GuessesModel)){
                 throw new Error(`mdlGuesses must be an instance of GuessesModel{${mdlGuesses}}`)
             }
         }

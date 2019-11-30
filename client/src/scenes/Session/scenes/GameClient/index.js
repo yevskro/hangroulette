@@ -37,6 +37,8 @@ class GameClient extends Component{
             <label>{this.props.word}</label><br/>
             <div>{buttons}</div>
             {newGameButton}
+            <div>Players:{this.props.mdlPlayers.players()}</div>
+            <div>Turn:{this.props.mdlPlayers.turn()}</div>
         </div>
     }
 }

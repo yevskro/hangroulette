@@ -29,8 +29,8 @@ class Intro extends Component {
     
     handleChangeSession = e => {
         try{
-            const mdlNewSessionId = new SessionIdModel(e.target.value)
-            this.setState({mdlSessionId: mdlNewSessionId})
+            const mdlSessionId = new SessionIdModel(e.target.value)
+            this.setState({mdlSessionId, error: ""})
         } 
         catch(e) {
             this.setState({error: "invalid sessionid input"})

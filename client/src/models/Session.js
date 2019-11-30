@@ -47,7 +47,7 @@ export default class SessionModel {
         }
 
         this.id = () => {
-            return this.mdlSessionId().id()
+            return _mdlSessionId.id()
         }
 
         this.mdlScore = () => {
@@ -87,7 +87,7 @@ export default class SessionModel {
         /* constructor must be initiated with all parameters met */
         
         this.validateConstructorArguements(mdlSessionId, mdlScore, mdlGame)
-        
+
         const _mdlScore         = mdlScore
         const _mdlSessionId     = mdlSessionId
         const _mdlGame          = mdlGame

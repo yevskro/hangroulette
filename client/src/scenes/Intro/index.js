@@ -10,7 +10,7 @@ class Intro extends Component {
         const mdlSessionId = new SessionIdModel(this.props.cookies.get("sessionId"))
         
         this.state = {
-            mdlSessionId: mdlSessionId,
+            mdlSessionId,
             error: ""
         }    
     }

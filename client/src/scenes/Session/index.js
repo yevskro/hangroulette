@@ -18,33 +18,27 @@ class Session extends Component {
         const mdlSession        = this.createSessionFromJson(jsonSession)
         
         this.state = {
-            mdlSession: mdlSession,
-            error: ""
+            mdlSession
         }
     }
 
     createSessionFromJson(jsonSession){
-        const mdlSessionId      = new SessionIdModel(jsonSession.sessionId)
-        const mdlGameGuesses    = new GuessesModel(jsonSession.correct, jsonSession.wrong)
-        const mdlGame           = new GameModel(mdlGameGuesses, jsonSession.word, jsonSession.status)  
-        const mdlScore          = new ScoreModel(jsonSession.wins, jsonSession.losses)   
-        return new SessionModel(mdlSessionId, mdlScore, mdlGame)       
+        try{
+            const mdlSessionId      = new SessionIdModel(jsonSession.sessionId)
+            const mdlGameGuesses    = new GuessesModel(jsonSession.correct, jsonSession.wrong)
+            const mdlGame           = new GameModel(mdlGameGuesses, jsonSession.word, jsonSession.status)  
+            const mdlScore          = new ScoreModel(jsonSession.wins, jsonSession.losses)   
+            return new SessionModel(mdlSessionId, mdlScore, mdlGame)
+        }
+        catch(e){
+            return this.createSessionFromJson(serviceSession.errorSession())
+        }
     }
 
     componentDidMount(){
-        try{
-            const jsonSession   = serviceSession.getSession(this.props.cookies.get("sessionId"))
-            const mdlNewSession = this.createSessionFromJson(jsonSession)
-
-            this.setState({
-                mdlSession: mdlNewSession
-            })
-        }
-        catch(e){
-            this.setState({
-                error: "could not get session"
-            })
-        }
+        const jsonSession   = serviceSession.getSession(this.props.cookies.get("sessionId"))
+        const mdlSession = this.createSessionFromJson(jsonSession)
+        this.setState({mdlSession})
     }
 
     onGameGuess(guess){
@@ -52,30 +46,22 @@ class Session extends Component {
 
     }
 
-    onGameNew(){/*
-        const jsonSession   = serviceSession.getNewGame(this.state.objSession.getObjSessionId().get())
-        const objScore      = new ScoreModel(jsonSession.wins, jsonSession.losses)
-        const objGuesses    = new GuessesModel(jsonSession.correct, jsonSession.wrong)
-        const objGame       = new GameModel(objGuesses, jsonSession.word)
-        const objNewSession = new SessionModel(this.state.objSession.getObjSessionId(), objScore, objGame)
-
-        this.setState = {
-            mdlSession: mdlNewSession
-        }*/
+    onGameNew(){
+        const jsonSession   = serviceSession.getNewGame(this.state.mdlSession.id())
+        const mdlSession = this.createSessionFromJson(jsonSession)
+        this.setState({mdlSession})
     }
 
     render(){
-        const id            = this.state.mdlSession.mdlSessionId().id()
+        const id            = this.state.mdlSession.id()
         const mdlScore      = this.state.mdlSession.mdlScore()
         const mdlGame       = this.state.mdlSession.mdlGame()
         const mdlGuesses    = mdlGame.mdlGuesses()
         const word          = mdlGame.word()
-        const { error }     = this.state
-        
+      
         return <div>
                 <SessionBoard id={id} mdlScore={mdlScore}/>
                 <GameClient mdlGuesses={mdlGuesses} word={word} onGameGuess={this.onGameGuess} onGameNew={this.onGameNew}/>
-                <div className="error">{error}</div>
             </div>
     }
 }

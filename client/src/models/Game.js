@@ -49,11 +49,11 @@ export class GuessesModel {
 } 
 
 export default class GameModel {
-    constructor(objGuesses, word, gameStatus){
+    constructor(mdlGuesses, word, gameStatus){
         /* ENCAPSULATED CLASS FUNCTION SETUP */
         /*************************************/
         this.getGuesses = () => {
-            return _objGuesses
+            return _mdlGuesses
         }
 
         this.getWord = () => {
@@ -104,7 +104,7 @@ export default class GameModel {
         /*************************/
         this.error      = new Error()
 
-        const _objGuesses = objGuesses
+        const _mdlGuesses = mdlGuesses
 
         if(word === undefined && this.validateWord(word).error.msg){
             return

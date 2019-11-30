@@ -14,18 +14,18 @@ import GameClient           from './scenes/GameClient'
 class Session extends Component {
     constructor(props){
         super(props)
-        const objSessionId      = new SessionIdModel(this.props.cookies.get("sessionId"))
-        const objGameGuesses    = new GuessesModel("loading", "")
-        const objGame           = new GameModel(objGameGuesses, GAMESTATUS.LOADING)  
-        const objScore          = new ScoreModel(0, 0)     
-        const objSession        = new SessionModel(objSessionId, objScore, objGame)
+        const mdlSessionId      = new SessionIdModel(this.props.cookies.get("sessionId"))
+        const mdlGameGuesses    = new GuessesModel("loading", "")
+        const mdlGame           = new GameModel(mdlGameGuesses, GAMESTATUS.LOADING)  
+        const mdlScore          = new ScoreModel(0, 0)     
+        const mdlSession        = new SessionModel(mdlSessionId, mdlScore, mdlGame)
         
         this.state = {
-            objSession: objSession
+            mdlSession: mdlSession
         }
     }
 
-    componentDidMount(){
+    componentDidMount(){/*
         const jsonSession   = serviceSession.getSession(this.state.objSession.getObjSessionId().get())
         const objScore      = new ScoreModel(jsonSession.wins, jsonSession.losses)
         const objGuesses    = new GuessesModel(jsonSession.correct, jsonSession.wrong)
@@ -34,7 +34,7 @@ class Session extends Component {
 
         this.setState = {
             objSession: objNewSession
-        }
+        }*/
     }
 
     onGameGuess(guess){
@@ -42,7 +42,7 @@ class Session extends Component {
 
     }
 
-    onGameNew(){
+    onGameNew(){/*
         const jsonSession   = serviceSession.getNewGame(this.state.objSession.getObjSessionId().get())
         const objScore      = new ScoreModel(jsonSession.wins, jsonSession.losses)
         const objGuesses    = new GuessesModel(jsonSession.correct, jsonSession.wrong)
@@ -50,20 +50,20 @@ class Session extends Component {
         const objNewSession = new SessionModel(this.state.objSession.getObjSessionId(), objScore, objGame)
 
         this.setState = {
-            objSession: objNewSession
-        }
+            mdlSession: mdlNewSession
+        }*/
     }
 
     render(){
-        const id        = this.state.objSession.getObjSessionId().get()
-        const objScore  = this.state.objSession.getObjScore()
-        const objGame   = this.state.objSession.getObjGame()
-        const guesses   = objGame.getGuesses()
-        const word      = objGame.getWord()
+        const id            = this.state.mdlSession.getMdlSessionId().get()
+        const mdlScore      = this.state.mdlSession.getMdlScore()
+        const mdlGame       = this.state.mdlSession.getMdlGame()
+        const mdlGuesses    = mdlGame.getGuesses()
+        const word          = mdlGame.getWord()
 
         return <div>
-                <SessionBoard id={id} wins={objScore.getWins()} losses={objScore.getLosses()}/>
-                <GameClient guesses={guesses} word={word} onGameGuess={this.onGameGuess} onGameNew={this.onGameNew}/>
+                <SessionBoard id={id} score={mdlScore}/>
+                <GameClient guesses={mdlGuesses} word={word} onGameGuess={this.onGameGuess} onGameNew={this.onGameNew}/>
             </div>
     }
 }

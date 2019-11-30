@@ -7,11 +7,11 @@ import FormSessionNew   from './components/FormSessionNew'
 class Intro extends Component {
     constructor(props){
         super(props)
-        const objSessionId = new SessionIdModel(this.props.cookies.get("sessionId"))
+        const mdlSessionId = new SessionIdModel(this.props.cookies.get("sessionId"))
         
         this.state = {
             cookies: this.props.cookies,
-            objSessionId: objSessionId,
+            mdlSessionId: mdlSessionId,
         }    
     }
 
@@ -22,20 +22,20 @@ class Intro extends Component {
 
     handleSubmitSession = e => {
         e.preventDefault()
-        const { objSessionId } = this.state
-        this.props.cookies.set("sessionId", objSessionId.get())
+        const { mdlSessionId } = this.state
+        this.props.cookies.set("sessionId", mdlSessionId.get())
         this.props.history.push(`/session`)
     }
     
     handleChangeSession = e => {
-        const objNewSessionId = new SessionIdModel(e.target.value)
-        this.setState({objSessionId: objNewSessionId})
+        const mdlNewSessionId = new SessionIdModel(e.target.value)
+        this.setState({objSessionId: mdlNewSessionId})
     }
 
     render(){
-        const { objSessionId }  = this.state
-        const { error }         = objSessionId
-        const sessionId         = objSessionId.get()
+        const { mdlSessionId }  = this.state
+        const { error }         = mdlSessionId
+        const sessionId         = mdlSessionId.get()
 
         return (
             <div>

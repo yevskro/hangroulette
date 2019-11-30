@@ -1,5 +1,5 @@
 import React from 'react'
 
-const GameClient = (p) => <div>GameClient</div>
+const GameClient = (p) => <div>GameClient Start</div>
 
 export default GameClient

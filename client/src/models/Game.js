@@ -16,14 +16,13 @@ export class GuessesModel {
             const regCharSet            = /^[a-zA-Z]/
             const regLengthAndCharSet   = /^[a-zA-Z]{0,6}$/
 
-            if(correct !== ""){
-                console.log("wtf")
-            }
-            if(!regCharSet.test(correct)){
+            if(correct !== "" && !regCharSet.test(correct)){
                 this.error.set("invalid guesses: correct")
+                throw new Error("invalid guesses: correct")
+                return this
             }
 
-            if(wrong !== "" || !regLengthAndCharSet.test(wrong)){
+            if(wrong !== "" && !regLengthAndCharSet.test(wrong)){
                 this.error.set("invalid guesses: wrong")
                 return this
             }

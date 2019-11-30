@@ -14,8 +14,8 @@ import GameClient           from './scenes/GameClient'
 class Session extends Component {
     constructor(props){
         super(props)
-        const jsonSession       = serviceSession.emptySession() 
-        const mdlSession        = this.createSessionFromJson(jsonSession)
+        const jsonSession   = serviceSession.emptySession() 
+        const mdlSession    = this.createSessionFromJson(jsonSession)
         
         this.state = {
             mdlSession

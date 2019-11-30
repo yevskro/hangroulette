@@ -23,9 +23,8 @@ class Session extends Component {
     }
 
     componentDidMount(){
-        const jsonSession   = serviceSession.getSession(this.props.cookies.get("sessionId"))
-        const mdlSession    = this.createSessionFromJson(jsonSession)
-        this.setState({mdlSession})
+        const jsonSession = serviceSession.getSession(this.props.cookies.get("sessionId"))
+        this.setStateFromSessionJson(jsonSession)
     }
 
     createSessionFromJson = (jsonSession) => {
@@ -38,27 +37,28 @@ class Session extends Component {
             return new SessionModel(mdlSessionId, mdlScore, mdlGame)
         }
         catch(e){
-            console.log(e)
             return this.createSessionFromJson(serviceSession.errorSession())
         }
     }
 
-    onGameGuess = (guess) => {
-        const jsonSession   = serviceSession.postWinGuess(guess)
-        const mdlSession    = this.createSessionFromJson(jsonSession)
+    setStateFromSessionJson = (jsonsession) => {
+        const mdlSession = this.createSessionFromJson(jsonSession)
         this.setState({mdlSession})
+    }
+
+    onGameGuess = (guess) => {
+        const jsonSession = serviceSession.postWinGuess(guess)
+        this.setStateFromSessionJson(jsonSession)
     }
 
     onGameAddPlayer = () => {
-        const jsonSession   = serviceSession.postAddPlayer()
-        const mdlSession    = this.createSessionFromJson(jsonSession)
-        this.setState({mdlSession})
+        const jsonSession = serviceSession.postAddPlayer()
+        this.setStateFromSessionJson(jsonSession)
     }
 
     onGameNew = () => {
-        const jsonSession   = serviceSession.getNewGame(this.state.mdlSession.id())
-        const mdlSession    = this.createSessionFromJson(jsonSession)
-        this.setState({mdlSession})
+        const jsonSession = serviceSession.getNewGame(this.state.mdlSession.id())
+        this.setStateFromSessionJson(jsonSession)
     }
 
     render(){

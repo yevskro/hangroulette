@@ -1,26 +1,59 @@
 import Error from "../helpers/error"
 
-class GameModel {
-    constructor(guesses, word){
+export const GAMESTATUS = {
+    LOADING: 'loading',
+    PLAYING: 'playing',
+    LOST: 'lost',
+    WON: 'won' 
+}
+
+export class GuessesModel {
+    constructor(correct, wrong){
+        this.validateGuesses = (correct, wrong) => {
+            this.error.clear()
+            const regCharSet            = /^[a-zA-Z]/
+            const regLengthAndCharSet   = /^[a-zA-Z]{0,6}$/
+
+            if(!regLengthAndCharSet.test(wrong)){
+                this.error.set("invalid guesses: wrong")
+                return this
+            }
+
+            if(!regCharSet.test(correct)){
+                this.error.set("invalid guesses: correct")
+            }
+
+            return this
+        }
+
+        this.getCorrect = () => {
+            return _correct
+        }
+        
+        this.getWrong = () => {
+            return _wrong
+        }
+
+        this.error = new Error()
+        if(this.validateGuesses(correct, wrong).error.msg){
+            return this
+        }
+
+        const _correct = correct
+        const _wrong = wrong
+    }
+} 
+
+export default class GameModel {
+    constructor(objGuesses, word, gameStatus){
         /* ENCAPSULATED CLASS FUNCTION SETUP */
         /*************************************/
         this.getGuesses = () => {
-            return _guesses
+            return _objGuesses
         }
 
         this.getWord = () => {
             return _word
-        }
-
-        this.validateGuess = (guess) => {
-            this.error.clear()
-            const regOneLetter = /^[a-zA-Z]{1}$/
-
-            if(!regOneLetter.test(guess)){
-                this.error.set("guess must be one letter a-z")
-            }
-
-            return this
         }
 
         this.validateWord = (word) => {
@@ -37,7 +70,7 @@ class GameModel {
 
         this.validateSingleSpaced = (word) => {
             this.error.clear()
-            let singleSpaced = word.split(" ").every(word => word !== "")
+            const singleSpaced = word.split(" ").every(word => word !== "")
 
             if(!singleSpaced){
                 this.error.set("single space only allowed")
@@ -46,38 +79,51 @@ class GameModel {
             return this
         }
 
-        this.validateGuesses = (guesses) => {
+        this.validateGameStatus = (gameStatus) => {
             this.error.clear()
-            const regCharSet            = /^[a-zA-Z]/
-            const regLengthAndCharSet   = /^[a-zA-Z]{0,6}$/
-
-            if(!regLengthAndCharSet.test(guesses.wrong)){
-                this.error.set("invalid guesses: wrong")
-                return this
-            }
-
-            if(!regCharSet.test(guesses.correct)){
-                this.error.set("invalid guesses: correct")
+            switch(gameStatus){
+                case GAMESTATUS.LOADING:
+                    return this
+                case GAMESTATUS.PLAYING:
+                    return this
+                case GAMESTATUS.WON:
+                    return this
+                case GAMESTATUS.LOST:
+                    return this
+                default:
+                    this.error.msg = "gamestatus is invalid"
             }
 
             return this
         }
-
         /* MAIN CONSTRUCTOR CODE */
         /*************************/
-        let _guesses    = {correct: "", wrong: ""}
-        let _word       = "" 
         this.error      = new Error()
 
-        if(guesses !== undefined && !this.validateGuesses(guesses).error.msg){
-            _guesses    = guesses
+        const _objGuesses = objGuesses
+
+        if(word === undefined && this.validateWord(word).error.msg){
+            return
         }
 
-        if(word !== undefined && !this.validateWord(word).error.msg){
-            _word       = word
+        const _word = word
+
+        if(this.validateGameStatus(gameStatus).error.msg){
+            return
         }
 
+        const _gameStatus = gameStatus
     }
 }
 
-export default GameModel
+        /*
+        this.validateGuess = (guess) => {
+            this.error.clear()
+            const regOneLetter = /^[a-zA-Z]{1}$/
+
+            if(!regOneLetter.test(guess)){
+                this.error.set("guess must be one letter a-z")
+            }
+
+            return this
+        }*/

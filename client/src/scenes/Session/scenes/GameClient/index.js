@@ -6,6 +6,27 @@ import { GAMESTATUS } from '../../../../models/Game'
 class GameClient extends Component{
     constructor(props){
         super(props)
+        this.state = {
+            turnSeconds: 12
+        }
+        console.log("Df")
+    }
+
+    componentDidMount(){
+        if(this.props.mdlPlayers.players() > 1){
+            this.turnTimer()
+        }
+    }
+
+    turnTimer = () => {
+        const incrementTimer = () => {
+            this.setState({turnSeconds: this.state.turnSeconds-1})
+            if(this.state.turnSeconds === 0){
+                clearInterval(id)
+            }
+        }
+
+        const id = setInterval(incrementTimer,1000)
     }
 
     onGuess = (e) => {
@@ -45,8 +66,40 @@ class GameClient extends Component{
             {newGameButton}
             <div>Players:{this.props.mdlPlayers.players()}</div>
             <div>Turn:{this.props.mdlPlayers.turn()}</div>
+            <div>SecondsForTurn:{this.state.turnSeconds}</div>
             <button onClick={this.props.onAddPlayer}>Add Player</button>
         </div>
     }
 }
 export default GameClient
+
+/* 
+    function timer(){
+        let seconds = 0
+        let id = 0
+        
+        function increment(){
+            seconds++
+            if(seconds === 12){
+                clearInterval(id)
+            }
+        }
+
+        return id = setInterval(increment,1000)
+    }
+
+    let x = 0
+    function j(){
+        return x = 1
+    }
+    console.log(j() + `x:${x}`)
+
+    function a(x) {    // <-- function
+        function b(y) { // <-- inner function
+            return x + y; // <-- use variables from outer scope
+        }
+    return b(x);       // <-- you can even return a function.
+    }
+    console.log(a(3));
+
+*/

@@ -31,7 +31,7 @@ class Session extends Component {
         try{
             const mdlSessionId      = new SessionIdModel(jsonSession.sessionId)
             const mdlGameGuesses    = new GuessesModel(jsonSession.correct, jsonSession.wrong)
-            const mdlPlayers        = new PlayersModel(jsonSession.players, jsonSession.turn)
+            const mdlPlayers        = new PlayersModel(jsonSession.players, jsonSession.turn, jsonSession.seconds)
             const mdlGame           = new GameModel(mdlGameGuesses, mdlPlayers, jsonSession.player, jsonSession.word, jsonSession.status)  
             const mdlScore          = new ScoreModel(jsonSession.wins, jsonSession.losses)   
             return new SessionModel(mdlSessionId, mdlScore, mdlGame)
@@ -61,6 +61,11 @@ class Session extends Component {
         this.setStateFromSessionJson(jsonSession)
     }
 
+    onGameGuessTimeout = () => {
+        const jsonSession = serviceSession.postGuessTimeout()
+        this.setStateFromSessionJson(jsonSession)
+    }
+
     render(){
         const id            = this.state.mdlSession.id()
         const mdlScore      = this.state.mdlSession.mdlScore()
@@ -73,13 +78,14 @@ class Session extends Component {
                 <SessionBoard id        ={id}
                               mdlScore  ={mdlScore}/>
 
-                <GameClient gameStatus  ={mdlGame.gameStatus()} 
-                            mdlGuesses  ={mdlGuesses} 
-                            mdlPlayers  ={mdlPlayers} 
-                            word        ={word} 
-                            onGuess     ={this.onGameGuess} 
-                            onNew       ={this.onGameNew}
-                            onAddPlayer ={this.onGameAddPlayer}/>
+                <GameClient gameStatus      ={mdlGame.gameStatus()} 
+                            mdlGuesses      ={mdlGuesses} 
+                            mdlPlayers      ={mdlPlayers} 
+                            word            ={word} 
+                            onGuess         ={this.onGameGuess} 
+                            onNew           ={this.onGameNew}
+                            onAddPlayer     ={this.onGameAddPlayer}
+                            onGuessTimeout  ={this.onGameGuessTimeout}/>
             </div>
     }
 }

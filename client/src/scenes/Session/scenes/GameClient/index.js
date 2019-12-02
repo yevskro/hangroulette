@@ -6,27 +6,6 @@ import { GAMESTATUS } from '../../../../models/Game'
 class GameClient extends Component{
     constructor(props){
         super(props)
-        this.state = {
-            turnSeconds: 12
-        }
-        console.log("Df")
-    }
-
-    componentDidMount(){
-        if(this.props.mdlPlayers.players() > 1){
-            this.turnTimer()
-        }
-    }
-
-    turnTimer = () => {
-        const incrementTimer = () => {
-            this.setState({turnSeconds: this.state.turnSeconds-1})
-            if(this.state.turnSeconds === 0){
-                clearInterval(id)
-            }
-        }
-
-        const id = setInterval(incrementTimer,1000)
     }
 
     onGuess = (e) => {

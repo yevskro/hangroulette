@@ -50,7 +50,7 @@ export class GuessesModel {
 } 
 
 export class PlayersModel {
-    constructor(players, turn){
+    constructor(players, turn, seconds){
         /* ENCAPSULATED CLASS FUNCTION SETUP */
         /*************************************/
         this.players = () => {
@@ -59,7 +59,9 @@ export class PlayersModel {
         this.turn = () => {
             return _turn
         }
-
+        this.seconds = () => {
+            return _seconds
+        }
         this.validatePlayers = (players) => {
             if(typeof(players) !== 'number'){
                 throw new Error(`players must be a number{${players}}`)
@@ -79,11 +81,24 @@ export class PlayersModel {
             }
             return this
         }
+
+        this.validateSeconds = (seconds) => {
+            if(typeof(seconds) !== 'number'){
+                throw new Error(`seconds must a number{${seconds}}`)
+            }
+
+            if(seconds < 0 && seconds > 12){
+                throw new Error(`seconds must be with game range 0..12{${seconds}}`)
+            }
+            return this
+        }
         /* MAIN CONSTRUCTOR CODE */
         /*************************/
         this.validateTurn(turn, this.validatePlayers(players))
+        this.validateSeconds(seconds)
         const _turn       = turn
         const _players    = players
+        const _seconds    = seconds
     }
 }
 

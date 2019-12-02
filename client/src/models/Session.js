@@ -35,7 +35,7 @@ export class ScoreModel {
 }
 
 export default class SessionModel {
-    constructor(mdlSessionId, mdlScore, mdlGame){
+    constructor(mdlSessionId, mdlScore, mdlGame, player){
         /* ENCAPSULATED CLASS FUNCTION SETUP */
         /*************************************/
         this.wins = () => {
@@ -48,6 +48,10 @@ export default class SessionModel {
 
         this.id = () => {
             return _mdlSessionId.id()
+        }
+
+        this.player = () => {
+            return _player
         }
 
         this.mdlScore = () => {
@@ -69,7 +73,7 @@ export default class SessionModel {
             return this
         } 
 
-        this.validateConstructorArguements = (mdlSessionId, mdlScore, mdlGame) => {
+        this.validateConstructorArguements = (mdlSessionId, mdlScore, mdlGame, player) => {
             if(!(mdlSessionId instanceof SessionIdModel)){
                 throw new Error(`sessionid object must be an instance of SessionIdModel{${mdlSessionId}}`)
             }
@@ -80,16 +84,29 @@ export default class SessionModel {
                 throw new Error(`objscore object must be an instance of ScoreModel{${mdlScore}}`)
             }
 
+            this.validatePlayer(player, mdlGame)
+            return this
+        }
+
+        this.validatePlayer = (player, mdlGame) => {
+            if(typeof(player) !== 'number'){
+                throw new TypeError(`player must be a number{${player}}`)
+            }
+            const players = mdlGame.mdlPlayers().players()
+            if(player <= 0 || player > players){
+                throw new Error(`player is outside of game players range{${player}}`)
+            }
             return this
         }
         /* MAIN CONSTRUCTOR CODE */
         /*************************/
         /* constructor must be initiated with all parameters met */
         
-        this.validateConstructorArguements(mdlSessionId, mdlScore, mdlGame)
+        this.validateConstructorArguements(mdlSessionId, mdlScore, mdlGame, player)
 
         const _mdlScore         = mdlScore
         const _mdlSessionId     = mdlSessionId
         const _mdlGame          = mdlGame
+        const _player           = player
     }
 }

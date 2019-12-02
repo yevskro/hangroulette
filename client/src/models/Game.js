@@ -103,7 +103,7 @@ export class PlayersModel {
 }
 
 export default class GameModel {
-    constructor(mdlGuesses, mdlPlayers, player, word, gameStatus){
+    constructor(mdlGuesses, mdlPlayers, word, gameStatus){
         /* ENCAPSULATED CLASS FUNCTION SETUP */
         /*************************************/
         this.gameStatus = () => {

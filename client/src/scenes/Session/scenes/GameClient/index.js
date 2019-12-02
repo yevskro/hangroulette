@@ -8,6 +8,10 @@ class GameClient extends Component{
         super(props)
     }
 
+    componentDidMount(){
+
+    }
+
     onGuess = (e) => {
         this.props.mdlGuesses.validateGuess(e.target.innerHTML)
         this.props.onGuess(e.target.innerHTML)
@@ -45,7 +49,7 @@ class GameClient extends Component{
             {newGameButton}
             <div>Players:{this.props.mdlPlayers.players()}</div>
             <div>Turn:{this.props.mdlPlayers.turn()}</div>
-            <div>SecondsForTurn:{this.state.turnSeconds}</div>
+            <div>SecondsForTurn:{this.props.mdlPlayers.seconds()}</div>
             <button onClick={this.props.onAddPlayer}>Add Player</button>
         </div>
     }

@@ -92,7 +92,7 @@ export default class SessionModel {
             if(typeof(player) !== 'number'){
                 throw new TypeError(`player must be a number{${player}}`)
             }
-            const players = mdlGame.mdlPlayers().players()
+            const players = mdlGame.players()
             if(player <= 0 || player > players){
                 throw new Error(`player is outside of game players range{${player}}`)
             }

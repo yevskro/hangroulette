@@ -118,6 +118,10 @@ export default class GameModel {
             return _mdlPlayers
         }
 
+        this.players = () => {
+            _mdlPlayers.players()
+        }
+
         this.word = () => {
             return _word
         }

@@ -24,18 +24,14 @@ class Session extends Component {
 
     componentDidMount(){
         window.WebSocket = window.WebSocket || window.MozWebSocket;
-        var connection = new WebSocket('ws://127.0.0.1:5001');
-        connection.onopen = function(){
-            console.log("open connection")
-        }
+        const connection = new WebSocket('ws://127.0.0.1:5001');
         connection.onmessage = (msg) => {
             this.setStateFromSessionJson(msg.data)
         }
     }
 
     createSessionFromJson = (jsonSession) => {
-        //console.log(jsonSession)
-        //try{
+        try{
             const session           = JSON.parse(jsonSession)
             const mdlSessionId      = new SessionIdModel(session.sessionId)
             const mdlGameGuesses    = new GuessesModel(session.correct, session.wrong)
@@ -43,11 +39,10 @@ class Session extends Component {
             const mdlGame           = new GameModel(mdlGameGuesses, mdlPlayers, session.word, session.status)  
             const mdlScore          = new ScoreModel(session.wins, session.losses)   
             return new SessionModel(mdlSessionId, mdlScore, mdlGame, session.player)
-        /*}
+        }
         catch(e){
-            console.log(e)
             return this.createSessionFromJson(serviceSession.errorSession())
-        }*/
+        }
     }
 
     setStateFromSessionJson = (jsonSession) => {
@@ -59,22 +54,12 @@ class Session extends Component {
         const jsonSession = serviceSession.postWinGuess(guess)
         this.setStateFromSessionJson(jsonSession)
     }
-/*
-    onGameAddPlayer = () => {
-        const jsonSession = serviceSession.postAddPlayer()
-        this.setStateFromSessionJson(jsonSession)
-    }
-*/
+
     onGameNew = () => {
         const jsonSession = serviceSession.getNewGame(this.state.mdlSession.id())
         this.setStateFromSessionJson(jsonSession)
     }
- /*   
-    onGameGuessTimeout = () => {
-        const jsonSession = serviceSession.postGuessTimeout()
-        this.setStateFromSessionJson(jsonSession)
-    }
-*/
+    
     render(){
         const id            = this.state.mdlSession.id()
         const mdlScore      = this.state.mdlSession.mdlScore()

@@ -18,27 +18,33 @@ const wsServer = new websocket({
     httpServer: server
 })
 
-const objSession = {sessionId: 1, wins: 2, losses: 2, correct: 'ekw', wrong: '', word: "wee weeeee wweeee okokok", status: "won",player: 1, players: 2, turn: 2,seconds: 0}
+const objSession = {sessionId: 1, wins: 2, losses: 2, correct: 'ekw', wrong: '', word: "wee weeeee wweeee okokok", status: "won",player: 1, players: 2, turn: 2,seconds: 12}
 wsServer.on('request', function(request){
-    var connection = request.accept(null,  request.origin)
+    const connection = request.accept(null,  request.origin)
+    connection.on('message', (message) => {
+        // only message to recieve is the guess message
+    })
+    // grab new session, 
+    // broadcast to the game room with the new session(user)
     connection.send(JSON.stringify(objSession))
+    startTimer(12, connection, objSession)
 })
-
-/*
-/*
-    turnTimer = () => {
-        const incrementTimer = () => {
-            if(this.state.turnSeconds === 0){
-                clearInterval(id)
-                this.setState({turnSeconds: 12, timerOn: false})
-                this.props.onGuessTimeout()
-                return
-            }
-            this.setState({turnSeconds: this.state.turnSeconds-1})
+// on close delete the session remove player from 
+// game table
+const startTimer = (seconds, connection, session) => {
+    const incrementTimer = () => {
+        connection.send(JSON.stringify(session))
+        clearInterval(id)
+        session.seconds = seconds - 1
+        if(session.seconds !== -1){
+            startTimer(seconds - 1, connection, session)
         }
-
-        this.setState({timerOn: true})
-        const id = setInterval(incrementTimer,1000)
     }
-*/
+    const id = setInterval(incrementTimer,1000)
+}
+
+// create a new session, get a game that is available,
+// get next available player spot, update session
+// send session
+// SessionClass, GameClass,
 app.listen(port)

@@ -3,7 +3,7 @@ class SessionIdModel{
         /* ENCAPSULATED CLASS FUNCTION SETUP */
         /*************************************/
         this.id = () => {
-            return _id
+            return id
         }
 
         this.validate = (id) => {

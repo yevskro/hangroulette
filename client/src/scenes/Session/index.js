@@ -59,7 +59,7 @@ class Session extends Component {
         const jsonSession = serviceSession.getNewGame(this.state.mdlSession.id())
         this.setStateFromSessionJson(jsonSession)
     }
-    
+
     render(){
         const id            = this.state.mdlSession.id()
         const mdlScore      = this.state.mdlSession.mdlScore()
@@ -83,3 +83,20 @@ class Session extends Component {
 }
 
 export default Session
+
+/*
+
+class j{
+    b(){
+        console.log(this)
+    }
+}
+
+function k(b){
+    b()
+}
+
+let a = new j()
+
+k(a.b)
+*/

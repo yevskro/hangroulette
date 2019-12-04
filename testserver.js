@@ -1,9 +1,25 @@
 
 class ServerSession{
     constructor(session){
-        this.players = () => {}
-        this.addPlayer = (client) => {}
-        this.removePlayer = (client) => {}    
+        this.players = () => plyrClients.length
+        this.addPlayer = (client) => {
+            if(this.players() === 3){
+                return undefined
+            }
+            plyrClients.push(client)
+        }
+        this.removePlayer = (client) => {
+            const plyrIndex = plyrClients.find((el, index) => {
+                if(el === client){
+                    return index
+                }
+            })
+            if(plyrIndex === undefined){
+                throw new Error("could not find client in clients(removeplayer)")
+            }
+            plyrClients = plyrClients.splice(plyrIndex, 1)
+
+        }    
         const plyrClients = []
         let session = session
     }
@@ -17,6 +33,7 @@ class ServerConnection{
         this.serverSession = () => {
             return serverSession
         }
+        // todo: validations for client and serversession
     }
 }
 
@@ -78,7 +95,7 @@ class ServerGame{
                     return index
                 }
             })
-            return undefined
+            throw new Error("could not find sessionindex(sessionIndexFromSessionId)")
         }
 
         this.createEmptySession = () => {
@@ -95,6 +112,9 @@ class ServerGame{
                     return index
                 }
             })
+            if(connectIndex === undefined){
+                throw new Error("could not find connectection(removeconnection)")
+            }
             const session = connects[connectIndex].session()
             session.removePlayer(connection)
             connects = connects.splice(connectIndex, 1)

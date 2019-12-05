@@ -1,3 +1,9 @@
+ // todo: extend gamemodel
+import GameModel from './models/Game'
+
+class GameServerModel extends GameModel{
+
+}
 
 class ServerSession{
     constructor(session){
@@ -8,6 +14,7 @@ class ServerSession{
             }
             plyrClients.push(client)
         }
+
         this.removePlayer = (client) => {
             const plyrIndex = plyrClients.find((el, index) => {
                 if(el === client){
@@ -19,7 +26,17 @@ class ServerSession{
             }
             plyrClients = plyrClients.splice(plyrIndex, 1)
 
-        }    
+        }
+
+        this.playerGuess = (guess) => {
+            // validate guess through the gameservermodel
+            // return undefined to disconnect the client if the 
+            // guess is invalid
+            // if the guess is valid, then check if
+            // the guess against the word and
+            // broadcast the results
+        }
+
         const plyrClients = []
         let session = session
     }
@@ -52,7 +69,7 @@ class ServerGame{
         }
 
         this.availableSessionFromIndex = (index) => {
-            /* loops through sessions and finds the best playable match, which
+            /* loops through sessions and find the best playable match, which
                is the closest to being full */
             let aSession = undefined
             for(let i = indexStart; i < sessions.length; i++){
@@ -65,7 +82,7 @@ class ServerGame{
                         break;
                     }
                     /* if found with one player save it because currently
-                        its the best match but don't exit there
+                        its the best match but don't exit, there
                         might be a better match on the loom */
                     if(aSession === undefined){
                         aSession = session

@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScoreModel } from '../../../models/Session'
+import { ScoreModel } from '../../../../../models/Session'
 
 const SessionBoard = (p) => 
     <div className="SessionBoard">

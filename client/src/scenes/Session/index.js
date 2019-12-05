@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import SessionIdModel       from '../../models/SessionId'
+import SessionIdModel       from '../../../../models/SessionId'
 import SessionModel, { 
         ScoreModel 
-        }                   from '../../models/Session'
+        }                   from '../../../../models/Session'
 import GameModel, { 
          GuessesModel,
          PlayersModel 
-        }                   from '../../models/Game'
+        }                   from '../../../../models/Game'
 import serviceSession       from '../../services/session'
 import SessionBoard         from './components/SessionBoard'
 import GameClient           from './scenes/GameClient'
@@ -14,9 +14,9 @@ import GameClient           from './scenes/GameClient'
 class Session extends Component {
     constructor(props){
         super(props)
-        const jsonSession   = serviceSession.emptySession() 
+        const jsonSession   = serviceSession.emptySession()
         const mdlSession    = this.createSessionFromJson(jsonSession)
-        
+
         this.state = {
             mdlSession
         }
@@ -71,23 +71,25 @@ class Session extends Component {
         return <div>
                 <SessionBoard id        ={id}
                               mdlScore  ={mdlScore}/>
-
+                              
                 <GameClient gameStatus      ={mdlGame.gameStatus()} 
                             mdlGuesses      ={mdlGuesses} 
                             mdlPlayers      ={mdlPlayers} 
                             word            ={word} 
                             onGuess         ={this.onGameGuess} 
                             onNew           ={this.onGameNew}/>
+
             </div>
     }
 }
 
 export default Session
-
+/*
+*/
 /*
 
 class j{
-    b(){
+    b = () => {
         console.log(this)
     }
 }

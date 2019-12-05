@@ -1,5 +1,4 @@
-import { GAMESTATUS } from '../models/Game'
-
+import { GAMESTATUS } from '../../../models/Game'
 class SessionService {
     getSession = (sessionId) => {
         return JSON.stringify({sessionId: 1, wins: 2, losses: 2, correct: 'ek', wrong: '', word: "___ __e____ __e____ _k___", status: GAMESTATUS.PLAYING, player: 1, players: 2, turn: 1,seconds: 0})

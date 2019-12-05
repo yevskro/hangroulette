@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { GAMESTATUS } from '../../../../models/Game'
+import { GAMESTATUS } from '../../../../../../models/Game'
 
 /* TODO: clean up code and refactor components */
 

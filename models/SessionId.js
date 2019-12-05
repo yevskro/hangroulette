@@ -1,4 +1,4 @@
-class SessionIdModel{
+export default class SessionIdModel{
     constructor(id){
         /* ENCAPSULATED CLASS FUNCTION SETUP */
         /*************************************/
@@ -23,5 +23,3 @@ class SessionIdModel{
         const _id = id
     }
 }
-
-export default SessionIdModel

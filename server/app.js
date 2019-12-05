@@ -1,6 +1,8 @@
 "use strict"
-const path = require('path')
-const express = require('express')
+import express from 'express'
+import path from 'path'
+import http from 'http'
+import websocket from 'websocket'
 const port = process.env.PORT || 5000
 const app = express()
 
@@ -9,12 +11,11 @@ app.get('*', (req, res) => {
     res.sendFile(path.resolve() + "/client/public/index.html")
 })
 
-const http = require('http')
 const server = http.createServer(app)
 server.listen(5001)
 
-const websocket = require('websocket').server
-const wsServer = new websocket({
+const WebSocket = websocket.server
+const wsServer = new WebSocket({
     httpServer: server
 })
 

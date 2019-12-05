@@ -3,6 +3,8 @@ import express from 'express'
 import path from 'path'
 import http from 'http'
 import websocket from 'websocket'
+import ServerGame from './ServerGame'
+
 const port = process.env.PORT || 5000
 const app = express()
 
@@ -20,18 +22,24 @@ const wsServer = new WebSocket({
 })
 
 const objSession = {sessionId: 1, wins: 2, losses: 2, correct: 'ekw', wrong: '', word: "wee weeeee wweeee okokok", status: "won",player: 1, players: 2, turn: 2,seconds: 12}
+const serverGame = new ServerGame(10)
+
 wsServer.on('request', function(request){
     const connection = request.accept(null,  request.origin)
-    connection.on('message', (message) => {
-        // only message to recieve is the guess message
+    connection.on('connect', () => {
+        serverGame.newClient(connection)
     })
-    // grab new session, 
-    // broadcast to the game room with the new session(user)
-    connection.send(JSON.stringify(objSession))
-    startTimer(12, connection, objSession)
+
+    connection.on('message', (msg) => {
+        const objAction = JSON.parse(msg.data).action
+        serverGame.action(connection, objAction)
+    })
+
+    connection.on('close', () => {
+        serverGame.removeConnection(connection)
+    })
 })
-// on close delete the session remove player from 
-// game table
+
 const startTimer = (seconds, connection, session) => {
     const incrementTimer = () => {
         connection.send(JSON.stringify(session))

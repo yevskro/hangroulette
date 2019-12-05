@@ -17,17 +17,12 @@ class GameClient extends Component{
         this.props.onGuess(e.target.innerHTML)
     }
 
-    onAddPlayer = () => {
-        this.props.onAddPlayer()
-    }
-
-    newGameButton = () => {
+    nextGameButton = () => {
         switch(this.props.gameStatus){
             case GAMESTATUS.LOADING:
-            case GAMESTATUS.PLAYING:
                 return <React.Fragment></React.Fragment>
             default:
-                return <div><button onClick={this.props.onNew}>New Game</button></div>
+                return <div><button onClick={this.props.onNew}>Next Game</button></div>
         }
     }
 
@@ -40,17 +35,16 @@ class GameClient extends Component{
     }
     render(){
         const buttons = this.guessButtons()
-        const newGameButton = this.newGameButton()
+        const nextGameButton = this.nextGameButton()
         
         return <div>
             GameClient {this.props.gameStatus}<br/>
             <label>{this.props.word}</label><br/>
             <div>{buttons}</div>
-            {newGameButton}
+            {nextGameButton}
             <div>Players:{this.props.mdlPlayers.players()}</div>
             <div>Turn:{this.props.mdlPlayers.turn()}</div>
             <div>SecondsForTurn:{this.props.mdlPlayers.seconds()}</div>
-            <button onClick={this.props.onAddPlayer}>Add Player</button>
         </div>
     }
 }

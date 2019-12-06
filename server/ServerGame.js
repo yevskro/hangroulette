@@ -44,7 +44,11 @@ export default class ServerGame{
         }
 
         const _sessionIndex = (session) => {
-            // finds the session in sessions
+            return sessions.find((s, index) => {
+                if(s === session){
+                    return index
+                }
+            })
         }
 
         const _bestAvailableSessionFromIndex = (index, best) => {
@@ -72,11 +76,13 @@ export default class ServerGame{
         }
 
         const _removeSession = (session) => {
-            // returns the sessions object for chaining
-        }
-
-        const _removeClient = (client) => {
-            // returns null
+            // finds the index where session is located
+            // in sessions and removes it from the array
+            const index = _sessionIndex(session)
+            if(index !== undefined){
+                sessions.slice(index,1)
+            }
+            throw new Error("_removeSession: session to remove is not found")
         }
 
         const _bindWebSocket = (server) => {

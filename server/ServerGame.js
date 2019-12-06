@@ -6,7 +6,7 @@ export default class ServerGame{
         this.newClient = (client) => {
             const aSession = _sessionForClient()
             aSession.addPlayer(client)
-            client.push(new ClientSession(client,aSession)) 
+            //client.push(new ClientSession(client,aSession)) 
         }
 
         this.moveClientToTheNextSession = (client) => {
@@ -41,10 +41,10 @@ export default class ServerGame{
 
         const _bestAvailableSessionFromIndex = (index, best) => {
             /*  
-                Loop through sessions and find the best playable match
+                Recurse through sessions and find the best playable match
                 closest to being full. We want to fill the first sessions 
                 created, not the later. [overfill the bucket and
-                spill into the next bucket under idea]
+                spill over into the next bucket under idea]
             */
             if(index === session.length){
                 return best
@@ -103,10 +103,9 @@ export default class ServerGame{
             });
         }
 
-        let     _totalSessionsCreated   = 0
-        let     _totalPlayersCreated    = 0
+        const   _created                = {players: 0, sessions: 0}
         const   _sessions               = []
-        const   _clients                = []
+        const   _players                = []
         const   _MAXSESSIONS            = MAXSESSIONS
         const   _port                   = port
         const   _server                 = _createServer()

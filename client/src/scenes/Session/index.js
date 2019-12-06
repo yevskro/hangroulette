@@ -53,8 +53,8 @@ class Session extends Component {
     }
 
     onGameNew = () => {
-        const jsonSession = serviceSession.getNewGame(this.state.mdlSession.id())
-        this.setStateFromSessionJson(jsonSession)
+        /*const jsonSession = serviceSession.getNewGame(this.state.mdlSession.id())
+        this.setStateFromSessionJson(jsonSession)*/
     }
 
     render(){

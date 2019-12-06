@@ -28,7 +28,7 @@ export default class ServerGame{
         }
 
         const _sessionForClient = () => {
-            const session = _bestAvailableSession(0,0)
+            const session = _bestAvailableSessionFromIndex(0)
             if(session === undefined){
                 return _createNewSession()
             }
@@ -39,43 +39,23 @@ export default class ServerGame{
 
         }
 
-        const _bestAvailableSession = (index, best) => {
-            /* loops through sessions and find the best playable match, which
-            is closest to being full. We also want to fill the rooms first
-            starting from the base or index specified */
-            /*
-                if(index + 1 === session.length){
-                    return index
-                }
-                const players = session[index].players()
-                if(session[index].players() === 2){
-                    return index
-                }
-                if(best !== undefined){
-                    best = index
-                }
-                return _bestAvailableSession(index+1, best)
-                
+        const _bestAvailableSessionFromIndex = (index, best) => {
+            /*  
+                Loop through sessions and find the best playable match
+                closest to being full. We want to fill the first sessions 
+                created, not the later. [overfill the bucket and
+                spill into the next bucket under idea]
             */
-            let aSession = undefined
-            for(let i = indexStart; i < sessions.length; i++){
-                const session = sessions[i]
-                const players = session.players()
-                if(players !== 3){ /* 3 players === full game */
-                    if(players === 2){ /* found exit */
-                        aSession = session
-                        break;
-                    }
-                    if(aSession === undefined){
-                        /* session has one player and is predecceses
-                        the later session, we have to fill up
-                        not the newest sessions but the oldest
-                        to sustain the game */
-                        aSession = session
-                    }
-                }
+            if(index === session.length){
+                return best
             }
-            return aSession
+            if(session[index].players() === 2){
+                return index
+            }
+            if(best !== undefined){
+                best = index
+            }
+            return _bestAvailableSession(index + 1, best)
         }
 
         const _sessionIndexFromSessionId = (id) => {
@@ -124,6 +104,7 @@ export default class ServerGame{
         }
 
         let     _totalSessionsCreated   = 0
+        let     _totalPlayersCreated    = 0
         const   _sessions               = []
         const   _clients                = []
         const   _MAXSESSIONS            = MAXSESSIONS
@@ -133,3 +114,22 @@ export default class ServerGame{
         _server.listen(_port);
     }
 }  
+
+/*
+
+            let aSession = undefined
+            for(let i = indexStart; i < sessions.length; i++){
+                const session = sessions[i]
+                const players = session.players()
+                if(players !== 3){
+                    if(players === 2){ 
+                        aSession = session
+                        break;
+                    }
+                    if(aSession === undefined){
+                        aSession = session
+                    }
+                }
+            }
+            return aSession 
+            */

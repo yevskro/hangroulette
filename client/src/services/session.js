@@ -21,12 +21,12 @@ class SessionService {
     }
 
     emptySession = () => {
-        return JSON.stringify({ sessionId: "",
-        wins: 0, losses: 0,
-        correct: "", wrong: "",
+        return JSON.stringify({ 
+        session: {id: 1,wins: 0, losses: 0,
+        game: {correct: "", wrong: "",
         word: "loading",
         status: GAMESTATUS.LOADING, 
-        player: 1, players: 1, turn: 1, seconds: 0 }) 
+        players: [1], turn: 1, seconds: 0 }) 
     }
 
     errorSession = () => {

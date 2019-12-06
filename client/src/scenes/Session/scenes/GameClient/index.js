@@ -37,15 +37,17 @@ class GameClient extends Component{
     render(){
         const buttons = this.guessButtons()
         const nextGameButton = this.nextGameButton()
-        
+        const mdlGame = this.props.game
+        const mdlPlayers = mdlGame.mdlPlayers()
+
         return <div>
-            GameClient {this.props.gameStatus}<br/>
-            <label>{this.props.word}</label><br/>
+            GameClient {mdlGame.gameStatus()}<br/>
+            <label>{mdlGame.word()}</label><br/>
             <div>{buttons}</div>
             {nextGameButton}
-            <div>Players:{this.props.mdlPlayers.players()}</div>
-            <div>Turn:{this.props.mdlPlayers.turn()}</div>
-            <div>SecondsForTurn:{this.props.mdlPlayers.seconds()}</div>
+            <div>Players:{mdlPlayers.players()}</div>
+            <div>Turn:{mdlPlayers.turn()}</div>
+            <div>SecondsForTurn:{mdlPlayers.seconds()}</div>
         </div>
     }
 }

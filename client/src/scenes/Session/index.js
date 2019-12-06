@@ -16,25 +16,29 @@ class Session extends Component {
         super(props)
         const jsonSession   = serviceSession.emptySession()
         const mdlSession    = this.createSessionFromJson(jsonSession)
-        window.WebSocket = window.WebSocket || window.MozWebSocket;
-        const connection = new WebSocket('ws://127.0.0.1:5001');
-        connection.onmessage = (msg) => {
-            this.setStateFromSessionJson(msg.data)
-        }
-
         this.state = {
             mdlSession,
-            webSocket: connection
+            playerId: 0
         }
     }
-    createSessionFromJson = (jsonSession) => {
+
+    componentDidMount(){
+        window.WebSocket = window.WebSocket || window.MozWebSocket;
+        this.wsGameClient = new WebSocket('ws://127.0.0.1:5001');
+        this.wsGameClient.onmessage = (msg) => {
+            this.setStateFromJson(msg.data)
+        }
+    }
+
+    createSessionFromJson = (json) => {
         try{
-            const session           = JSON.parse(jsonSession)
+            const session           = JSON.parse(json)
             const mdlSessionId      = new SessionIdModel(session.sessionId)
-            const mdlGameGuesses    = new GuessesModel(session.correct, session.wrong)
-            const mdlPlayers        = new PlayersModel(session.players, session.turn, session.seconds)
-            const mdlGame           = new GameModel(mdlGameGuesses, mdlPlayers, session.word, session.status)  
-            const mdlScore          = new ScoreModel(session.wins, session.losses)   
+            const mdlScore          = new ScoreModel(session.wins, session.losses) 
+            const game              = session.game
+            const mdlGameGuesses    = new GuessesModel(game.correct, game.wrong)
+            const mdlPlayers        = new PlayersModel(game.players, game.turn, game.seconds)
+            const mdlGame           = new GameModel(mdlGameGuesses, mdlPlayers, game.word, session.status)    
             return new SessionModel(mdlSessionId, mdlScore, mdlGame, session.player)
         }
         catch(e){
@@ -42,9 +46,10 @@ class Session extends Component {
         }
     }
 
-    setStateFromSessionJson = (jsonSession) => {
-        const mdlSession = this.createSessionFromJson(jsonSession)
-        this.setState({mdlSession})
+    setStateFromJson = (json) => {
+        const mdlSession = this.createSessionFromJson(json.session)
+        const { playerId } = json
+        this.setState({mdlSession, playerId})
     }
 
     onGameGuess = (guess) => {
@@ -52,50 +57,23 @@ class Session extends Component {
         this.state.webSocket.send(string)
     }
 
-    onGameNew = () => {
+    onGameNext = () => {
         /*const jsonSession = serviceSession.getNewGame(this.state.mdlSession.id())
         this.setStateFromSessionJson(jsonSession)*/
     }
 
     render(){
-        const id            = this.state.mdlSession.id()
-        const mdlScore      = this.state.mdlSession.mdlScore()
-        const mdlGame       = this.state.mdlSession.mdlGame()
-        const mdlPlayers    = mdlGame.mdlPlayers()
-        const mdlGuesses    = mdlGame.mdlGuesses()
-        const word          = mdlGame.word()
+        const mdlGame = this.state.mdlSession.mdlGame()
       
         return <div>
-                <SessionBoard id        ={id}
-                              mdlScore  ={mdlScore}/>
+                <SessionBoard session   ={this.state.mdlSession}/>
 
-                <GameClient gameStatus      ={mdlGame.gameStatus()} 
-                            mdlGuesses      ={mdlGuesses} 
-                            mdlPlayers      ={mdlPlayers} 
-                            word            ={word} 
-                            onGuess         ={this.onGameGuess} 
-                            onNew           ={this.onGameNew}/>
-
+                <GameClient game        ={mdlGame}
+                            playerId    ={this.playerId}
+                            onGuess     ={this.onGameGuess} 
+                            onNext      ={this.onGameNext}/>
             </div>
     }
 }
 
 export default Session
-/*
-*/
-/*
-
-class j{
-    b = () => {
-        console.log(this)
-    }
-}
-
-function k(b){
-    b()
-}
-
-let a = new j()
-
-k(a.b)
-*/

@@ -4,8 +4,8 @@ import websocket from 'websocket'
 export default class ServerGame{
     constructor(MAXSESSIONS, port){
         this.newClient = (client) => {
-            const aSession = _sessionForClient()
-            aSession.addPlayer(client)
+            //const aSession = _sessionForClient()
+            //aSession.addPlayer(client)
             //client.push(new ClientSession(client,aSession)) 
         }
 
@@ -103,9 +103,11 @@ export default class ServerGame{
             });
         }
 
+        /* _created, _sessions, _players will be mutated within */
         const   _created                = {players: 0, sessions: 0}
         const   _sessions               = []
         const   _players                = []
+        /********************************************************/
         const   _MAXSESSIONS            = MAXSESSIONS
         const   _port                   = port
         const   _server                 = _createServer()

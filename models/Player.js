@@ -1,27 +1,35 @@
-export default class Player{
-    constructor(id, session){
+import SessionModel from '../models/Session'
+
+export default class PlayerModel{
+    constructor(id, mdlSession){
         this.id = () => {
+            debugger
             return id
         }
         
-        this.session = () => {
-            return session
+        this.mdlSession = () => {
+            return mdlSession
         }
 
         const validateId = (id) => {
             if(typeof(id) !== 'number'){
-                throw new Error(`id must be a number{${id}}`)
+                throw new TypeError(`id must be a number{${id}}`)
+            }
+
+            if(id < 0){
+                throw new Error('id must be >= 0{${id}}')
             }
             return id
         }
 
-        const validateSession = (session) => {
-            if(session instanceof SessionModel){
-                return session
+        const validateSession = (mdlSession) => {
+            if(mdlSession instanceof SessionModel){
+                return mdlSession
             }
-            throw new Error(`session must be an instance of sessionmodel{${session}}`)        
+            throw new TypeError(`session must be an instance of sessionmodel{${session}}`)        
         }
+
         validateId(id)
-        validateSession(session)
+        validateSession(mdlSession)
     }
 }

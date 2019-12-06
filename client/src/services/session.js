@@ -22,20 +22,26 @@ class SessionService {
 
     emptySession = () => {
         return JSON.stringify({ 
-        session: {id: 1,wins: 0, losses: 0,
-        game: {correct: "", wrong: "",
-        word: "loading",
-        status: GAMESTATUS.LOADING, 
-        players: [1], turn: 1, seconds: 0 }) 
+            session: {id: 1,wins: 0, losses: 0,
+                game: {correct: "", wrong: "",
+                    word: "loading",
+                    status: GAMESTATUS.LOADING, 
+                    players: [1], turn: 1, seconds: 0 
+                }
+            }
+        })
     }
 
     errorSession = () => {
-        return JSON.stringify({ sessionId: "",
-        wins: 0, losses: 0,
-        correct: "", wrong: "",
-        word: "session error",
-        status: GAMESTATUS.LOADING,
-        player: 1, players: 1, turn: 1, seconds: 0 }) 
+        return JSON.stringify({ 
+            session: {id: 0, wins: 0, losses: 0,
+                game: {correct: "", wrong: "",
+                    word: "session error",
+                    status: GAMESTATUS.LOADING,
+                    players: [1], turn: 1, seconds: 0 
+                }
+            }
+        })
     }
 }
 

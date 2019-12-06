@@ -63,11 +63,11 @@ export class PlayersModel {
             return _seconds
         }
         this.validatePlayers = (players) => {
-            if(typeof(players) !== 'number'){
-                throw new Error(`players must be a number{${players}}`)
+            if(!(players instanceof Array)){
+                throw new Error(`players must be an array{${players}}`)
             }
-            if(players <= 0 || players >= 3){
-                throw new Error(`minumum 1 player and maximum of 3 players allowed{${players}}`)
+            if(players.length > 3){
+                throw new Error(`maximum of 3 players allowed{${players}}`)
             }
             return this
         }

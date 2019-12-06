@@ -1,11 +1,11 @@
 import React from "react";
 import { Route } from  "react-router-dom";
 import "./App.css";
-import Session from './scenes/Session'
+import Player from './scenes/Player'
 
 const App = (props) => {
   return <div className="App">
-          <Route exact path="/" component={Session} />
+          <Route exact path="/" component={Player} />
         </div>
 };
 

@@ -1,4 +1,13 @@
 import { GAMESTATUS } from '../../../models/Game'
+import SessionModel, { 
+    ScoreModel 
+    }                   from '../../../models/Session'
+import GameModel, { 
+     GuessesModel,
+     PlayersModel 
+    }                   from '../../../models/Game'
+import PlayerModel          from '../../../models/Player'
+
 class SessionService {
     getSession = (sessionId) => {
         return JSON.stringify({sessionId: 1, wins: 2, losses: 2, correct: 'ek', wrong: '', word: "___ __e____ __e____ _k___", status: GAMESTATUS.PLAYING, player: 1, players: 2, turn: 1,seconds: 0})
@@ -22,11 +31,11 @@ class SessionService {
 
     emptySession = () => {
         return JSON.stringify({ 
-            session: {id: 1,wins: 0, losses: 0,
+            session: {id: 0,wins: 0, losses: 0,
                 game: {correct: "", wrong: "",
                     word: "loading",
                     status: GAMESTATUS.LOADING, 
-                    players: [1], turn: 1, seconds: 0 
+                    players: [], turn: 1, seconds: 0 
                 }
             }
         })
@@ -38,10 +47,18 @@ class SessionService {
                 game: {correct: "", wrong: "",
                     word: "session error",
                     status: GAMESTATUS.LOADING,
-                    players: [1], turn: 1, seconds: 0 
+                    players: [], turn: 1, seconds: 0 
                 }
             }
         })
+    }
+
+    createSessionFromId = (id) => {
+        const mdlScore          = new ScoreModel(0, 0) 
+        const mdlGameGuesses    = new GuessesModel("", "")
+        const mdlPlayers        = new PlayersModel([], 0, 0)
+        const mdlGame           = new GameModel(mdlGameGuesses, mdlPlayers, "loading", GAMESTATUS.LOADING)    
+        return new SessionModel(id, mdlScore, mdlGame)
     }
 }
 

@@ -76,7 +76,7 @@ export class PlayersModel {
             if(typeof(turn) !== 'number'){
                 throw new Error(`turn must be a number{${turn}}`)
             }
-            if(turn <= 0 || turn > players){
+            if(turn < 0 || turn > players){
                 throw new Error(`turn is out of scope from players{${turn}}`)
             }
             return this

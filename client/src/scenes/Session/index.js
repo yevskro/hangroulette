@@ -16,20 +16,17 @@ class Session extends Component {
         super(props)
         const jsonSession   = serviceSession.emptySession()
         const mdlSession    = this.createSessionFromJson(jsonSession)
-
-        this.state = {
-            mdlSession
-        }
-    }
-
-    componentDidMount(){
         window.WebSocket = window.WebSocket || window.MozWebSocket;
         const connection = new WebSocket('ws://127.0.0.1:5001');
         connection.onmessage = (msg) => {
             this.setStateFromSessionJson(msg.data)
         }
-    }
 
+        this.state = {
+            mdlSession,
+            webSocket: connection
+        }
+    }
     createSessionFromJson = (jsonSession) => {
         try{
             const session           = JSON.parse(jsonSession)
@@ -51,8 +48,8 @@ class Session extends Component {
     }
 
     onGameGuess = (guess) => {
-        const jsonSession = serviceSession.postWinGuess(guess)
-        this.setStateFromSessionJson(jsonSession)
+        const string = JSON.stringify({action: {guess: `${guess}`}})
+        this.state.webSocket.send(string)
     }
 
     onGameNew = () => {
@@ -71,7 +68,7 @@ class Session extends Component {
         return <div>
                 <SessionBoard id        ={id}
                               mdlScore  ={mdlScore}/>
-                              
+
                 <GameClient gameStatus      ={mdlGame.gameStatus()} 
                             mdlGuesses      ={mdlGuesses} 
                             mdlPlayers      ={mdlPlayers} 

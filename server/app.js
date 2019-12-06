@@ -13,30 +13,24 @@ app.get('*', (req, res) => {
     res.sendFile(path.resolve() + "/client/public/index.html")
 })
 
-const server = http.createServer(app)
-server.listen(5001)
+const serverGame = new ServerGame(10, 5001)
 
-const WebSocket = websocket.server
-const wsServer = new WebSocket({
-    httpServer: server
-})
-
-const objSession = {sessionId: 1, wins: 2, losses: 2, correct: 'ekw', wrong: '', word: "wee weeeee wweeee okokok", status: "won",player: 1, players: 2, turn: 2,seconds: 12}
+/*const objSession = {sessionId: 1, wins: 2, losses: 2, correct: 'ekw', wrong: '', word: "wee weeeee wweeee okokok", status: "won",player: 1, players: 2, turn: 2,seconds: 12}
 const serverGame = new ServerGame(10)
 
 wsServer.on('request', function(request){
-    const connection = request.accept(null,  request.origin)
-    connection.on('connect', () => {
-        serverGame.newClient(connection)
+    const client = request.accept(null,  request.origin)
+    client.on('connect', () => {
+        serverGame.newClient(client)
     })
 
-    connection.on('message', (msg) => {
+    client.on('message', (msg) => {
         const objAction = JSON.parse(msg.data).action
-        serverGame.action(connection, objAction)
+        serverGame.action(client, objAction)
     })
 
-    connection.on('close', () => {
-        serverGame.removeConnection(connection)
+    client.on('close', () => {
+        serverGame.removeClient(client)
     })
 })
 
@@ -50,7 +44,7 @@ const startTimer = (seconds, connection, session) => {
         }
     }
     const id = setInterval(incrementTimer,1000)
-}
+}*/
 
 // create a new session, get a game that is available,
 // get next available player spot, update session

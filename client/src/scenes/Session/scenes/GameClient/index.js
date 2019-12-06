@@ -33,6 +33,7 @@ class GameClient extends Component{
             return <button className="btn-guess" key={`guess-${char}`} onClick={this.onGuess}>{char}</button>
         })
     }
+    
     render(){
         const buttons = this.guessButtons()
         const nextGameButton = this.nextGameButton()

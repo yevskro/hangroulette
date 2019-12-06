@@ -8,7 +8,7 @@ import GameModel, {
          PlayersModel 
         }                   from '../../../../models/Game'
 import serviceSession       from '../../services/session'
-import SessionBoard         from './components/SessionBoard'
+import Session              from './components/Session'
 import GameClient           from './scenes/GameClient'
 
 class Session extends Component {
@@ -66,9 +66,9 @@ class Session extends Component {
         const mdlGame = this.state.mdlSession.mdlGame()
       
         return <div>
-                <SessionBoard session   ={this.state.mdlSession}/>
+                <Session    session     ={this.state.mdlSession}/>
 
-                <GameClient game        ={mdlGame}
+                <GameClient mdlGame     ={mdlGame}
                             playerId    ={this.playerId}
                             onGuess     ={this.onGameGuess} 
                             onNext      ={this.onGameNext}/>

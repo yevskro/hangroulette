@@ -22,7 +22,7 @@ class GameClient extends Component{
             case GAMESTATUS.LOADING:
                 return <React.Fragment></React.Fragment>
             default:
-                return <div><button onClick={this.props.onNew}>Next Game</button></div>
+                return <div><button onClick={this.props.onNext}>Next Game</button></div>
         }
     }
 
@@ -35,10 +35,10 @@ class GameClient extends Component{
     }
     
     render(){
-        const buttons = this.guessButtons()
-        const nextGameButton = this.nextGameButton()
-        const mdlGame = this.props.game
-        const mdlPlayers = mdlGame.mdlPlayers()
+        const buttons           = this.guessButtons()
+        const nextGameButton    = this.nextGameButton()
+        const mdlGame           = this.props.mdlGame
+        const mdlPlayers        = mdlGame.mdlPlayers()
 
         return <div>
             GameClient {mdlGame.gameStatus()}<br/>
@@ -51,35 +51,5 @@ class GameClient extends Component{
         </div>
     }
 }
+
 export default GameClient
-
-/* 
-    function timer(){
-        let seconds = 0
-        let id = 0
-        
-        function increment(){
-            seconds++
-            if(seconds === 12){
-                clearInterval(id)
-            }
-        }
-
-        return id = setInterval(increment,1000)
-    }
-
-    let x = 0
-    function j(){
-        return x = 1
-    }
-    console.log(j() + `x:${x}`)
-
-    function a(x) {    // <-- function
-        function b(y) { // <-- inner function
-            return x + y; // <-- use variables from outer scope
-        }
-    return b(x);       // <-- you can even return a function.
-    }
-    console.log(a(3));
-
-*/

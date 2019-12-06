@@ -9,7 +9,7 @@ class GameClient extends Component{
     }
 
     onGuess = (e) => {
-        this.props.mdlGuesses.validateGuess(e.target.innerHTML)
+        this.props.mdlGame.mdlGuesses().validateGuess(e.target.innerHTML)
         this.props.onGuess(e.target.innerHTML)
     }
 

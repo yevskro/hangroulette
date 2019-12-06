@@ -3,7 +3,6 @@ import SessionModel from '../models/Session'
 export default class PlayerModel{
     constructor(id, mdlSession){
         this.id = () => {
-            debugger
             return id
         }
         

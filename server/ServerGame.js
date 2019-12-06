@@ -1,5 +1,6 @@
 import http from 'http'
 import websocket from 'websocket'
+import servicePlayer from '../client/src/services/player'
 
 export default class ServerGame{
     constructor(MAXSESSIONS, port){
@@ -25,6 +26,8 @@ export default class ServerGame{
 
         this.action = (client, action) => {
             //const sessionIndex = _sessionIndexFromClient
+            const player = JSON.parse(servicePlayer.errorPlayer())
+            client.send(JSON.stringify(player))
         }
 
         const _sessionForClient = () => {

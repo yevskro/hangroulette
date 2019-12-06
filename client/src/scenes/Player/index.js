@@ -7,17 +7,15 @@ import GameModel, {
          PlayersModel 
         }                   from '../../../../models/Game'
 import PlayerModel          from '../../../../models/Player'
-import serviceSession       from '../../services/session'
+import servicePlayer       from '../../services/player'
 import Session              from './components/Session'
 import GameClient           from './scenes/GameClient'
 
 class Player extends Component {
     constructor(props){
         super(props)
-        const jsonSession   = serviceSession.emptySession()
-        const mdlSession    = this.createSessionFromJson(jsonSession)
-        const mdlPlayer     = new PlayerModel(0, mdlSession)
-
+        const jsonPlayer  = servicePlayer.emptyPlayer()
+        const mdlPlayer   = this.createPlayerFromJson(jsonPlayer)
         this.state = {
             mdlPlayer: mdlPlayer 
         }
@@ -32,24 +30,26 @@ class Player extends Component {
         }
     }
 
-    createSessionFromJson = (json) => {
-        //try{
-            const objSession        = JSON.parse(json).session
+    createPlayerFromJson = (json) => {
+        try{
+            const objPlayer         = JSON.parse(json).player
+            const objSession        = objPlayer.session
             const mdlScore          = new ScoreModel(objSession.wins, objSession.losses) 
             const objGame           = objSession.game
             const mdlGameGuesses    = new GuessesModel(objGame.correct, objGame.wrong)
             const mdlPlayers        = new PlayersModel(objGame.players, objGame.turn, objGame.seconds)
             const mdlGame           = new GameModel(mdlGameGuesses, mdlPlayers, objGame.word, objGame.status)    
-            return new SessionModel(objSession.id, mdlScore, mdlGame)
-        //}
-        //catch(e){
-        //    return this.createSessionFromJson(serviceSession.errorSession())
-        //}
+            const mdlSession        = new SessionModel(objSession.id, mdlScore, mdlGame)
+            return new PlayerModel(objPlayer.id, mdlSession)
+        }
+        catch(e){
+            console.log(e)
+            return this.createPlayerFromJson(servicePlayer.errorPlayer())
+        }
     }
 
     setStateFromJson = (json) => {
-        const mdlSession    = this.createSessionFromJson(json.player.session)
-        const mdlPlayer     = new PlayerModel(json.player.id, mdlSession)
+        const mdlPlayer = this.createPlayerFromJson(json)
         this.setState({mdlPlayer})
     }
 

@@ -3,6 +3,7 @@ import websocket from 'websocket'
 import serviceSession from '../client/src/services/session'
 import servicePlayer from '../client/src/services/player'
 import SessionModel from '../models/Session'
+import ServerSession from './ServerSession'
 
 export default class ServerGame{
     constructor(MAXCLIENTS, port){
@@ -10,8 +11,7 @@ export default class ServerGame{
             _created.clients = _created.clients + 1
             /* _sessionForClient() will create a new session if none avail */
             const aSession = _sessionForClient()
-            //aSession.addPlayer(client) 
-            /* addPlayer not implemented yet stubbed out */
+            aSession.addPlayer(client) 
             return aSession
         }
 
@@ -29,26 +29,25 @@ export default class ServerGame{
             //return undefined       
         }
 
-        this.action = (client, action) => {
+        this.action = (client, action, session) => {
             //const sessionIndex = _sessionIndexFromClient
             const player = JSON.parse(servicePlayer.errorPlayer())
             client.send(JSON.stringify(player))
+            console.log(_sessions.length + " " + session.id())
         }
 
         const _sessionForClient = () => {
-            const session = _bestAvailableSessionFromIndex(0)
+            const session = _sessions[_bestAvailableSessionFromIndex(0)]
             if(session === undefined){
-                return _createNewSession()
+                const newSession = _createNewSession()
+                _sessions.push(newSession)
+                return newSession
             }
             return session
         }
 
         const _sessionIndex = (session) => {
-            return sessions.find((s, index) => {
-                if(s === session){
-                    return index
-                }
-            })
+            return _sessions.findIndex((s) => session === s)
         }
 
         const _bestAvailableSessionFromIndex = (index, best) => {
@@ -61,28 +60,31 @@ export default class ServerGame{
             if(index === _sessions.length){
                 return best
             }
-            if(_sessions[index].players() === 2){
+            const players = _sessions[index].players()
+
+            if(players === 2){
                 return index
             }
-            if(best !== undefined){
+            if(best === undefined && players !== 3){
                 best = index
             }
-            return _bestAvailableSession(index + 1, best)
+            return _bestAvailableSessionFromIndex(index + 1, best)
         }
 
         const _createNewSession = () => {
             _created.sessions++
-            return serviceSession.createSessionFromId(_created.sessions)
+            return new ServerSession(serviceSession.createSessionFromId(_created.sessions))
         }
 
         const _removeSession = (session) => {
             // finds the index where session is located
             // in sessions and removes it from the array
             const index = _sessionIndex(session)
-            if(index !== undefined){
-                sessions.slice(index,1)
-            }
-            throw new Error("_removeSession: session to remove is not found")
+            if(index === undefined){
+                throw new Error("_removeSession: session to remove is not found")
+       
+            }     
+            _sessions.splice(index,1)
         }
 
         const _bindWebSocket = (server) => {
@@ -103,10 +105,13 @@ export default class ServerGame{
                 const srvSession = this.newClient(client)
                 client.on('message', (msg) => {
                     const objAction = JSON.parse(msg.utf8Data)
-                    this.action(client, objAction)
+                    this.action(client, objAction, srvSession)
                 })
                 client.on('close', () => {
-                    this.removeClient(client)
+                    srvSession.removePlayer(client)
+                    if(srvSession.players() === 0){
+                        _removeSession(srvSession)
+                    }
                 })
             })
 
@@ -150,3 +155,13 @@ export default class ServerGame{
             }
             return aSession 
             */
+
+/* 
+            let p = [6,7,8]
+            let k = p.find((el, index) => {
+                if(el == 7){
+                    return index
+                }
+            })
+            console.log(k)
+*/

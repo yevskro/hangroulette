@@ -15,25 +15,33 @@ export default class ServerGame{
             return aSession
         }
 
-        this.moveClientToTheNextSession = (client) => {
-            //const sessionIndex = _sessionIndexFromClientId(client)
-            //const newSession = _availableSessionFromIndex(sessionIndex)
-            //if(newSession !== undefined){ 
+        this.moveClientToNextSession = (client, currentSession) => {
+            console.log("moveClient...")
+            const sessionIndex = _sessionIndex(currentSession)
+            const newSession = _sessions[_bestAvailableSessionFromIndex(sessionIndex)]
+            if(newSession !== undefined){ 
                 /* found a playable session */
-            //    const session = sessions[sessionIndex]
-            //    session.removePlayer(client)
-            //    newSession.addPlayer(client)
-            //    return session
-            //} /* if there was no playable session available we will not be creating
-            //    a new session.. our boy is stuck in the game ¯\_(ツ)_/¯*/
-            //return undefined       
+                const session = _sessions[sessionIndex]
+                session.removePlayer(client)
+                if(session.players() === 0){
+                    _removeSession(session)
+                }
+                newSession.addPlayer(client)
+                console.log(newSession.id())
+            } 
+            /* if no playable session available we will 
+                not create a new session.. our boy is stuck 
+                in the game ¯\_(ツ)_/¯ */      
         }
 
         this.action = (client, action, session) => {
             //const sessionIndex = _sessionIndexFromClient
-            const player = JSON.parse(servicePlayer.errorPlayer())
+            /*const player = JSON.parse(servicePlayer.errorPlayer())
             client.send(JSON.stringify(player))
-            console.log(_sessions.length + " " + session.id())
+            console.log(_sessions.length + " " + session.id())*/
+            if(action.next){
+                this.moveClientToNextSession(client, session)
+            }
         }
 
         const _sessionForClient = () => {
@@ -77,8 +85,6 @@ export default class ServerGame{
         }
 
         const _removeSession = (session) => {
-            // finds the index where session is located
-            // in sessions and removes it from the array
             const index = _sessionIndex(session)
             if(index === undefined){
                 throw new Error("_removeSession: session to remove is not found")
@@ -104,8 +110,8 @@ export default class ServerGame{
 
                 const srvSession = this.newClient(client)
                 client.on('message', (msg) => {
-                    const objAction = JSON.parse(msg.utf8Data)
-                    this.action(client, objAction, srvSession)
+                    const { action } = JSON.parse(msg.utf8Data)
+                    this.action(client, action, srvSession)
                 })
                 client.on('close', () => {
                     srvSession.removePlayer(client)
@@ -125,10 +131,10 @@ export default class ServerGame{
             });
         }
 
-        /* _created, _sessions, _players will be mutated within */
+        /* _created, _sessions, will be mutated within */
         const   _created                = {clients: 0, sessions: 0}
         const   _sessions               = []
-        /********************************************************/
+        /***********************************************/
         const   _MAXCLIENTS             = MAXCLIENTS
         const   _port                   = port
         const   _server                 = _createServer()

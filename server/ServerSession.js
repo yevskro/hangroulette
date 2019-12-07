@@ -8,6 +8,7 @@ export default class ServerSession{
                 return false
             }
             _players.push(client)
+            console.log(`added client to session: ${_session.id()} players: ${this.players()}`)
             return true
         }
 
@@ -15,6 +16,7 @@ export default class ServerSession{
             const playerIndex = _players.findIndex((c) => c === client)
             if(playerIndex !== undefined){
                 _players.splice(playerIndex, 1)
+                console.log(`removed client from session: ${_session.id()} players: ${this.players()}`)
                 return true
             }
             return false

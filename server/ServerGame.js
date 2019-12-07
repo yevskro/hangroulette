@@ -8,30 +8,30 @@ import ServerSession from './ServerSession'
 export default class ServerGame{
     constructor(MAXCLIENTS, port){
         this.newClient = (client) => {
-            _created.clients = _created.clients + 1
+            _created.clients++
             /* _sessionForClient() will create a new session if none avail */
             const aSession = _sessionForClient()
+            console.log(aSession.id())
             aSession.addPlayer(client) 
             return aSession
         }
 
         this.moveClientToNextSession = (client, currentSession) => {
-            console.log("moveClient...")
-            const sessionIndex = _sessionIndex(currentSession)
-            const newSession = _sessions[_bestAvailableSessionFromIndex(sessionIndex)]
-            if(newSession !== undefined){ 
-                /* found a playable session */
-                const session = _sessions[sessionIndex]
-                session.removePlayer(client)
-                if(session.players() === 0){
-                    _removeSession(session)
-                }
-                newSession.addPlayer(client)
-                console.log(newSession.id())
-            } 
-            /* if no playable session available we will 
-                not create a new session.. our boy is stuck 
-                in the game ¯\_(ツ)_/¯ */      
+            const searchIndex = _sessionIndex(currentSession)
+            const bSession =  _sessions[_bestAvailableSessionFromIndex(searchIndex + 1)]
+
+            if(bSession === undefined){
+                return currentSession
+            }
+
+            currentSession.removePlayer(client)
+            bSession.addPlayer(client)
+
+            if(currentSession.players() === 0){
+                _removeSession(currentSession)
+            }
+
+            return bSession 
         }
 
         this.action = (client, action, session) => {
@@ -40,7 +40,7 @@ export default class ServerGame{
             client.send(JSON.stringify(player))
             console.log(_sessions.length + " " + session.id())*/
             if(action.next){
-                this.moveClientToNextSession(client, session)
+                return this.moveClientToNextSession(client, session)
             }
         }
 
@@ -58,39 +58,53 @@ export default class ServerGame{
             return _sessions.findIndex((s) => session === s)
         }
 
-        const _bestAvailableSessionFromIndex = (index, best) => {
+        const _bestAvailableSessionFromIndex = (index) => {
             /*  
                 Recurse through sessions and find the best playable match
                 closest to being full. We want to fill the first sessions 
                 created, not the later. [overfill the bucket and
                 spill over into the next bucket under idea]
             */
-            if(index === _sessions.length){
-                return best
-            }
-            const players = _sessions[index].players()
+            const cyclicalSearch = (index, count, best) => {
+                if(count === _sessions.length){
+                    return best
+                }
 
-            if(players === 2){
-                return index
+                if(index === _sessions.length){
+                    return cyclicalSearch(0, count, best)
+                }
+
+                const players = _sessions[index].players()
+    
+                if(players === 2){
+                    return index
+                }
+
+                if(best === undefined && players !== 3){
+                    best = index
+                }
+
+                return cyclicalSearch(index + 1, count + 1, best)
             }
-            if(best === undefined && players !== 3){
-                best = index
-            }
-            return _bestAvailableSessionFromIndex(index + 1, best)
+
+            return cyclicalSearch(index, 0)
         }
 
         const _createNewSession = () => {
             _created.sessions++
+            console.log(`created session ${_created.sessions} `)
             return new ServerSession(serviceSession.createSessionFromId(_created.sessions))
         }
 
         const _removeSession = (session) => {
             const index = _sessionIndex(session)
-            if(index === undefined){
+            console.log(`removing session with index ${index}`)
+            if(index === undefined || index === -1){
                 throw new Error("_removeSession: session to remove is not found")
        
-            }     
+            }
             _sessions.splice(index,1)
+            console.log(`removedsession ${session.id()} length: ${_sessions.length}`)
         }
 
         const _bindWebSocket = (server) => {
@@ -108,11 +122,18 @@ export default class ServerGame{
                     return
                 }
 
-                const srvSession = this.newClient(client)
+                let srvSession = this.newClient(client)
+
                 client.on('message', (msg) => {
                     const { action } = JSON.parse(msg.utf8Data)
-                    this.action(client, action, srvSession)
+                    /*  
+                        srvSession is mutated in action() when
+                        action is next game
+                    */
+                    srvSession = this.action(client, action, srvSession)
+                    console.log(`after action current client session: ${srvSession.id()}`)
                 })
+
                 client.on('close', () => {
                     srvSession.removePlayer(client)
                     if(srvSession.players() === 0){

@@ -35,8 +35,9 @@ class SessionService {
                 game: {correct: "", wrong: "",
                     word: "loading",
                     status: GAMESTATUS.LOADING, 
-                    players: [], turn: 1, seconds: 0 
-                }
+                    players: [], turn: 1
+                },
+                seconds: 0
             }
         })
     }
@@ -47,8 +48,9 @@ class SessionService {
                 game: {correct: "", wrong: "",
                     word: "session error",
                     status: GAMESTATUS.LOADING,
-                    players: [], turn: 1, seconds: 0 
-                }
+                    players: [], turn: 1
+                },
+                seconds: 0
             }
         })
     }
@@ -58,7 +60,7 @@ class SessionService {
         const mdlGameGuesses    = new GuessesModel("", "")
         const mdlPlayers        = new PlayersModel([], 0, 0)
         const mdlGame           = new GameModel(mdlGameGuesses, mdlPlayers, "loading", GAMESTATUS.LOADING)    
-        return new SessionModel(id, mdlScore, mdlGame)
+        return new SessionModel(id, mdlScore, mdlGame, 12)
     }
 }
 

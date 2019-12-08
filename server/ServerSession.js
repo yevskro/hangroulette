@@ -1,3 +1,5 @@
+import SessionModel from '../models/Session'
+
 export default class ServerSession{
     constructor(session){
         this.id = () => _session.id()
@@ -8,7 +10,9 @@ export default class ServerSession{
                 return false
             }
             _players.push(client)
-            console.log(`added client to session: ${_session.id()} players: ${this.players()}`)
+            if(_players.length === 1){
+                this.startTurnTimer()
+            }
             return true
         }
 
@@ -22,10 +26,27 @@ export default class ServerSession{
             return false
         }
 
-        this.playerGuess = (guess) => {
+        this.playerGuess = (client, guess) => {
         
         }
 
+        this.broadcastState = () => {
+            for(let j = 0; j < _players.length; j++){
+                _players[j].send(_session.json())
+            }
+        }
+
+        this.startTurnTimer = () => {
+            const turnTimer = () => {
+                const newSecond = _session.seconds() - 1 || 12
+                _session = new SessionModel(_session.id(), 
+                                            _session.mdlScore(),
+                                            _session.mdlGame(),
+                                            newSecond)
+                this.broadcastState()
+            }
+            const id = setInterval(turnTimer,1000)
+        }
         const _players = []
         let _session = session
     }

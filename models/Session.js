@@ -34,9 +34,31 @@ export class ScoreModel {
 }
 
 export default class SessionModel {
-    constructor(id, mdlScore, mdlGame, player){
+    constructor(id, mdlScore, mdlGame, seconds){
         /* ENCAPSULATED CLASS FUNCTION SETUP */
         /*************************************/
+        this.json = () => {
+            const mdlGuesses = _mdlGame.mdlGuesses()
+            const obj = {
+                session: {
+                    id: _id, wins: this.wins(), losses: this.losses(),
+                    game: {
+                        correct: mdlGuesses.correct, wrong: mdlGuesses.wrong,
+                        word: _mdlGame.word(),
+                        status: _mdlGame.gameStatus(),
+                        players: _mdlGame.players(), turn: _mdlGame.turn() 
+                    },
+                    seconds: _seconds
+                }
+            }
+            console.log(obj)
+            return JSON.stringify(obj)
+        }
+
+        this.seconds = () => {
+            return _seconds
+        }
+        
         this.wins = () => {
             return _mdlScore.wins()
         }
@@ -72,7 +94,7 @@ export default class SessionModel {
             return this
         } 
 
-        this.validateConstructorArguements = (id, mdlScore, mdlGame, player) => {
+        this.validateConstructorArguements = (id, mdlScore, mdlGame) => {
             if(typeof(id) !== 'number'){
                 throw new TypeError(`id must be a number {${id}}`)
             }
@@ -92,9 +114,9 @@ export default class SessionModel {
         /* constructor must be initiated with all parameters met */
         
         this.validateConstructorArguements(id, mdlScore, mdlGame)
-
         const _mdlScore         = mdlScore
         const _mdlGame          = mdlGame
         const _id               = id
+        const _seconds          = seconds
     }
 }

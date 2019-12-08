@@ -32,8 +32,7 @@ class Player extends Component {
     }
 
     createPlayerFromObj = (obj) => {
-        //try{
-            //console.log(obj)
+        try{
             const objSession        = obj.session
             const mdlScore          = new ScoreModel(objSession.wins, objSession.losses) 
             const objGame           = objSession.game
@@ -42,11 +41,11 @@ class Player extends Component {
             const mdlGame           = new GameModel(mdlGameGuesses, mdlPlayers, objGame.word, objGame.status)    
             const mdlSession        = new SessionModel(objSession.id, mdlScore, mdlGame, objSession.seconds)
             return new PlayerModel(obj.id, mdlSession)
-        //}
-        //catch(e){
+        }
+        catch(e){
             console.log(e)
             return this.createPlayerFromObj(servicePlayer.errorPlayer())
-        //}
+        }
     }
 
     setStateFromJson = (json) => {

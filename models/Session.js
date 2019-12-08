@@ -37,22 +37,19 @@ export default class SessionModel {
     constructor(id, mdlScore, mdlGame, seconds){
         /* ENCAPSULATED CLASS FUNCTION SETUP */
         /*************************************/
-        this.json = () => {
+        this.jsonObj = () => {
             const mdlGuesses = _mdlGame.mdlGuesses()
             const obj = {
-                session: {
-                    id: _id, wins: this.wins(), losses: this.losses(),
-                    game: {
-                        correct: mdlGuesses.correct, wrong: mdlGuesses.wrong,
-                        word: _mdlGame.word(),
-                        status: _mdlGame.gameStatus(),
-                        players: _mdlGame.players(), turn: _mdlGame.turn() 
-                    },
-                    seconds: _seconds
-                }
+                id: _id, wins: this.wins(), losses: this.losses(),
+                game: {
+                    correct: mdlGuesses.correct(), wrong: mdlGuesses.wrong(),
+                    word: _mdlGame.word(),
+                    status: _mdlGame.gameStatus(),
+                    players: _mdlGame.players(), turn: _mdlGame.turn() 
+                },
+                seconds: _seconds
             }
-            console.log(obj)
-            return JSON.stringify(obj)
+            return obj
         }
 
         this.seconds = () => {

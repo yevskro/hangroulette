@@ -37,9 +37,9 @@ class Player extends Component {
             const mdlScore          = new ScoreModel(objSession.wins, objSession.losses) 
             const objGame           = objSession.game
             const mdlGameGuesses    = new GuessesModel(objGame.correct, objGame.wrong)
-            const mdlPlayers        = new PlayersModel(objGame.players, objGame.turn, objGame.seconds)
+            const mdlPlayers        = new PlayersModel(objGame.players, objGame.turn)
             const mdlGame           = new GameModel(mdlGameGuesses, mdlPlayers, objGame.word, objGame.status)    
-            const mdlSession        = new SessionModel(objSession.id, mdlScore, mdlGame)
+            const mdlSession        = new SessionModel(objSession.id, mdlScore, mdlGame, objSession.seconds)
             return new PlayerModel(objPlayer.id, mdlSession)
         }
         catch(e){
@@ -50,6 +50,7 @@ class Player extends Component {
 
     setStateFromJson = (json) => {
         const mdlPlayer = this.createPlayerFromJson(json)
+        console.log(json)
         this.setState({mdlPlayer})
     }
 

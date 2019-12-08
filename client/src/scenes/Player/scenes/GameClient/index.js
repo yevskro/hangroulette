@@ -43,7 +43,6 @@ class GameClient extends Component{
             {nextGameButton}
             <div>Players:{mdlPlayers.players()}</div>
             <div>Turn:{mdlPlayers.turn()}</div>
-            <div>SecondsForTurn:{mdlPlayers.seconds()}</div>
         </div>
     }
 }

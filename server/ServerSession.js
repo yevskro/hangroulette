@@ -33,7 +33,7 @@ export default class ServerSession{
         this.broadcastState = () => {
             const session = _session.jsonObj()
             for(let j = 0; j < _players.length; j++){
-                _players[j].send(JSON.stringify({player: {id: j + 1, session}}))
+                _players[j].send(JSON.stringify({timestamp: Date.now(), player: {id: j + 1, session}}))
             }
         }
 

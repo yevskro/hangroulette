@@ -17,7 +17,8 @@ class Player extends Component {
         const jsonPlayer  = servicePlayer.emptyPlayer()
         const mdlPlayer   = this.createPlayerFromJson(jsonPlayer)
         this.state = {
-            mdlPlayer: mdlPlayer 
+            mdlPlayer: mdlPlayer,
+            timestamp: 0 
         }
     }
 
@@ -32,7 +33,6 @@ class Player extends Component {
 
     createPlayerFromJson = (json) => {
         try{
-            const objPlayer         = JSON.parse(json).player
             const objSession        = objPlayer.session
             const mdlScore          = new ScoreModel(objSession.wins, objSession.losses) 
             const objGame           = objSession.game
@@ -49,6 +49,7 @@ class Player extends Component {
     }
 
     setStateFromJson = (json) => {
+        const obj = JSON.parse(json)
         const mdlPlayer = this.createPlayerFromJson(json)
         console.log(json)
         this.setState({mdlPlayer})

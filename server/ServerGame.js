@@ -11,27 +11,26 @@ export default class ServerGame{
             _created.clients++
             /* _sessionForClient() will create a new session if none avail */
             const aSession = _sessionForClient()
-            console.log(aSession.id())
             aSession.addPlayer(client) 
             return aSession
         }
 
         this.moveClientToNextSession = (client, currentSession) => {
             const searchIndex = _sessionIndex(currentSession)
-            const bSession =  _sessions[_bestAvailableSessionFromIndex(searchIndex + 1)]
+            const bSessionIndex = _bestAvailableSessionFromIndex(searchIndex + 1)
 
-            if(bSession === undefined){
+            if(bSessionIndex === undefined || _sessions[bSessionIndex] === currentSession){
                 return currentSession
             }
 
             currentSession.removePlayer(client)
-            bSession.addPlayer(client)
+            _sessions[bSessionIndex].addPlayer(client)
 
             if(currentSession.players() === 0){
                 _removeSession(currentSession)
             }
 
-            return bSession 
+            return _sessions[bSessionIndex] 
         }
 
         this.action = (client, action, session) => {
@@ -45,13 +44,14 @@ export default class ServerGame{
         }
 
         const _sessionForClient = () => {
-            const session = _sessions[_bestAvailableSessionFromIndex(0)]
-            if(session === undefined){
+            console.log("sessonForClient called")
+            const sessionIndex = _bestAvailableSessionFromIndex(0)
+            if(sessionIndex === undefined){
                 const newSession = _createNewSession()
                 _sessions.push(newSession)
                 return newSession
             }
-            return session
+            return _sessions[sessionIndex]
         }
 
         const _sessionIndex = (session) => {
@@ -65,7 +65,16 @@ export default class ServerGame{
                 created, not the later. [overfill the bucket and
                 spill over into the next bucket under idea]
             */
+            if(_sessions.length === 0){
+                return undefined
+            }
+            /*
+                CyclicalSearch is intended to search from the
+                index of sessions to the index before it(if there
+                is one) making it "cyclical"
+            */
             const cyclicalSearch = (index, count, best) => {
+                console.log(`cyclicalSearch: ${index} ${count} ${best}`)
                 if(count === _sessions.length){
                     return best
                 }
@@ -163,32 +172,3 @@ export default class ServerGame{
         _server.listen(_port);
     }
 }  
-
-/*
-
-            let aSession = undefined
-            for(let i = indexStart; i < sessions.length; i++){
-                const session = sessions[i]
-                const players = session.players()
-                if(players !== 3){
-                    if(players === 2){ 
-                        aSession = session
-                        break;
-                    }
-                    if(aSession === undefined){
-                        aSession = session
-                    }
-                }
-            }
-            return aSession 
-            */
-
-/* 
-            let p = [6,7,8]
-            let k = p.find((el, index) => {
-                if(el == 7){
-                    return index
-                }
-            })
-            console.log(k)
-*/

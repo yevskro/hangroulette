@@ -14,11 +14,11 @@ import GameClient           from './scenes/GameClient'
 class Player extends Component {
     constructor(props){
         super(props)
-        const jsonPlayer  = servicePlayer.emptyPlayer()
-        const mdlPlayer   = this.createPlayerFromJson(jsonPlayer)
+        const player    = servicePlayer.emptyPlayer()
+        const mdlPlayer = this.createPlayerFromObj(player)
         this.state = {
             mdlPlayer: mdlPlayer,
-            timestamp: 0 
+            latency: 0 
         }
     }
 
@@ -31,28 +31,29 @@ class Player extends Component {
         }
     }
 
-    createPlayerFromJson = (json) => {
+    createPlayerFromObj = (obj) => {
         try{
-            const objSession        = objPlayer.session
+            const objSession        = obj.session
             const mdlScore          = new ScoreModel(objSession.wins, objSession.losses) 
             const objGame           = objSession.game
             const mdlGameGuesses    = new GuessesModel(objGame.correct, objGame.wrong)
             const mdlPlayers        = new PlayersModel(objGame.players, objGame.turn)
             const mdlGame           = new GameModel(mdlGameGuesses, mdlPlayers, objGame.word, objGame.status)    
             const mdlSession        = new SessionModel(objSession.id, mdlScore, mdlGame, objSession.seconds)
-            return new PlayerModel(objPlayer.id, mdlSession)
+            return new PlayerModel(obj.id, mdlSession)
         }
         catch(e){
             console.log(e)
-            return this.createPlayerFromJson(servicePlayer.errorPlayer())
+            return this.createPlayerFromObj(servicePlayer.errorPlayer())
         }
     }
 
     setStateFromJson = (json) => {
+        const now = Date.now()
         const obj = JSON.parse(json)
-        const mdlPlayer = this.createPlayerFromJson(json)
-        console.log(json)
-        this.setState({mdlPlayer})
+        const latency = now - parseInt(obj.timestamp)
+        const mdlPlayer = this.createPlayerFromObj(obj.player)
+        this.setState({mdlPlayer, latency})
     }
 
     onGameGuess = (guess) => {
@@ -70,6 +71,7 @@ class Player extends Component {
         const mdlGame       = mdlSession.mdlGame()
 
         return <div>
+                Latency: {this.state.latency}ms
                 <Session    mdlSession  ={mdlSession}/>
 
                 <GameClient mdlGame     ={mdlGame}

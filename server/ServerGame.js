@@ -41,6 +41,10 @@ export default class ServerGame{
             if(action.next){
                 return this.moveClientToNextSession(client, session)
             }
+            if(action.guess){
+                //TODO: validate guess if invalid disconnect player
+                // check guess
+            }
         }
 
         const _sessionForClient = () => {
@@ -110,7 +114,6 @@ export default class ServerGame{
             console.log(`removing session with index ${index}`)
             if(index === undefined || index === -1){
                 throw new Error("_removeSession: session to remove is not found")
-       
             }
             _sessions.splice(index,1)
             console.log(`removedsession ${session.id()} length: ${_sessions.length}`)

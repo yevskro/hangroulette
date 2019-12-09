@@ -1,4 +1,0 @@
-
-class GameServerModel extends GameModel{
-
-}

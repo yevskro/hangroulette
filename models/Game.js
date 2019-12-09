@@ -78,17 +78,6 @@ export class PlayersModel {
             }
             return this
         }
-        /*
-        this.validateSeconds = (seconds) => {
-            if(typeof(seconds) !== 'number'){
-                throw new Error(`seconds must a number{${seconds}}`)
-            }
-
-            if(seconds < 0 && seconds > 12){
-                throw new Error(`seconds must be with game range 0..12{${seconds}}`)
-            }
-            return this
-        }*/
         /* MAIN CONSTRUCTOR CODE */
         /*************************/
         this.validateTurn(turn, this.validatePlayers(players))

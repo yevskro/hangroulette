@@ -27,7 +27,8 @@ export default class ServerSession{
         }
 
         this.playerGuess = (client, guess) => {
-        
+            console.log(_session.mdlGame().guess(guess))
+            return this
         }
 
         this.broadcastState = () => {

@@ -7,6 +7,7 @@ import GameModel, {
      PlayersModel 
     }                   from '../../../models/Game'
 import PlayerModel          from '../../../models/Player'
+import ServerGameModel  from '../../../models/server/ServerGame'
 
 class SessionService {
     getSession = (sessionId) => {
@@ -58,6 +59,14 @@ class SessionService {
         const mdlGameGuesses    = new GuessesModel("", "")
         const mdlPlayers        = new PlayersModel([], 0, 0)
         const mdlGame           = new GameModel(mdlGameGuesses, mdlPlayers, "loading", GAMESTATUS.LOADING)    
+        return new SessionModel(id, mdlScore, mdlGame, 12)
+    }
+
+    createServerSessionFromId = (id) => {
+        const mdlScore          = new ScoreModel(0, 0) 
+        const mdlGameGuesses    = new GuessesModel("", "")
+        const mdlPlayers        = new PlayersModel([], 0, 0)
+        const mdlGame           = new ServerGameModel(mdlGameGuesses, mdlPlayers, ServerGameModel.convertWordToHidden("word"), GAMESTATUS.PLAYING, "word")    
         return new SessionModel(id, mdlScore, mdlGame, 12)
     }
 }

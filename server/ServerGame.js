@@ -34,16 +34,12 @@ export default class ServerGame{
         }
 
         this.action = (client, action, session) => {
-            //const sessionIndex = _sessionIndexFromClient
-            /*const player = JSON.parse(servicePlayer.errorPlayer())
-            client.send(JSON.stringify(player))
-            console.log(_sessions.length + " " + session.id())*/
             if(action.next){
                 return this.moveClientToNextSession(client, session)
             }
             if(action.guess){
-                //TODO: validate guess if invalid disconnect player
-                // check guess
+                const guess = action.guess
+                return session.playerGuess(client, guess)
             }
         }
 
@@ -105,8 +101,8 @@ export default class ServerGame{
 
         const _createNewSession = () => {
             _created.sessions++
-            console.log(`created session ${_created.sessions} `)
-            return new ServerSession(serviceSession.createSessionFromId(_created.sessions))
+            console.log(`created session ${_created.sessions}`)
+            return new ServerSession(serviceSession.createServerSessionFromId(_created.sessions))
         }
 
         const _removeSession = (session) => {
@@ -143,7 +139,7 @@ export default class ServerGame{
                         action is next game
                     */
                     srvSession = this.action(client, action, srvSession)
-                    console.log(`after action current client session: ${srvSession.id()}`)
+                    console.log(`after action ${action} current client session: ${srvSession.id()}`)
                 })
 
                 client.on('close', () => {

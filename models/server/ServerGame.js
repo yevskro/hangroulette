@@ -1,4 +1,4 @@
-import GameModel, { GAMESTATUS, GuessesModel } from '../Game'
+import GameModel, { GAMESTATUS, GuessesModel, PlayersModel } from '../Game'
 
 export default class ServerGameModel extends GameModel{
     static convertWordToHidden(word){
@@ -62,7 +62,9 @@ export default class ServerGameModel extends GameModel{
                 }
                 /* game is still playing, return with new guesses */
                 console.log("game is still playing")
-                return new ServerGameModel(newMdlGuesses, mdlPlayers, newHiddenWord, GAMESTATUS.PLAYING, _serverWord)
+                // TODO: change turn here
+                const newMdlPlayers = new PlayersModel(mdlPlayers.players(),mdlPlayers.nextTurn())
+                return new ServerGameModel(newMdlGuesses,newMdlPlayers, newHiddenWord, GAMESTATUS.PLAYING, _serverWord)
             }
             /* if we are here then there was an incorrect guess */
             const newWrong = mdlGuesses.wrong() + guess
@@ -75,7 +77,8 @@ export default class ServerGameModel extends GameModel{
             }
             /* game is still playing, return with new guesses */
             console.log(`wrong guess new wrong guess ${newMdlGuesses.wrong()}`)
-            return new ServerGameModel(newMdlGuesses, mdlPlayers, this.word(), GAMESTATUS.PLAYING, _serverWord)
+            const newMdlPlayers = new PlayersModel(mdlPlayers.players(),mdlPlayers.nextTurn())
+            return new ServerGameModel(newMdlGuesses, newMdlPlayers, this.word(), GAMESTATUS.PLAYING, _serverWord)
         }
 
         this.serverWord = () => {

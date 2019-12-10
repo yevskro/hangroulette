@@ -1,5 +1,5 @@
 import SessionModel from '../models/Session'
-import { GAMESTATUS } from '../models/Game'
+import { GAMESTATUS, PlayersModel } from '../models/Game'
 import ServerGameModel from '../models/server/ServerGame'
 
 export default class ServerSession{
@@ -13,8 +13,16 @@ export default class ServerSession{
                 return false
             }
             _players.push(client)
+            const mdlGame = _session.mdlGame()
+            let mdlPlayers = new PlayersModel(mdlGame.mdlPlayers().players() + 1, mdlGame.mdlPlayers().turn())
+            const newMdlGame = new ServerGameModel(mdlGame.mdlGuesses(),mdlPlayers,mdlGame.word(),GAMESTATUS.PLAYING, mdlGame.serverWord())
+            _session = new SessionModel(_session.id(), 
+                                        _session.mdlScore(),
+                                        newMdlGame,
+                                        _session.seconds())
+
             if(_players.length === 1){
-                this.startTurnTimer()
+                this.startTurnTimer(GAMESTATUS.PLAYING)
             }
             return true
         }
@@ -47,7 +55,7 @@ export default class ServerSession{
             }
             _session = new SessionModel(_session.id(), mdlScore, newGameState, seconds)
             this.broadcastState()
-            this.startTurnTimer()
+            this.startTurnTimer(gameStatus)
             return this
         }
 
@@ -63,6 +71,7 @@ export default class ServerSession{
                 const newSecond = _session.seconds() - 1 || 12
                 if(newSecond === 1 && gameStatus !== GAMESTATUS.PLAYING){
                     // TODO: create new mdlGame with playing state
+                    console.log(gameStatus)
                     const mdlGame = _session.mdlGame()
                     const newMdlGame = new ServerGameModel(mdlGame.mdlGuesses(),mdlGame.mdlPlayers(),mdlGame.word(),GAMESTATUS.PLAYING, mdlGame.serverWord())
                     _session = new SessionModel(_session.id(), 
@@ -71,28 +80,30 @@ export default class ServerSession{
                                                 newSecond)
                     return
                 }
-                _session = new SessionModel(_session.id(), 
-                                            _session.mdlScore(),
-                                            _session.mdlGame(),
-                                            newSecond)
+                const mdlGame = _session.mdlGame()
+                if(newSecond === 12){
+                    // nextTurn()
+                    const newMdlPlyrs = new PlayersModel(mdlGame.mdlPlayers().players(),
+                                                         mdlGame.mdlPlayers().nextTurn())
+
+                    const newMdlGame = new ServerGameModel(mdlGame.mdlGuesses(),newMdlPlyrs,mdlGame.word(),mdlGame.gameStatus(),mdlGame.serverWord())
+                    _session = new SessionModel(_session.id(), 
+                                                _session.mdlScore(),
+                                                newMdlGame,
+                                                newSecond)
+                }
+                else{
+                    _session = new SessionModel(_session.id(), 
+                                                _session.mdlScore(),
+                                                _session.mdlGame(),
+                                                newSecond)
+                }
                 this.broadcastState()
             }
 
             _timer = setInterval(turnTimer, 1000)
         }
-
-        /*this.startTurnTimer = () => {
-            const turnTimer = () => {
-                const newSecond = _session.seconds() - 1 || 12
-                _session = new SessionModel(_session.id(), 
-                                            _session.mdlScore(),
-                                            _session.mdlGame(),
-                                            newSecond)
-                this.broadcastState()
-            }
-            _timer = setInterval(turnTimer,1000)
-        }*/
-
+        
         this.stopTurnTimer = () => {
             clearInterval(_timer)
         }

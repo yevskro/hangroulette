@@ -69,6 +69,10 @@ class SessionService {
         const mdlGame           = new ServerGameModel(mdlGameGuesses, mdlPlayers, ServerGameModel.convertWordToHidden("word"), GAMESTATUS.PLAYING, "word")    
         return new SessionModel(id, mdlScore, mdlGame, 12)
     }
+
+    createServerSessionFromArguements = () => {
+        
+    }
 }
 
 const sessionService = new SessionService()

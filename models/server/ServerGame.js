@@ -78,6 +78,9 @@ export default class ServerGameModel extends GameModel{
             return new ServerGameModel(newMdlGuesses, mdlPlayers, this.word(), GAMESTATUS.PLAYING, _serverWord)
         }
 
+        this.serverWord = () => {
+            return _serverWord
+        }
         const _serverWord = serverWord
     }
 }

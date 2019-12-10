@@ -1,5 +1,6 @@
 import SessionModel from '../models/Session'
 import { GAMESTATUS } from '../models/Game'
+import ServerGameModel from '../models/server/ServerGame'
 
 export default class ServerSession{
     constructor(session){
@@ -39,18 +40,14 @@ export default class ServerSession{
             console.log(`now printing out server sessions arguements besides id`)
             console.log(`${_session.mdlScore()}, ${_session.seconds()}`)
             const mdlScore          = _session.mdlScore()
-            const newSession =  new SessionModel(_session.id(), mdlScore, newGameState, 12)
-            _session = newSession
             this.stopTurnTimer()
+            let seconds = 12
+            if(gameStatus !== GAMESTATUS.PLAYING){
+                seconds = 3
+            }
+            _session = new SessionModel(_session.id(), mdlScore, newGameState, seconds)
             this.broadcastState()
-            if(gameStatus === GAMESTATUS.PLAYING){
-                this.startTurnTimer()
-            }
-            else{
-                this.startGameOverTimer()
-            }
-            console.log(`newSession ${newSession.mdlGame().word()}`)
-
+            this.startTurnTimer()
             return this
         }
 
@@ -61,14 +58,16 @@ export default class ServerSession{
             }
         }
 
-        this.startTurnTimerEx = (gameStatus) => {
+        this.startTurnTimer = (gameStatus) => {
             const turnTimer = () => {
                 const newSecond = _session.seconds() - 1 || 12
                 if(newSecond === 1 && gameStatus !== GAMESTATUS.PLAYING){
                     // TODO: create new mdlGame with playing state
+                    const mdlGame = _session.mdlGame()
+                    const newMdlGame = new ServerGameModel(mdlGame.mdlGuesses(),mdlGame.mdlPlayers(),mdlGame.word(),GAMESTATUS.PLAYING, mdlGame.serverWord())
                     _session = new SessionModel(_session.id(), 
                                                 _session.mdlScore(),
-                                                _session.mdlGame(),
+                                                newMdlGame,
                                                 newSecond)
                     return
                 }
@@ -82,7 +81,7 @@ export default class ServerSession{
             _timer = setInterval(turnTimer, 1000)
         }
 
-        this.startTurnTimer = () => {
+        /*this.startTurnTimer = () => {
             const turnTimer = () => {
                 const newSecond = _session.seconds() - 1 || 12
                 _session = new SessionModel(_session.id(), 
@@ -92,39 +91,14 @@ export default class ServerSession{
                 this.broadcastState()
             }
             _timer = setInterval(turnTimer,1000)
-        }
+        }*/
 
         this.stopTurnTimer = () => {
             clearInterval(_timer)
         }
 
-        this.gameOverTimer = () => {
-            let seconds = 4
-            const turnTimer = () => {
-                seconds--
-                if(seconds === 1){
-                    this.stopGameOverTimer()
-                    // change mdlGame gamestatus here
-                    //const newGameModel = 
-                    //_session = new SessionModel()
-                    this.startTurnTimer()
-                    return
-                }
-                _session = new SessionModel(_session.id(), 
-                                            _session.mdlScore(),
-                                            _session.mdlGame(),
-                                            seconds)
-                this.broadcastState()
-            }
-            _timer = setInterval(turnTimer,1000)
-        }
-
-        this.stopGameOverTimer = () {
-            clearInterval(_gameOverTimer)
-        }
         const _players = []
         let _session = session
         let _timer = 0
-        let _gameOverTimer = 0 
     }
 }

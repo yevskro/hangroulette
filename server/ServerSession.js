@@ -38,21 +38,13 @@ export default class ServerSession{
             console.log(`now printing out server sessions arguements besides id`)
             console.log(`${_session.mdlScore()}, ${_session.seconds()}`)
             const mdlScore          = _session.mdlScore()
-            let newSeconds = 12
-            const gameStatus = newGameState.gameStatus()
-            console.log(gameStatus === GAMESTATUS.WON)
-            switch (gameStatus){
-                case GAMESTATUS.WON:
-                case GAMESTATUS.LOST:
-                    newSeconds = 4
-                    break;
-                default:
-                    newSeconds = 12
-            }
-            console.log("after guess " + gameStatus + "seconds " + newSeconds)
-            const newSession =  new SessionModel(_session.id(), mdlScore, newGameState, newSeconds)
+            const newSession =  new SessionModel(_session.id(), mdlScore, newGameState, 12)
             _session = newSession
+            this.stopTurnTimer()
+            this.broadcastState()
+            this.startTurnTimer()
             console.log(`newSession ${newSession.mdlGame().word()}`)
+
             return this
         }
 
@@ -73,6 +65,10 @@ export default class ServerSession{
                 this.broadcastState()
             }
             _timer = setInterval(turnTimer,1000)
+        }
+
+        this.stopTurnTimer = () => {
+            clearInterval(_timer)
         }
 
         const _players = []

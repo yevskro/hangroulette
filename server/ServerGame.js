@@ -43,7 +43,6 @@ export default class ServerGame{
                 const newSession = session.playerGuess(client, guess)
                 console.log(`after action newSession is: `)
                 console.log(newSession)
-                console.log(`with the id ${newSession.id()}`)
                 return newSession
             }
         }
@@ -144,8 +143,14 @@ export default class ServerGame{
                         action is next game
                     */
                     console.log(`onmessage ${action}`)
-                    srvSession = this.action(client, action, srvSession)
-                    console.log(`onmessage after action ${action} current client session: ${srvSession.id()}`)
+                    const newSrvSession = this.action(client, action, srvSession)
+                    if(newSrvSession === undefined){
+                        client.close()
+                    }
+                    else{
+                        srvSession = newSrvSession
+                    }
+                    console.log(`onmessage after action ${action} current client session: ${srvSession}`)
                 })
 
                 client.on('close', () => {

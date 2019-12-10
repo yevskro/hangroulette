@@ -28,6 +28,9 @@ export default class ServerSession{
 
         this.playerGuess = (client, guess) => {
             const newGameState = _session.mdlGame().guess(guess)
+            if(newGameState === undefined){
+                return undefined
+            }
             console.log(`session:${_session.id()} playerGuess() newGameState:`)  
             console.log(newGameState.word())
             console.log(`now printing out server sessions arguements besides id`)
@@ -56,10 +59,6 @@ export default class ServerSession{
                 this.broadcastState()
             }
             _timer = setInterval(turnTimer,1000)
-        }
-
-        this.stopTurnTimer = () => {
-            clearInterval(_timer)
         }
 
         const _players = []

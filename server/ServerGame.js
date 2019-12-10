@@ -45,6 +45,7 @@ export default class ServerGame{
                 console.log(newSession)
                 return newSession
             }
+            return undefined /* action does not exist, malicious data probable */
         }
 
         const _sessionForClient = () => {
@@ -145,6 +146,7 @@ export default class ServerGame{
                     console.log(`onmessage ${action}`)
                     const newSrvSession = this.action(client, action, srvSession)
                     if(newSrvSession === undefined){
+                        /* undefined will be returned mostly because of improper data recieves */
                         client.close()
                     }
                     else{

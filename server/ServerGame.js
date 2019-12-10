@@ -39,7 +39,12 @@ export default class ServerGame{
             }
             if(action.guess){
                 const guess = action.guess
-                return session.playerGuess(client, guess)
+                console.log(`before action`)
+                const newSession = session.playerGuess(client, guess)
+                console.log(`after action newSession is: `)
+                console.log(newSession)
+                console.log(`with the id ${newSession.id()}`)
+                return newSession
             }
         }
 
@@ -138,8 +143,9 @@ export default class ServerGame{
                         srvSession is mutated in action() when
                         action is next game
                     */
+                    console.log(`onmessage ${action}`)
                     srvSession = this.action(client, action, srvSession)
-                    console.log(`after action ${action} current client session: ${srvSession.id()}`)
+                    console.log(`onmessage after action ${action} current client session: ${srvSession.id()}`)
                 })
 
                 client.on('close', () => {

@@ -27,8 +27,15 @@ export default class ServerSession{
         }
 
         this.playerGuess = (client, guess) => {
-            console.log(_session.mdlGame().guess(guess))
-            return this
+            const newGameState = _session.mdlGame().guess(guess)
+            console.log(`session:${_session.id()} playerGuess() newGameState:`)  
+            console.log(newGameState)
+            console.log(`now printing out server sessions arguements besides id`)
+            console.log(`${_session.mdlScore()}, ${_session.seconds()}`)
+            return new ServerSession(   _session.id(),
+                                        _session.mdlScore(),
+                                        newGameState,
+                                        _session.seconds())
         }
 
         this.broadcastState = () => {

@@ -1,4 +1,5 @@
 import SessionModel from '../models/Session'
+import { GAMESTATUS } from '../models/Game'
 
 export default class ServerSession{
     constructor(session){
@@ -37,7 +38,19 @@ export default class ServerSession{
             console.log(`now printing out server sessions arguements besides id`)
             console.log(`${_session.mdlScore()}, ${_session.seconds()}`)
             const mdlScore          = _session.mdlScore()
-            const newSession =  new SessionModel(_session.id(), mdlScore, newGameState, 12)
+            let newSeconds = 12
+            const gameStatus = newGameState.gameStatus()
+            console.log(gameStatus === GAMESTATUS.WON)
+            switch (gameStatus){
+                case GAMESTATUS.WON:
+                case GAMESTATUS.LOST:
+                    newSeconds = 4
+                    break;
+                default:
+                    newSeconds = 12
+            }
+            console.log("after guess " + gameStatus + "seconds " + newSeconds)
+            const newSession =  new SessionModel(_session.id(), mdlScore, newGameState, newSeconds)
             _session = newSession
             console.log(`newSession ${newSession.mdlGame().word()}`)
             return this

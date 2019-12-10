@@ -36,7 +36,7 @@ class SessionService {
             game: {correct: "", wrong: "",
                 word: "loading",
                 status: GAMESTATUS.LOADING, 
-                players: [], turn: 1
+                players: 0, turn: 1
             },
             seconds: 0
         }
@@ -48,7 +48,7 @@ class SessionService {
             game: {correct: "", wrong: "",
                     word: "session error",
                     status: GAMESTATUS.LOADING,
-                    players: [], turn: 1
+                    players: 0, turn: 1
                 },
             seconds: 0
         }
@@ -57,7 +57,7 @@ class SessionService {
     createSessionFromId = (id) => {
         const mdlScore          = new ScoreModel(0, 0) 
         const mdlGameGuesses    = new GuessesModel("", "")
-        const mdlPlayers        = new PlayersModel([], 0, 0)
+        const mdlPlayers        = new PlayersModel(0, 0, 0)
         const mdlGame           = new GameModel(mdlGameGuesses, mdlPlayers, "loading", GAMESTATUS.LOADING)    
         return new SessionModel(id, mdlScore, mdlGame, 12)
     }
@@ -65,13 +65,13 @@ class SessionService {
     createServerSessionFromId = (id) => {
         const mdlScore          = new ScoreModel(0, 0) 
         const mdlGameGuesses    = new GuessesModel("", "")
-        const mdlPlayers        = new PlayersModel([], 0, 0)
+        const mdlPlayers        = new PlayersModel(0, 0, 0)
         const mdlGame           = new ServerGameModel(mdlGameGuesses, mdlPlayers, ServerGameModel.convertWordToHidden("word"), GAMESTATUS.PLAYING, "word")    
         return new SessionModel(id, mdlScore, mdlGame, 12)
     }
 
     createServerSessionFromArguements = () => {
-        
+
     }
 }
 

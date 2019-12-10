@@ -59,9 +59,14 @@ export class PlayersModel {
         this.turn = () => {
             return _turn
         }
+
+        this.nextTurn = () => {
+            return turn % players + 1
+        }
+
         this.validatePlayers = (players) => {
-            if(!(players instanceof Array)){
-                throw new Error(`players must be an array{${players}}`)
+            if(typeof(players) !== 'number' || players < 0 || players > 3){
+                throw new Error(`players must be an number between 0 and 3 {${players}}`)
             }
             if(players.length > 3){
                 throw new Error(`maximum of 3 players allowed{${players}}`)

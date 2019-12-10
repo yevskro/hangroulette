@@ -4,7 +4,8 @@ export default class ServerSession{
     constructor(session){
         this.id = () => _session.id()
         this.players = () => _players.length
-        
+        this.clients = () => _players
+
         this.addPlayer = (client) => {
             if(_players.length === 3){
                 return false

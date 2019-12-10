@@ -6,18 +6,18 @@ import SessionModel from '../models/Session'
 import ServerSession from './ServerSession'
 
 export default class ServerGame{
-    constructor(MAXCLIENTS, port){
+    constructor(MAXCLIENTS, port, MAXCONNECTIONSPERUSER, UNIQUEPLAY){
         this.newClient = (client) => {
             _created.clients++
             /* _sessionForClient() will create a new session if none avail */
-            const aSession = _sessionForClient()
+            const aSession = _sessionForClient(client)
             aSession.addPlayer(client) 
             return aSession
         }
 
         this.moveClientToNextSession = (client, currentSession) => {
             const searchIndex = _sessionIndex(currentSession)
-            const bSessionIndex = _bestAvailableSessionFromIndex(searchIndex + 1)
+            const bSessionIndex = _bestAvailableSessionFromIndex(client, searchIndex + 1)
 
             if(bSessionIndex === undefined || _sessions[bSessionIndex] === currentSession){
                 return currentSession
@@ -48,9 +48,9 @@ export default class ServerGame{
             return undefined /* action does not exist, malicious data probable */
         }
 
-        const _sessionForClient = () => {
+        const _sessionForClient = (client) => {
             console.log("sessonForClient called")
-            const sessionIndex = _bestAvailableSessionFromIndex(0)
+            const sessionIndex = _bestAvailableSessionFromIndex(client, 0)
             if(sessionIndex === undefined){
                 const newSession = _createNewSession()
                 _sessions.push(newSession)
@@ -63,7 +63,7 @@ export default class ServerGame{
             return _sessions.findIndex((s) => session === s)
         }
 
-        const _bestAvailableSessionFromIndex = (index) => {
+        const _bestAvailableSessionFromIndex = (client, index) => {
             /*  
                 Recurse through sessions and find the best playable match
                 closest to being full. We want to fill the first sessions 
@@ -89,7 +89,16 @@ export default class ServerGame{
                 }
 
                 const players = _sessions[index].players()
-    
+  
+                if(UNIQUEPLAY){
+                    const clients = _sessions[index].clients()
+                    for(let i = 0; i < players; i++){
+                        if(clients[i].remoteAddress === client.remoteAddress){
+                            return cyclicalSearch(index + 1, count + 1, best)    
+                        }
+                    }
+                }
+
                 if(players === 2){
                     return index
                 }
@@ -136,7 +145,16 @@ export default class ServerGame{
                 }
 
                 let srvSession = this.newClient(client)
-
+                console.log(client.remoteAddress + ` connected`)
+                if(_users[client.remoteAddress] === undefined){
+                    _users[client.remoteAddress] = 0
+                }
+                if(_users[client.remoteAddress] === MAXCONNECTIONSPERUSER){
+                    client.close()
+                    return
+                }
+                _users[client.remoteAddress]++
+                console.log(_users)
                 client.on('message', (msg) => {
                     const { action } = JSON.parse(msg.utf8Data)
                     /*  
@@ -160,6 +178,10 @@ export default class ServerGame{
                     if(srvSession.players() === 0){
                         _removeSession(srvSession)
                     }
+                    _users[client.remoteAddress]--
+                    if(_users[client.remoteAddress] === 0){
+                        delete _users[client.remoteAddress]
+                    }
                 })
             })
 
@@ -176,6 +198,7 @@ export default class ServerGame{
         /* _created, _sessions, will be mutated within */
         const   _created                = {clients: 0, sessions: 0}
         const   _sessions               = []
+        const   _users                  = {}
         /***********************************************/
         const   _MAXCLIENTS             = MAXCLIENTS
         const   _port                   = port

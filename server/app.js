@@ -13,7 +13,7 @@ app.get('*', (req, res) => {
     res.sendFile(path.resolve() + "/client/public/index.html")
 })
 
-const serverGame = new ServerGame(10, 5001)
+const serverGame = new ServerGame(10, 5001, 5, true)
 
 /*const objSession = {sessionId: 1, wins: 2, losses: 2, correct: 'ekw', wrong: '', word: "wee weeeee wweeee okokok", status: "won",player: 1, players: 2, turn: 2,seconds: 12}
 const serverGame = new ServerGame(10)

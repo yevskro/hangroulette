@@ -13,14 +13,11 @@ export default class ServerSession{
                 return false
             }
             _players.push(client)
-            const mdlGame = _session.mdlGame()
-            let mdlPlayers = new PlayersModel(mdlGame.mdlPlayers().players() + 1, mdlGame.mdlPlayers().turn())
-            const newMdlGame = new ServerGameModel(mdlGame.mdlGuesses(),mdlPlayers,mdlGame.word(),GAMESTATUS.PLAYING, mdlGame.serverWord())
+            const newMdlGame = _session.mdlGame().addPlayer()
             _session = new SessionModel(_session.id(), 
                                         _session.mdlScore(),
                                         newMdlGame,
                                         _session.seconds())
-
             if(_players.length === 1){
                 this.startTurnTimer(GAMESTATUS.PLAYING)
             }
@@ -103,7 +100,7 @@ export default class ServerSession{
 
             _timer = setInterval(turnTimer, 1000)
         }
-        
+
         this.stopTurnTimer = () => {
             clearInterval(_timer)
         }

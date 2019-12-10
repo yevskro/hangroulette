@@ -17,6 +17,26 @@ export default class ServerGameModel extends GameModel{
     constructor(mdlGuesses, mdlPlayers, hiddenWord, gameStatus, serverWord){
         /* convert word to hidden word for the client */
         super(mdlGuesses, mdlPlayers, hiddenWord, gameStatus)
+        this.nextTurn = () => {
+            // returns a new ServerModel with the next turn calculated
+            const mdlPlayers = this.mdlPlayers()
+            const newMdlPlayers = new PlayersModel(mdlPlayers.players(), mdlPlayers.nextTurn())
+            return new ServerGameModel(this.mdlGuesses(),newMdlPlayers,this.word(),this.gameStatus(),_serverWord)
+        }
+
+        this.addPlayer = () => {
+            // returns a new servermodel
+            let newMdlPlayers = undefined
+            const mdlPlayers = this.mdlPlayers()
+            if(mdlPlayers.players() === 0){
+                newMdlPlayers = new PlayersModel(1, 1)
+            }
+            else{
+                newMdlPlayers = new PlayersModel(mdlPlayers.players() + 1, mdlPlayers.turn())
+            }
+            return new ServerGameModel(this.mdlGuesses(),newMdlPlayers,this.word(),this.gameStatus(),_serverWord)
+        }
+
         this.guess = (guess) => {
             /* undefined is to be understood as a malicious data attempt */
             try{

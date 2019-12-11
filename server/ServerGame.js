@@ -137,7 +137,7 @@ export default class ServerGame{
 
             wsServer.on('request', (request) => {
                 const client = request.accept(null,  request.origin)
-                if(_created.clients === this.MAXCLIENTS){
+                if(_created.clients === _MAXCLIENTS){
                     // TODO: call a function that sends 
                     // a message this server is busy
                     // and closes the connection
@@ -145,7 +145,6 @@ export default class ServerGame{
                 }
 
                 let srvSession = this.newClient(client)
-                console.log(client.remoteAddress + ` connected`)
                 if(_users[client.remoteAddress] === undefined){
                     _users[client.remoteAddress] = 0
                 }
@@ -154,7 +153,6 @@ export default class ServerGame{
                     return
                 }
                 _users[client.remoteAddress]++
-                console.log(_users)
                 client.on('message', (msg) => {
                     const { action } = JSON.parse(msg.utf8Data)
                     /*  
@@ -164,13 +162,11 @@ export default class ServerGame{
                     console.log(`onmessage ${action}`)
                     const newSrvSession = this.action(client, action, srvSession)
                     if(newSrvSession === undefined){
-                        /* undefined will be returned mostly because of improper data recieves */
                         client.close()
                     }
                     else{
                         srvSession = newSrvSession
                     }
-                    console.log(`onmessage after action ${action} current client session: ${srvSession}`)
                 })
 
                 client.on('close', () => {

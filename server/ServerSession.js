@@ -34,12 +34,31 @@ export default class ServerSession{
             return false
         }
 
+        this.isClientsTurn = (client) => {
+            const turn = _session.mdlGame().turn()
+            for(let i = 0; i < _players.length; i++){
+                if(_players[i] === client){
+                    if(i + 1 === turn){
+                        return true
+                    }
+                    return false
+                }
+            }
+        }
+
         this.playerGuess = (client, guess) => {
+            console.log("checking if its the clients turn")
+            if(!this.isClientsTurn(client)){
+                console.log("not players turn")
+                return undefined
+            }
+            console.log("clients turn is valid")
+
             const newGameState = _session.mdlGame().guess(guess)
-            const gameStatus = newGameState.gameStatus()
             if(newGameState === undefined){
                 return undefined
             }
+            const gameStatus = newGameState.gameStatus()
             console.log(`session:${_session.id()} playerGuess() newGameState:`)  
             console.log(newGameState.word())
             console.log(`now printing out server sessions arguements besides id`)

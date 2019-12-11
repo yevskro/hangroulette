@@ -1,5 +1,17 @@
 import GameModel, { GAMESTATUS, GuessesModel, PlayersModel } from '../Game'
 
+export const SGERRORS = {
+    INVALIDGUESS: `invalid guess`, 
+    OUTOFSYNCGUESS: `out of sync guess`,
+    INVALIDTURN: `player guessing is out of turn`
+}
+
+export class ServerGameError{
+    constructor(error){
+        this.error = error 
+    }
+}
+
 export default class ServerGameModel extends GameModel{
     static convertWordToHidden(word){
         let hiddenWord = ""
@@ -43,19 +55,19 @@ export default class ServerGameModel extends GameModel{
                 mdlGuesses.validateGuess(guess)
             }
             catch(e){
-                return undefined 
+                return new ServerGameError(SGERRORS.INVALIDGUESS)
             }
 
             if(gameStatus !== GAMESTATUS.PLAYING){
             /* client should know not to send a guess if the game is over */
-                return undefined
+                return new ServerGameError(SGERRORS.OUTOFSYNCGUESS)
             }
 
             const correct = mdlGuesses.correct()
             const wrong   = mdlGuesses.wrong()
             if(correct.includes(guess) || wrong.includes(guess)){
             /* the client should be responsible for not sending the same guess */
-                return undefined
+                return new ServerGameError(SGERRORS.INVALIDGUESS)
             }
 
             if(_serverWord.includes(guess)){

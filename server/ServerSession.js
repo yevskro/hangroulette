@@ -1,6 +1,6 @@
 import SessionModel from '../models/Session'
 import { GAMESTATUS, PlayersModel } from '../models/Game'
-import ServerGameModel from '../models/server/ServerGame'
+import ServerGameModel, { ServerGameError, SGERRORS } from '../models/server/ServerGame'
 
 export default class ServerSession{
     constructor(session){
@@ -50,14 +50,15 @@ export default class ServerSession{
             console.log("checking if its the clients turn")
             if(!this.isClientsTurn(client)){
                 console.log("not players turn")
-                return undefined
+                return new ServerGameError(SGERRORS.INVALIDTURN)
             }
             console.log("clients turn is valid")
 
             const newGameState = _session.mdlGame().guess(guess)
-            if(newGameState === undefined){
-                return undefined
+            if(newGameState instanceof ServerGameError){
+                return newGameState
             }
+
             const gameStatus = newGameState.gameStatus()
             console.log(`session:${_session.id()} playerGuess() newGameState:`)  
             console.log(newGameState.word())

@@ -4,6 +4,7 @@ import serviceSession from '../client/src/services/session'
 import servicePlayer from '../client/src/services/player'
 import SessionModel from '../models/Session'
 import ServerSession from './ServerSession'
+import { ServerGameError, SGERRORS } from '../models/server/ServerGame'
 
 export default class ServerGame{
     constructor(MAXCLIENTS, port, MAXCONNECTIONSPERUSER, UNIQUEPLAY){
@@ -45,7 +46,8 @@ export default class ServerGame{
                 console.log(newSession)
                 return newSession
             }
-            return undefined /* action does not exist, malicious data probable */
+            /* action does not exist, malicious data probable */
+            return new ServerGameError(SGERRORS.INVALIDACTION) 
         }
 
         const _sessionForClient = (client) => {
@@ -161,7 +163,8 @@ export default class ServerGame{
                     */
                     console.log(`onmessage ${action}`)
                     const newSrvSession = this.action(client, action, srvSession)
-                    if(newSrvSession === undefined){
+                    if(newSrvSession instanceof ServerGameError){
+                        console.log(newSrvSession.error)
                         client.close()
                     }
                     else{

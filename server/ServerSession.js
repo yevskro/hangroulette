@@ -15,6 +15,7 @@ export default class ServerSession{
             if(_players.length === 3){
                 return false
             }
+
             _players.push(client)
             const newMdlGame = _session.mdlGame().addPlayer()
             _session = new SessionModel(_session.id(), 
@@ -76,11 +77,17 @@ export default class ServerSession{
             }
 
             const gameStatus = newGameState.gameStatus()
-            const mdlScore          = _session.mdlScore()
+            let mdlScore          = _session.mdlScore()
             this.stopTurnTimer()
             let seconds = TURNSECONDS
             if(gameStatus !== GAMESTATUS.PLAYING){
                 seconds = GAMEOVERSECONDS
+                if(gameStatus === GAMESTATUS.WON){
+                    mdlScore = mdlScore.won()
+                }
+                else{
+                    mdlScore = mdlScore.lost()
+                }
             }
             _session = new SessionModel(_session.id(), mdlScore, newGameState, seconds)
             this.broadcastState()

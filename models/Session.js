@@ -24,6 +24,14 @@ export class ScoreModel {
             return _losses
         }
 
+        this.won = () => {
+            return new ScoreModel(_wins + 1, _losses)   
+        }
+
+        this.lost = () => {
+            return new ScoreModel(_wins, _losses + 1)
+        }
+
         /* MAIN CONSTRUCTOR CODE */
         /*************************/
         this.validateScoreNumber(wins)

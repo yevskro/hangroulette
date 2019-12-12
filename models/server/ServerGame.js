@@ -4,7 +4,9 @@ export const SGERRORS = {
     INVALIDGUESS: `invalid guess`, 
     OUTOFSYNCGUESS: `out of sync guess`,
     INVALIDTURN: `player guessing is out of turn`,
-    NOAVAILABLESESSION: `no available session found`
+    NOAVAILABLESESSION: `no available session found`,
+    CANTADDPLAYER: `can't add player game already has 3, full`,
+    CANTREMOVEPLAYER: `can't remove player game has 0 players`
 }
 
 
@@ -39,11 +41,12 @@ export default class ServerGameModel extends GameModel{
         }
 
         this.addPlayer = () => {
-            // returns a new servermodel
             let newMdlPlayers = undefined
-            const mdlPlayers = this.mdlPlayers()
-            // TODO: players() === 3 returns gameservererror
-            if(mdlPlayers.players() === 0){
+            const players = this.players()
+            if(players === 3){
+                return new ServerGameError(SGERRORS.CANTADDPLAYER)
+            }
+            else if(mdlPlayers.players() === 0){
                 newMdlPlayers = new PlayersModel(1, 1)
             }
             else{
@@ -57,7 +60,7 @@ export default class ServerGameModel extends GameModel{
             let newMdlPlayers = undefined
             const mdlPlayers = this.mdlPlayers()
             if(mdlPlayers.players() === 0){
-                // TODO: return server error
+                return new ServerGameError(SGERRORS.CANTREMOVEPLAYER)
             }
             else{
                 newMdlPlayers = new PlayersModel(mdlPlayers.players() - 1, mdlPlayers.turn())
@@ -67,7 +70,6 @@ export default class ServerGameModel extends GameModel{
         }
 
         this.guess = (guess) => {
-            /* undefined is to be understood as a malicious data attempt */
             try{
                 mdlGuesses.validateGuess(guess)
             }

@@ -59,7 +59,7 @@ class SessionService {
         const mdlGameGuesses    = new GuessesModel("", "")
         const mdlPlayers        = new PlayersModel(0, 0, 0)
         const mdlGame           = new GameModel(mdlGameGuesses, mdlPlayers, "loading", GAMESTATUS.LOADING)    
-        return new SessionModel(id, mdlScore, mdlGame, 12)
+        return new SessionModel(id, mdlScore, mdlGame, 11)
     }
 
     createServerSessionFromId = (id) => {
@@ -67,7 +67,7 @@ class SessionService {
         const mdlGameGuesses    = new GuessesModel("", "")
         const mdlPlayers        = new PlayersModel(0, 0, 0)
         const mdlGame           = new ServerGameModel(mdlGameGuesses, mdlPlayers, ServerGameModel.convertWordToHidden("word"), GAMESTATUS.PLAYING, "word")    
-        return new SessionModel(id, mdlScore, mdlGame, 12)
+        return new SessionModel(id, mdlScore, mdlGame, 11)
     }
 
     createServerSessionFromArguements = () => {

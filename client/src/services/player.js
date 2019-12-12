@@ -13,7 +13,7 @@ class ServicePlayer{
                     players: 0, turn: 1
                 }
             },
-            seconds: 12,
+            seconds: 10,
             timestamp: 0
         }
     }

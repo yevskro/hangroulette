@@ -2,6 +2,9 @@ import SessionModel from '../models/Session'
 import { GAMESTATUS, PlayersModel } from '../models/Game'
 import ServerGameModel, { ServerGameError, SGERRORS } from '../models/server/ServerGame'
 
+const TURNSECONDS       = 10
+const GAMEOVERSECONDS   = 4
+
 export default class ServerSession{
     constructor(session){
         this.id = () => _session.id()
@@ -28,12 +31,11 @@ export default class ServerSession{
             const playerIndex = _players.findIndex((c) => c === client)
             if(playerIndex !== undefined){
                 _players.splice(playerIndex, 1)
-                //TODO: if a player with the current turn leaves, reset turn
                 const turn = _session.mdlGame().turn()
                 const playerPosition = playerIndex + 1
                 let seconds = _session.seconds()
                 if(turn === playerPosition){
-                    seconds = 12
+                    seconds = TURNSECONDS
                 }
                 let newMdlGame = _session.mdlGame().removePlayer()
                 if(turn > newMdlGame.players()){
@@ -82,9 +84,9 @@ export default class ServerSession{
             console.log(`${_session.mdlScore()}, ${_session.seconds()}`)
             const mdlScore          = _session.mdlScore()
             this.stopTurnTimer()
-            let seconds = 12
+            let seconds = TURNSECONDS
             if(gameStatus !== GAMESTATUS.PLAYING){
-                seconds = 3
+                seconds = GAMEOVERSECONDS
             }
             _session = new SessionModel(_session.id(), mdlScore, newGameState, seconds)
             this.broadcastState()
@@ -101,7 +103,7 @@ export default class ServerSession{
 
         this.startTurnTimer = (gameStatus) => {
             const turnTimer = () => {
-                const newSecond = _session.seconds() - 1 || 12
+                const newSecond = _session.seconds() - 1 || TURNSECONDS
                 if(newSecond === 1 && gameStatus !== GAMESTATUS.PLAYING){
                     // TODO: create new mdlGame with playing state
                     console.log(gameStatus)
@@ -114,7 +116,7 @@ export default class ServerSession{
                     return
                 }
                 const mdlGame = _session.mdlGame()
-                if(newSecond === 12){
+                if(newSecond === TURNSECONDS){
                     // nextTurn()
                     const newMdlPlyrs = new PlayersModel(mdlGame.mdlPlayers().players(),
                                                          mdlGame.mdlPlayers().nextTurn())

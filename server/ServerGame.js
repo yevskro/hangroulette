@@ -119,6 +119,7 @@ export default class ServerGame{
 
         const _createNewSession = () => {
             _created.sessions++
+            // TODO: remove serviceSession and a factory function
             return new ServerSession(serviceSession.createServerSessionFromId(_created.sessions))
         }
 
@@ -157,14 +158,14 @@ export default class ServerGame{
                 client.on('message', (msg) => {
                     const { action } = JSON.parse(msg.utf8Data)
                     /*  
-                        action()
-                        1. a next action returns a new session 
-                        2. a guess action will return a new session
-                            holding a new game model state
-                                        or 
-                            a ServerGameError might bubble up 
-                            representing that a malicious attempt made
-                            with corrupt data or out of sync game logic
+                        action():
+                            1. a next action returns a new session 
+                            2. a guess action will return a new session
+                                holding a new game model state
+                                            or 
+                                a ServerGameError might bubble up 
+                                representing that a malicious attempt made
+                                with corrupt data or out of sync game logic
                     */
                     const newSrvSession = this.action(client, action, srvSession)
                     if(newSrvSession instanceof ServerGameError){
@@ -200,11 +201,13 @@ export default class ServerGame{
         /* _created, _sessions, _users will be mutated within */
         const   _created                = {clients: 0, sessions: 0}
         const   _sessions               = []
-        /* _users object key will be the ipaddress and the value will
-        be the number of connections it currently has to the server.
-        This is then checked against the max amount of connections
-        to protect the server from being flooded with the same user
-        ex. _users = {127.0.0.1: 3} 127.0.0.1 has 3 connections */
+        /*  _users:
+            object key will be the ipaddress and the value will
+            be the number of connections it currently has to the server.
+            This is then checked against the max amount of connections
+            to protect the server from being flooded with the same user
+            ex. _users = {127.0.0.1: 3} 127.0.0.1 has 3 connections 
+        */
         const   _users                  = {} 
         /***********************************************/
         const   _MAXCLIENTS             = MAXCLIENTS

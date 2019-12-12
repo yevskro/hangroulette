@@ -22,6 +22,7 @@ export default class ServerSession{
                                         newMdlGame,
                                         _session.seconds())
             if(_players.length === 1){
+                this.broadcastState()
                 this.startTurnTimer(GAMESTATUS.PLAYING)
             }
             return true
@@ -46,7 +47,7 @@ export default class ServerSession{
                                             _session.mdlScore(),
                                             newMdlGame,
                                             seconds)
-                                            
+
                 return true
             }
             return false

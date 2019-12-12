@@ -6,8 +6,6 @@ import SessionModel from '../models/Session'
 import ServerSession from './ServerSession'
 import { ServerGameError, SGERRORS } from '../models/server/ServerGame'
 
-const NOFOUNDSESSION    = undefined
-
 export default class ServerGame{
     constructor(MAXCLIENTS, port, MAXCONNECTIONSPERUSER, UNIQUEPLAY){
         this.newClient = (client) => {
@@ -22,7 +20,7 @@ export default class ServerGame{
             const searchIndex = _sessionIndex(currentSession)
             const bSessionIndex = _bestSessionFromIndexExcluded(searchIndex, client)
             
-            if(bSessionIndex === NOFOUNDSESSION){
+            if(bSessionIndex === _NOFOUNDSESSION){
                 return currentSession
             }
 
@@ -56,7 +54,7 @@ export default class ServerGame{
             console.log("sessonForClient called")
             const sessionIndex = _bestSessionFromIndex(0, client)
             console.log(`sessionIndex ${sessionIndex}`)
-            if(sessionIndex === NOFOUNDSESSION){
+            if(sessionIndex === _NOFOUNDSESSION){
                 const newSession = _createNewSession()
                 _sessions.push(newSession)
                 return newSession
@@ -77,7 +75,7 @@ export default class ServerGame{
             */
             if(_sessions.length === 0){
                 console.log("empty session")
-                return NOFOUNDSESSION
+                return _NOFOUNDSESSION
             }
             /*
                 CyclicalSearch is intended to search from the
@@ -110,7 +108,7 @@ export default class ServerGame{
                     return index
                 }
 
-                if(best === NOFOUNDSESSION && players !== 3){
+                if(best === _NOFOUNDSESSION && players !== 3){
                     best = index
                 }
 
@@ -135,12 +133,10 @@ export default class ServerGame{
 
         const _removeSession = (session) => {
             const index = _sessionIndex(session)
-            console.log(`removing session with index ${index}`)
-            if(index === undefined || index === -1){
+            if(index === _SESSIONDOESNTEXIST){
                 throw new Error("_removeSession: session to remove is not found")
             }
             _sessions.splice(index,1)
-            console.log(`removedsession ${session.id()} length: ${_sessions.length}`)
         }
 
         const _bindWebSocket = (server) => {
@@ -173,10 +169,8 @@ export default class ServerGame{
                         srvSession is mutated in action() when
                         action is next game
                     */
-                    console.log(`onmessage ${action}`)
                     const newSrvSession = this.action(client, action, srvSession)
                     if(newSrvSession instanceof ServerGameError){
-                        console.log(newSrvSession.error)
                         client.close()
                     }
                     else{
@@ -190,7 +184,7 @@ export default class ServerGame{
                         _removeSession(srvSession)
                     }
                     _users[client.remoteAddress]--
-                    if(_users[client.remoteAddress] === 0){
+                    if(_users[client.remoteAddress] === _IPDOESNTEXIST){
                         delete _users[client.remoteAddress]
                     }
                 })
@@ -215,6 +209,13 @@ export default class ServerGame{
         const   _port                   = port
         const   _server                 = _createServer()
         const   _wsServer               = _bindWebSocket(_server)
+        /***********************************************/
+        /* defines for failed returns, making readability 
+        and following logic easier */
+        const   _NOFOUNDSESSION         = undefined
+        const   _IPDOESNTEXIST          = undefined
+        const   _SESSIONDOESNTEXIST     = -1
+        /***********************************************/
         _server.listen(_port);
     }
 }  

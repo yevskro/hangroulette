@@ -91,9 +91,7 @@ export default class ServerGameModel extends GameModel{
 
             if(_serverWord.includes(guess)){
             /* guess is correct, change the visible word for clients */
-                console.log("correct guess")
                 let newHiddenWord = ""
-                console.log(`server word: ${_serverWord}`)
                 for(let index = 0; index < _serverWord.length; index++){
                     if(_serverWord[index] === guess){
                         newHiddenWord += guess
@@ -104,30 +102,23 @@ export default class ServerGameModel extends GameModel{
                 }
 
                 const newCorrect = mdlGuesses.correct() + guess
-                console.log(`newCorrect: ${newCorrect} newHiddenWord: ${newHiddenWord}`)
                 const newMdlGuesses = new GuessesModel(newCorrect, mdlGuesses.wrong())
                 if(!newHiddenWord.includes('_')){
                 /* game is won, return with new guesses state and won status */
-                    console.log("game is won")
                     return new ServerGameModel(newMdlGuesses, mdlPlayers, newHiddenWord, GAMESTATUS.WON, _serverWord)
                 }
                 /* game is still playing, return with new guesses */
-                console.log("game is still playing")
-                // TODO: change turn here
                 const newMdlPlayers = new PlayersModel(mdlPlayers.players(),mdlPlayers.nextTurn())
                 return new ServerGameModel(newMdlGuesses,newMdlPlayers, newHiddenWord, GAMESTATUS.PLAYING, _serverWord)
             }
             /* if we are here then there was an incorrect guess */
             const newWrong = mdlGuesses.wrong() + guess
-            console.log(`newWrong ${newWrong}`)
             const newMdlGuesses = new GuessesModel(mdlGuesses.correct(), newWrong)
             if(newWrong.length === 6){
             /* sorry my guy, you lost */
-                console.log("game is lost")
                 return new ServerGameModel(newMdlGuesses, mdlPlayers, this.word(), GAMESTATUS.LOST, _serverWord)
             }
             /* game is still playing, return with new guesses */
-            console.log(`wrong guess new wrong guess ${newMdlGuesses.wrong()}`)
             const newMdlPlayers = new PlayersModel(mdlPlayers.players(),mdlPlayers.nextTurn())
             return new ServerGameModel(newMdlGuesses, newMdlPlayers, this.word(), GAMESTATUS.PLAYING, _serverWord)
         }

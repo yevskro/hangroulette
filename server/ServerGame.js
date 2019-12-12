@@ -40,10 +40,7 @@ export default class ServerGame{
             }
             if(action.guess){
                 const guess = action.guess
-                console.log(`before action`)
                 const newSession = session.playerGuess(client, guess)
-                console.log(`after action newSession is: `)
-                console.log(newSession)
                 return newSession
             }
             /* action does not exist, malicious data probable */
@@ -51,9 +48,7 @@ export default class ServerGame{
         }
 
         const _sessionForClient = (client) => {
-            console.log("sessonForClient called")
             const sessionIndex = _bestSessionFromIndex(0, client)
-            console.log(`sessionIndex ${sessionIndex}`)
             if(sessionIndex === _NOFOUNDSESSION){
                 const newSession = _createNewSession()
                 _sessions.push(newSession)
@@ -74,7 +69,7 @@ export default class ServerGame{
                 spill over into the next bucket under idea]
             */
             if(_sessions.length === 0){
-                console.log("empty session")
+            /* no sessions to loop through */
                 return _NOFOUNDSESSION
             }
             /*
@@ -83,7 +78,6 @@ export default class ServerGame{
                 is one) making it "cyclical"
             */
             const cyclicalSearch = (index, count, client, best) => {
-                console.log(`cyclicalSearch: ${index} ${count} ${best}`)
                 if(count === _sessions.length){
                     return best
                 }
@@ -93,9 +87,7 @@ export default class ServerGame{
                 }
 
                 const players = _sessions[index].players()
-                console.log(`player in searching session ${players}`)
-                if(UNIQUEPLAY){
-                    console.log(`uniqueplay`)
+                if(_UNIQUEPLAY){
                     const clients = _sessions[index].clients()
                     for(let i = 0; i < players; i++){
                         if(clients[i].remoteAddress === client.remoteAddress){
@@ -127,7 +119,6 @@ export default class ServerGame{
 
         const _createNewSession = () => {
             _created.sessions++
-            console.log(`created session ${_created.sessions}`)
             return new ServerSession(serviceSession.createServerSessionFromId(_created.sessions))
         }
 
@@ -155,10 +146,10 @@ export default class ServerGame{
                 }
 
                 let srvSession = this.newClient(client)
-                if(_users[client.remoteAddress] === undefined){
+                if(_users[client.remoteAddress] === _IPDOESNTEXIST){
                     _users[client.remoteAddress] = 0
                 }
-                if(_users[client.remoteAddress] === MAXCONNECTIONSPERUSER){
+                if(_users[client.remoteAddress] === _MAXCONNECTIONSPERUSER){
                     client.close()
                     return
                 }
@@ -200,17 +191,19 @@ export default class ServerGame{
             });
         }
 
-        /* _created, _sessions, will be mutated within */
+        /* _created, _sessions, _users will be mutated within */
         const   _created                = {clients: 0, sessions: 0}
         const   _sessions               = []
         const   _users                  = {}
         /***********************************************/
         const   _MAXCLIENTS             = MAXCLIENTS
+        const   _MAXCONNECTIONSPERUSER  = MAXCONNECTIONSPERUSER
+        const   _UNIQUEPLAY             = UNIQUEPLAY
         const   _port                   = port
         const   _server                 = _createServer()
         const   _wsServer               = _bindWebSocket(_server)
         /***********************************************/
-        /* defines for failed returns, making readability 
+        /* const defines for failed returns, making readability 
         and following logic easier */
         const   _NOFOUNDSESSION         = undefined
         const   _IPDOESNTEXIST          = undefined

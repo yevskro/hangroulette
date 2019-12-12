@@ -104,24 +104,12 @@ export default class ServerSession{
         this.startTurnTimer = (gameStatus) => {
             const turnTimer = () => {
                 const newSecond = _session.seconds() - 1 || TURNSECONDS
-                if(newSecond === 1 && gameStatus !== GAMESTATUS.PLAYING){
-                    // TODO: create new mdlGame with playing state
-                    console.log(gameStatus)
-                    const mdlGame = _session.mdlGame()
-                    const newMdlGame = new ServerGameModel(mdlGame.mdlGuesses(),mdlGame.mdlPlayers(),mdlGame.word(),GAMESTATUS.PLAYING, mdlGame.serverWord())
-                    _session = new SessionModel(_session.id(), 
-                                                _session.mdlScore(),
-                                                newMdlGame,
-                                                newSecond)
-                    return
-                }
                 const mdlGame = _session.mdlGame()
                 if(newSecond === TURNSECONDS){
-                    // nextTurn()
                     const newMdlPlyrs = new PlayersModel(mdlGame.mdlPlayers().players(),
                                                          mdlGame.mdlPlayers().nextTurn())
 
-                    const newMdlGame = new ServerGameModel(mdlGame.mdlGuesses(),newMdlPlyrs,mdlGame.word(),mdlGame.gameStatus(),mdlGame.serverWord())
+                    const newMdlGame = new ServerGameModel(mdlGame.mdlGuesses(),newMdlPlyrs,mdlGame.word(),GAMESTATUS.PLAYING,mdlGame.serverWord())
                     _session = new SessionModel(_session.id(), 
                                                 _session.mdlScore(),
                                                 newMdlGame,

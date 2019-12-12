@@ -6,6 +6,8 @@ import SessionModel from '../models/Session'
 import ServerSession from './ServerSession'
 import { ServerGameError, SGERRORS } from '../models/server/ServerGame'
 
+const NOFOUNDSESSION    = undefined
+
 export default class ServerGame{
     constructor(MAXCLIENTS, port, MAXCONNECTIONSPERUSER, UNIQUEPLAY){
         this.newClient = (client) => {
@@ -18,9 +20,9 @@ export default class ServerGame{
 
         this.moveClientToNextSession = (client, currentSession) => {
             const searchIndex = _sessionIndex(currentSession)
-            const bSessionIndex = _bestAvailableSessionFromIndex(client, searchIndex + 1)
-
-            if(bSessionIndex === undefined || _sessions[bSessionIndex] === currentSession){
+            const bSessionIndex = _bestSessionFromIndexExcluded(searchIndex, client)
+            
+            if(bSessionIndex === NOFOUNDSESSION){
                 return currentSession
             }
 
@@ -52,8 +54,9 @@ export default class ServerGame{
 
         const _sessionForClient = (client) => {
             console.log("sessonForClient called")
-            const sessionIndex = _bestAvailableSessionFromIndex(client, 0)
-            if(sessionIndex === undefined){
+            const sessionIndex = _bestSessionFromIndex(0, client)
+            console.log(`sessionIndex ${sessionIndex}`)
+            if(sessionIndex === NOFOUNDSESSION){
                 const newSession = _createNewSession()
                 _sessions.push(newSession)
                 return newSession
@@ -65,7 +68,7 @@ export default class ServerGame{
             return _sessions.findIndex((s) => session === s)
         }
 
-        const _bestAvailableSessionFromIndex = (client, index) => {
+        const _bestSessionCyclicalSearch = (index, count, client) => {
             /*  
                 Recurse through sessions and find the best playable match
                 closest to being full. We want to fill the first sessions 
@@ -73,14 +76,15 @@ export default class ServerGame{
                 spill over into the next bucket under idea]
             */
             if(_sessions.length === 0){
-                return undefined
+                console.log("empty session")
+                return NOFOUNDSESSION
             }
             /*
                 CyclicalSearch is intended to search from the
                 index of sessions to the index before it(if there
                 is one) making it "cyclical"
             */
-            const cyclicalSearch = (index, count, best) => {
+            const cyclicalSearch = (index, count, client, best) => {
                 console.log(`cyclicalSearch: ${index} ${count} ${best}`)
                 if(count === _sessions.length){
                     return best
@@ -91,8 +95,9 @@ export default class ServerGame{
                 }
 
                 const players = _sessions[index].players()
-  
+                console.log(`player in searching session ${players}`)
                 if(UNIQUEPLAY){
+                    console.log(`uniqueplay`)
                     const clients = _sessions[index].clients()
                     for(let i = 0; i < players; i++){
                         if(clients[i].remoteAddress === client.remoteAddress){
@@ -105,14 +110,21 @@ export default class ServerGame{
                     return index
                 }
 
-                if(best === undefined && players !== 3){
+                if(best === NOFOUNDSESSION && players !== 3){
                     best = index
                 }
 
-                return cyclicalSearch(index + 1, count + 1, best)
+                return cyclicalSearch(index + 1, count + 1, client, best)
             }
+            return cyclicalSearch(index, count, client)
+        }
 
-            return cyclicalSearch(index, 0)
+        const _bestSessionFromIndexExcluded = (index, client) => {
+            return _bestSessionCyclicalSearch(index + 1, 1, client)
+        }
+
+        const _bestSessionFromIndex = (index, client) => {
+            return _bestSessionCyclicalSearch(index, 0, client)
         }
 
         const _createNewSession = () => {

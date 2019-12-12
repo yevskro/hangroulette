@@ -3,8 +3,10 @@ import GameModel, { GAMESTATUS, GuessesModel, PlayersModel } from '../Game'
 export const SGERRORS = {
     INVALIDGUESS: `invalid guess`, 
     OUTOFSYNCGUESS: `out of sync guess`,
-    INVALIDTURN: `player guessing is out of turn`
+    INVALIDTURN: `player guessing is out of turn`,
+    NOAVAILABLESESSION: `no available session found`
 }
+
 
 export class ServerGameError{
     constructor(error){
@@ -40,12 +42,27 @@ export default class ServerGameModel extends GameModel{
             // returns a new servermodel
             let newMdlPlayers = undefined
             const mdlPlayers = this.mdlPlayers()
+            // TODO: players() === 3 returns gameservererror
             if(mdlPlayers.players() === 0){
                 newMdlPlayers = new PlayersModel(1, 1)
             }
             else{
                 newMdlPlayers = new PlayersModel(mdlPlayers.players() + 1, mdlPlayers.turn())
             }
+            return new ServerGameModel(this.mdlGuesses(),newMdlPlayers,this.word(),this.gameStatus(),_serverWord)
+        }
+
+        this.removePlayer = () => {
+            // returns a new servermodel
+            let newMdlPlayers = undefined
+            const mdlPlayers = this.mdlPlayers()
+            if(mdlPlayers.players() === 0){
+                // TODO: return server error
+            }
+            else{
+                newMdlPlayers = new PlayersModel(mdlPlayers.players() - 1, mdlPlayers.turn())
+            }
+
             return new ServerGameModel(this.mdlGuesses(),newMdlPlayers,this.word(),this.gameStatus(),_serverWord)
         }
 

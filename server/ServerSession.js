@@ -28,6 +28,22 @@ export default class ServerSession{
             const playerIndex = _players.findIndex((c) => c === client)
             if(playerIndex !== undefined){
                 _players.splice(playerIndex, 1)
+                //TODO: if a player with the current turn leaves, reset turn
+                const turn = _session.mdlGame().turn()
+                const playerPosition = playerIndex + 1
+                let seconds = _session.seconds()
+                if(turn === playerPosition){
+                    seconds = 12
+                }
+                let newMdlGame = _session.mdlGame().removePlayer()
+                if(turn > newMdlGame.players()){
+                    newMdlGame = newMdlGame.nextTurn()
+                }
+
+                _session = new SessionModel(_session.id(), 
+                                            _session.mdlScore(),
+                                            newMdlGame,
+                                            seconds)
                 console.log(`removed client from session: ${_session.id()} players: ${this.players()}`)
                 return true
             }

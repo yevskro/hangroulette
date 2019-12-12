@@ -46,7 +46,7 @@ export default class ServerSession{
                                             _session.mdlScore(),
                                             newMdlGame,
                                             seconds)
-                console.log(`removed client from session: ${_session.id()} players: ${this.players()}`)
+                                            
                 return true
             }
             return false
@@ -65,12 +65,9 @@ export default class ServerSession{
         }
 
         this.playerGuess = (client, guess) => {
-            console.log("checking if its the clients turn")
             if(!this.isClientsTurn(client)){
-                console.log("not players turn")
                 return new ServerGameError(SGERRORS.INVALIDTURN)
             }
-            console.log("clients turn is valid")
 
             const newGameState = _session.mdlGame().guess(guess)
             if(newGameState instanceof ServerGameError){
@@ -78,10 +75,6 @@ export default class ServerSession{
             }
 
             const gameStatus = newGameState.gameStatus()
-            console.log(`session:${_session.id()} playerGuess() newGameState:`)  
-            console.log(newGameState.word())
-            console.log(`now printing out server sessions arguements besides id`)
-            console.log(`${_session.mdlScore()}, ${_session.seconds()}`)
             const mdlScore          = _session.mdlScore()
             this.stopTurnTimer()
             let seconds = TURNSECONDS

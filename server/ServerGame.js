@@ -15,7 +15,7 @@ export default class ServerGame{
         }
 
         this.moveClientToNextSession = (client, currentSession) => {
-            const searchIndex = _sessionIndex(currentSession)
+            const searchIndex   = _sessionIndex(currentSession)
             const bSessionIndex = _bestSessionFromIndexExcluded(searchIndex, client)
             
             if(bSessionIndex === _NOFOUNDSESSION){
@@ -37,8 +37,8 @@ export default class ServerGame{
                 return this.moveClientToNextSession(client, session)
             }
             if(action.guess){
-                const guess = action.guess
-                const newSession = session.playerGuess(client, guess)
+                const guess         = action.guess
+                const newSession    = session.playerGuess(client, guess)
                 return newSession
             }
             /* if action does not exist, malicious data probable */
@@ -47,11 +47,13 @@ export default class ServerGame{
 
         const _sessionForClient = (client) => {
             const sessionIndex = _bestSessionFromIndex(0, client)
+
             if(sessionIndex === _NOFOUNDSESSION){
                 const newSession = _createNewSession()
                 _sessions.push(newSession)
                 return newSession
             }
+
             return _sessions[sessionIndex]
         }
 
@@ -136,14 +138,14 @@ export default class ServerGame{
         }
 
         const _bindWebSocket = (server) => {
-            const WebSocketServer = websocket.server
-            const wsServer = new WebSocketServer({
+            const WebSocketServer   = websocket.server
+            const wsServer          = new WebSocketServer({
                 httpServer: server
             })
 
             wsServer.on('request', (request) => {
-                const client = request.accept(null,  request.origin)
-                let srvSession = undefined
+                const client    = request.accept(null,  request.origin)
+                let srvSession  = undefined
                 const handleRequest = () => {
                     if(_created.clients === _MAXCLIENTS){
                         // TODO: call a function that sends 

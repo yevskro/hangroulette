@@ -1,13 +1,11 @@
 import http from 'http'
 import websocket from 'websocket'
 import serviceSession from '../client/src/services/session'
-import servicePlayer from '../client/src/services/player'
-import SessionModel from '../models/Session'
 import ServerSession from './ServerSession'
 import { ServerGameError, SGERRORS } from '../models/server/ServerGame'
 
 export default class ServerGame{
-    constructor(MAXCLIENTS, port, MAXCONNECTIONSPERUSER, UNIQUEPLAY){
+    constructor(MAXCLIENTS, PORT, MAXCONNECTIONSPERUSER, UNIQUEPLAY){
         this.newClient = (client) => {
             _created.clients++
             /* _sessionForClient() will create a new session if none avail */
@@ -43,7 +41,7 @@ export default class ServerGame{
                 const newSession = session.playerGuess(client, guess)
                 return newSession
             }
-            /* action does not exist, malicious data probable */
+            /* if action does not exist, malicious data probable */
             return new ServerGameError(SGERRORS.INVALIDACTION) 
         }
 
@@ -79,15 +77,19 @@ export default class ServerGame{
             */
             const cyclicalSearch = (index, count, client, best) => {
                 if(count === _sessions.length){
+                    /* we checked the whole array */
                     return best
                 }
 
                 if(index === _sessions.length){
+                    /* we are at the end of the array, start next search from the beginning */
                     return cyclicalSearch(0, count, best)
                 }
 
                 const players = _sessions[index].players()
+
                 if(_UNIQUEPLAY){
+                    /* a client can not join the same session more than once */
                     const clients = _sessions[index].clients()
                     for(let i = 0; i < players; i++){
                         if(clients[i].remoteAddress === client.remoteAddress){
@@ -97,10 +99,12 @@ export default class ServerGame{
                 }
 
                 if(players === 2){
+                    /* any session with 2 players is the best session to join */
                     return index
                 }
 
                 if(best === _NOFOUNDSESSION && players !== 3){
+                    /* set best to what could be the best possible session */
                     best = index
                 }
 
@@ -207,23 +211,24 @@ export default class ServerGame{
             This is then checked against the max amount of connections
             to protect the server from being flooded with the same user
             ex. _users = {127.0.0.1: 3} 127.0.0.1 has 3 connections 
+            and allowed up to _MAXCONNECTIONSPERUSER
         */
         const   _users                  = {} 
         /***********************************************/
         const   _MAXCLIENTS             = MAXCLIENTS
         const   _MAXCONNECTIONSPERUSER  = MAXCONNECTIONSPERUSER
         const   _UNIQUEPLAY             = UNIQUEPLAY
-        const   _port                   = port
+        const   _PORT                   = PORT
         const   _server                 = _createServer()
         const   _wsServer               = _bindWebSocket(_server)
         /***********************************************/
-        /* const defines for failed returns, making readability 
+        /* symbolic constants for failed returns, making readability 
         and following logic easier */
         const   _NOFOUNDSESSION         = undefined
         const   _IPDOESNTEXIST          = undefined
         const   _SESSIONDOESNTEXIST     = -1
         const   _ZEROPLAYERS            = 0
         /***********************************************/
-        _server.listen(_port);
+        _server.listen(_PORT);
     }
 }  

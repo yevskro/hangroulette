@@ -140,64 +140,61 @@ export default class ServerGame{
             const wsServer = new WebSocketServer({
                 httpServer: server
             })
-            let srvSession = undefined
-            let client = undefined
-            
-            const handleOnMessage = (msg) => {
-                const { action } = JSON.parse(msg.utf8Data)
-                /*  
-                    action():
-                        1. a next action returns a new session 
-                        2. a guess action will return a new session
-                            holding a new game model state
-                                        or 
-                            a ServerGameError might bubble up 
-                            representing that a malicious attempt made
-                            with corrupt data or out of sync game logic
-                */
-                const newSrvSession = this.action(client, action, srvSession)
-                if(newSrvSession instanceof ServerGameError){
-                    client.close()
-                }
-                else{
-                    srvSession = newSrvSession
-                }
-            }
-
-            const handleOnClose = () => {
-                srvSession.removePlayer(client)
-                if(srvSession.players() === _ZERO){
-                    _removeSession(srvSession)
-                }
-                _users[client.remoteAddress].connections--
-                if(_users[client.remoteAddress].connections === _ZERO){
-                    delete _users[client.remoteAddress]
-                }
-            }
-
-            const handleRequest = () => {
-                if(_created.clients === _MAXCLIENTS){
-                    // TODO: call a function that sends 
-                    // a message this server is busy
-                    // and closes the connection
-                    return
-                }
-    
-                if(_users[client.remoteAddress] === _IPDOESNTEXIST){
-                    _users[client.remoteAddress] = {connections: 0}
-                }
-
-                if(_users[client.remoteAddress].connections === _MAXCONNECTIONSPERUSER){
-                    client.close()
-                    return
-                }
-
-                _users[client.remoteAddress].connections++
-            }
 
             wsServer.on('request', (request) => {
-                client = request.accept(null,  request.origin)
-                srvSession = this.newClient(client)
+                const client = request.accept(null,  request.origin)
+                let srvSession = undefined
+                const handleRequest = () => {
+                    if(_created.clients === _MAXCLIENTS){
+                        // TODO: call a function that sends 
+                        // a message this server is busy
+                        // and closes the connection
+                        return
+                    }
+    
+                    srvSession = this.newClient(client)
+                    if(_users[client.remoteAddress] === _IPDOESNTEXIST){
+                        _users[client.remoteAddress] = {connections: _ZERO}
+                    }
+                    if(_users[client.remoteAddress].connections === _MAXCONNECTIONSPERUSER){
+                        client.close()
+                        return
+                    }
+                    _users[client.remoteAddress].connections++
+                }
+
+                const handleOnMessage = (msg) => {
+                    const { action } = JSON.parse(msg.utf8Data)
+                    /*  
+                        action():
+                            1. a next action returns a new session 
+                            2. a guess action will return a new session
+                                holding a new game model state
+                                            or 
+                                a ServerGameError might bubble up 
+                                representing that a malicious attempt made
+                                with corrupt data or out of sync game logic
+                    */
+                    const newSrvSession = this.action(client, action, srvSession)
+                    if(newSrvSession instanceof ServerGameError){
+                        client.close()
+                    }
+                    else{
+                        srvSession = newSrvSession
+                    }
+                }
+
+                const handleOnClose = () => {
+                    srvSession.removePlayer(client)
+                    if(srvSession.players() === _ZERO){
+                        _removeSession(srvSession)
+                    }
+                    _users[client.remoteAddress].connections--
+                    if(_users[client.remoteAddress].connections === _ZERO){
+                        delete _users[client.remoteAddress]
+                    }
+                }
+
                 client.on('message', handleOnMessage)
                 client.on('close', handleOnClose)
                 handleRequest()

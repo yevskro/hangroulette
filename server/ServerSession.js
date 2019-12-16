@@ -1,14 +1,29 @@
-import SessionModel from '../models/Session'
+import SessionModel, { ScoreModel } from '../models/Session'
 import { GAMESTATUS, PlayersModel, GuessesModel } from '../models/Game'
 import ServerGameModel, { ServerGameError, SGERRORS } from '../models/server/ServerGame'
+import sessionService from '../client/src/services/session'
+import { Server } from 'http'
 
 export default class ServerSession{
+    static sessionErrorJSON(error){
+        const mdlScore          = new ScoreModel(0, 0) 
+        const mdlGameGuesses    = new GuessesModel("", "")
+        const mdlPlayers        = new PlayersModel(0, 0, 0)
+        const mdlGame           = new ServerGameModel(mdlGameGuesses, mdlPlayers, `error: ${error}`, GAMESTATUS.LOADING, `error: ${error}`)    
+        const session           = new SessionModel(1, mdlScore, mdlGame, 0)
+        return JSON.stringify({timestamp: Date.now(), player: {id: 1, session: session.jsonObj()}})        
+    }
+
     constructor(session){
         /*              public methods                 */
         /***********************************************/
         this.id         = () => _session.id()
         this.players    = () => _players.length
         this.clients    = () => _players
+
+        this.errorPlayer = (client, error) => {
+            client.send(ServerSession.sessionErrorJSON(error))
+        }
 
         this.addPlayer = (client) => {
             if(_players.length === 3){

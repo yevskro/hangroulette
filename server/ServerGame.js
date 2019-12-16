@@ -1,8 +1,18 @@
 import http from 'http'
 import websocket from 'websocket'
-import serviceSession from '../client/src/services/session'
+import SessionModel, { 
+    ScoreModel 
+    }     from '../models/Session'
+
 import ServerSession from './ServerSession'
 import { ServerGameError, SGERRORS } from '../models/server/ServerGame'
+import { GAMESTATUS, 
+    GuessesModel,
+    PlayersModel 
+   }     from '../models/Game'
+
+import ServerGameModel from '../models/server/ServerGame'
+
 
 export default class ServerGame{
     constructor(MAXCLIENTS, PORT, MAXCONNECTIONSPERUSER, UNIQUEPLAY){
@@ -49,7 +59,7 @@ export default class ServerGame{
             const sessionIndex = _bestSessionFromIndex(0, client)
 
             if(sessionIndex === _NOFOUNDSESSION){
-                const newSession = _createNewSession()
+                const newSession = _createSession("word")
                 _sessions.push(newSession)
                 return newSession
             }
@@ -123,10 +133,13 @@ export default class ServerGame{
             return _bestSessionCyclicalSearch(index, 0, client)
         }
 
-        const _createNewSession = () => {
+        const _createSession = (word) => {
             _created.sessions++
-            // TODO: remove serviceSession and a factory function
-            return new ServerSession(serviceSession.createServerSessionFromId(_created.sessions))
+            const mdlScore          = new ScoreModel(0, 0) 
+            const mdlGameGuesses    = new GuessesModel("", "")
+            const mdlPlayers        = new PlayersModel(0, 0, 0)
+            const mdlGame           = new ServerGameModel(mdlGameGuesses, mdlPlayers, ServerGameModel.convertWordToHidden(word), GAMESTATUS.PLAYING, word)    
+            return new ServerSession(new SessionModel(_created.sessions, mdlScore, mdlGame, 11))
         }
 
         const _removeSession = (session) => {
@@ -148,9 +161,9 @@ export default class ServerGame{
                 let srvSession  = undefined
                 const handleRequest = () => {
                     if(_created.clients === _MAXCLIENTS){
-                        // TODO: call a function that sends 
-                        // a message this server is busy
-                        // and closes the connection
+                        const json = ServerSession.sessionErrorJSON(SGERRORS.SERVERISFULL)
+                        client.send(json)
+                        client.close()
                         return
                     }
     
@@ -179,6 +192,7 @@ export default class ServerGame{
                     */
                     const newSrvSession = _action(client, action, srvSession)
                     if(newSrvSession instanceof ServerGameError){
+                        srvSession.errorPlayer(client, newSrvSession.error)
                         client.close()
                     }
                     else{

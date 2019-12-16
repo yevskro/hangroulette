@@ -59,7 +59,6 @@ export default class ServerGameModel extends GameModel{
         }
 
         this.removePlayer = () => {
-            // returns a new servermodel
             let newMdlPlayers = undefined
             const mdlPlayers = this.mdlPlayers()
             if(mdlPlayers.players() === 0){

@@ -40,7 +40,7 @@ export default class ServerSession{
                     seconds = _TURNSECONDS
                     newMdlGame = newMdlGame.nextTurn()
                 }
-                
+
                 _session = new SessionModel(_session.id(), 
                                             _session.mdlScore(),
                                             newMdlGame,
@@ -53,14 +53,11 @@ export default class ServerSession{
 
         this.isClientsTurn = (client) => {
             const turn = _session.mdlGame().turn()
-            for(let i = 0; i < _players.length; i++){
-                if(_players[i] === client){
-                    if(i + 1 === turn){
-                        return true
-                    }
-                    return false
-                }
+            const index = _players.findIndex((el) => el === client)
+            if(index + 1 === turn){
+                return true
             }
+            return false
         }
 
         this.playerGuess = (client, guess) => {

@@ -4,9 +4,9 @@ import ServerGameModel, { ServerGameError, SGERRORS } from '../models/server/Ser
 
 export default class ServerSession{
     constructor(session){
-        this.id = () => _session.id()
-        this.players = () => _players.length
-        this.clients = () => _players
+        this.id         = () => _session.id()
+        this.players    = () => _players.length
+        this.clients    = () => _players
 
         this.addPlayer = (client) => {
             if(_players.length === 3){
@@ -28,15 +28,16 @@ export default class ServerSession{
 
         this.removePlayer = (client) => {
             const playerIndex = _players.findIndex((c) => c === client)
-            if(playerIndex !== -1){
+            if(playerIndex !== _PLAYERDOESNTEXIST){
+                const turn              = _session.mdlGame().turn()
+                const playerPosition    = playerIndex + 1
+                let seconds             = _session.seconds()
+                let newMdlGame = _session.mdlGame().removePlayer()
+
                 _players.splice(playerIndex, 1)
-                const turn = _session.mdlGame().turn()
-                const playerPosition = playerIndex + 1
-                let seconds = _session.seconds()
                 if(turn === playerPosition){
                     seconds = _TURNSECONDS
                 }
-                let newMdlGame = _session.mdlGame().removePlayer()
                 if(turn > newMdlGame.players()){
                     newMdlGame = newMdlGame.nextTurn()
                 }
@@ -168,10 +169,12 @@ export default class ServerSession{
             clearInterval(_timerRestartGame)
         }
 
-        const _players          = []
-        let _session            = session
-        let _timerTurn          = 0
-        let _timerRestartGame   = 0
-        const _TURNSECONDS      = 10
-        const _RESTARTSECONDS   = 4
+        const _players              = []
+        let _session                = session
+        let _timerTurn              = 0
+        let _timerRestartGame       = 0
+        const _TURNSECONDS          = 10
+        const _RESTARTSECONDS       = 4
+        const _PLAYERDOESNTEXIST    = -1
+    }
 }

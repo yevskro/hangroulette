@@ -94,9 +94,7 @@ export default class ServerSession{
 
         this.broadcastState = () => {
             const session = _session.jsonObj()
-            for(let j = 0; j < _players.length; j++){
-                _players[j].send(JSON.stringify({timestamp: Date.now(), player: {id: j + 1, session}}))
-            }
+            _players.forEach((el, index) => el.send(JSON.stringify({timestamp: Date.now(), player: {id: index + 1, session}})))
         }
 
         this.startTimerTurn = () => {

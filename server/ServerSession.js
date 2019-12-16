@@ -4,6 +4,8 @@ import ServerGameModel, { ServerGameError, SGERRORS } from '../models/server/Ser
 
 export default class ServerSession{
     constructor(session){
+        /*              public methods                 */
+        /***********************************************/
         this.id         = () => _session.id()
         this.players    = () => _players.length
         this.clients    = () => _players
@@ -19,9 +21,9 @@ export default class ServerSession{
                                         _session.mdlScore(),
                                         newMdlGame,
                                         _session.seconds())
-            this.broadcastState()
+            _broadcastState()
             if(_players.length === 1){
-                this.startTimerTurn(GAMESTATUS.PLAYING)
+                _startTimerTurn(GAMESTATUS.PLAYING)
             }
             return true
         }
@@ -51,17 +53,8 @@ export default class ServerSession{
             return false
         }
 
-        this.isClientsTurn = (client) => {
-            const turn = _session.mdlGame().turn()
-            const index = _players.findIndex((el) => el === client)
-            if(index + 1 === turn){
-                return true
-            }
-            return false
-        }
-
         this.playerGuess = (client, guess) => {
-            if(!this.isClientsTurn(client)){
+            if(!_isClientsTurn(client)){
                 return new ServerGameError(SGERRORS.INVALIDTURN)
             }
 
@@ -83,33 +76,41 @@ export default class ServerSession{
                 else{
                     mdlScore = mdlScore.lost()
                 }
-                this.stopTimerTurn()
-                this.startTimerRestartGame(gameStatus)
+                _stopTimerTurn()
+                _startTimerRestartGame(gameStatus)
             }
 
             _session = new SessionModel(_session.id(), mdlScore, newGameState, seconds)
-            this.broadcastState()
+            _broadcastState()
             return this
         }
+        /*              private methods                */
+        /***********************************************/
+        const _isClientsTurn = (client) => {
+            const turn = _session.mdlGame().turn()
+            const index = _players.findIndex((el) => el === client)
+            if(index + 1 === turn){
+                return true
+            }
+            return false
+        }
 
-        this.broadcastState = () => {
+        const _broadcastState = () => {
             const session = _session.jsonObj()
             _players.forEach((el, index) => el.send(JSON.stringify({timestamp: Date.now(), player: {id: index + 1, session}})))
         }
 
-        this.startTimerTurn = () => {
+        const _startTimerTurn = () => {
             const timerTurn = () => {
                 const newSecond = _session.seconds() - 1 || _TURNSECONDS
                 const mdlGame   = _session.mdlGame()
                 if(newSecond === _TURNSECONDS){
                     const newMdlPlyrs   = new PlayersModel(mdlGame.mdlPlayers().players(),
                                                             mdlGame.mdlPlayers().nextTurn())
-
                     const newMdlGame    = new ServerGameModel(mdlGame.mdlGuesses(),
                                                                 newMdlPlyrs,mdlGame.word(),
                                                                 GAMESTATUS.PLAYING,
                                                                 mdlGame.serverWord())
-
                     _session            = new SessionModel(_session.id(), 
                                                             _session.mdlScore(),
                                                             newMdlGame,
@@ -121,17 +122,17 @@ export default class ServerSession{
                                                             _session.mdlGame(),
                                                             newSecond)
                 }
-                this.broadcastState()
+                _broadcastState()
             }
 
             _timerTurn = setInterval(timerTurn, 1000)
         }
 
-        this.stopTimerTurn = () => {
+        const _stopTimerTurn = () => {
             clearInterval(_timerTurn)
         }
 
-        this.startTimerRestartGame = (gameStatus) => {
+        const _startTimerRestartGame = (gameStatus) => {
             let seconds = _RESTARTSECONDS
             const mdlGame = _session.mdlGame()
             let newMdlGame = new ServerGameModel(mdlGame.mdlGuesses(),
@@ -142,33 +143,33 @@ export default class ServerSession{
             const restartTurn = () => {
                 seconds--
                 if(seconds === 1){
-                    this.stopTimerRestartGame()
+                    _stopTimerRestartGame()
                     newMdlGame = new ServerGameModel(new GuessesModel("", ""),
                                                         mdlGame.mdlPlayers(),
                                                         "____",
                                                         GAMESTATUS.PLAYING,
                                                         mdlGame.serverWord())
-                    this.startTimerTurn()
+                    _startTimerTurn()
                 }
                 _session = new SessionModel(_session.id(), 
                                             _session.mdlScore(),
                                             newMdlGame,
                                             seconds)
-                this.broadcastState()
+                _broadcastState()
             }
             _timerRestartGame = setInterval(restartTurn, 1000)
         }
 
-        this.stopTimerRestartGame = () => {
+        const _stopTimerRestartGame = () => {
             clearInterval(_timerRestartGame)
         }
-
+        /***********************************************/
         const _players              = []
-        let _session                = session
-        let _timerTurn              = 0
-        let _timerRestartGame       = 0
         const _TURNSECONDS          = 10
         const _RESTARTSECONDS       = 4
         const _PLAYERDOESNTEXIST    = -1
+        let _session                = session
+        let _timerTurn              = 0
+        let _timerRestartGame       = 0
     }
 }

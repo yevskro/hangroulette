@@ -6,7 +6,9 @@ export const SGERRORS = {
     INVALIDTURN: `player guessing is out of turn`,
     NOAVAILABLESESSION: `no available session found`,
     CANTADDPLAYER: `can't add player game already has 3, full`,
-    CANTREMOVEPLAYER: `can't remove player game has 0 players`
+    CANTREMOVEPLAYER: `can't remove player game has 0 players`,
+    SERVERISFULL: `server is currently full`,
+    SERVERERROR: `server error`
 }
 
 
@@ -18,6 +20,7 @@ export class ServerGameError{
 
 export default class ServerGameModel extends GameModel{
     static convertWordToHidden(word){
+        /* ex input: "word", output: "____" */
         let hiddenWord = ""
         for(const char in word){
             if(char !== ' '){

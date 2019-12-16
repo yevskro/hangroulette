@@ -6,7 +6,7 @@ import { ServerGameError, SGERRORS } from '../models/server/ServerGame'
 
 export default class ServerGame{
     constructor(MAXCLIENTS, PORT, MAXCONNECTIONSPERUSER, UNIQUEPLAY){
-        this.newClient = (client) => {
+        const _newClient = (client) => {
             _created.clients++
             /* _sessionForClient() will create a new session if none avail */
             const aSession = _sessionForClient(client)
@@ -14,7 +14,7 @@ export default class ServerGame{
             return aSession
         }
 
-        this.moveClientToNextSession = (client, currentSession) => {
+        const _moveClientToNextSession = (client, currentSession) => {
             const searchIndex   = _sessionIndex(currentSession)
             const bSessionIndex = _bestSessionFromIndexExcluded(searchIndex, client)
             
@@ -32,9 +32,9 @@ export default class ServerGame{
             return _sessions[bSessionIndex] 
         }
 
-        this.action = (client, action, session) => {
+        const _action = (client, action, session) => {
             if(action.next){
-                return this.moveClientToNextSession(client, session)
+                return _moveClientToNextSession(client, session)
             }
             if(action.guess){
                 const guess         = action.guess
@@ -154,7 +154,7 @@ export default class ServerGame{
                         return
                     }
     
-                    srvSession = this.newClient(client)
+                    srvSession = _newClient(client)
                     if(_users[client.remoteAddress] === _IPDOESNTEXIST){
                         _users[client.remoteAddress] = {connections: _ZERO}
                     }
@@ -177,7 +177,7 @@ export default class ServerGame{
                                 representing that a malicious attempt made
                                 with corrupt data or out of sync game logic
                     */
-                    const newSrvSession = this.action(client, action, srvSession)
+                    const newSrvSession = _action(client, action, srvSession)
                     if(newSrvSession instanceof ServerGameError){
                         client.close()
                     }

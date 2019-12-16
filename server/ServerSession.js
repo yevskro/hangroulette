@@ -32,16 +32,15 @@ export default class ServerSession{
                 const turn              = _session.mdlGame().turn()
                 const playerPosition    = playerIndex + 1
                 let seconds             = _session.seconds()
-                let newMdlGame = _session.mdlGame().removePlayer()
+                let newMdlGame          = _session.mdlGame().removePlayer()
 
                 _players.splice(playerIndex, 1)
                 if(turn === playerPosition){
+                    /* if we are removing a player whos in the middle of a turn, reset turn */
                     seconds = _TURNSECONDS
-                }
-                if(turn > newMdlGame.players()){
                     newMdlGame = newMdlGame.nextTurn()
                 }
-
+                
                 _session = new SessionModel(_session.id(), 
                                             _session.mdlScore(),
                                             newMdlGame,
@@ -105,7 +104,7 @@ export default class ServerSession{
 
         this.startTimerTurn = () => {
             const timerTurn = () => {
-                const newSecond = _session.seconds() - 1 || TURNSECONDS
+                const newSecond = _session.seconds() - 1 || _TURNSECONDS
                 const mdlGame   = _session.mdlGame()
                 if(newSecond === _TURNSECONDS){
                     const newMdlPlyrs   = new PlayersModel(mdlGame.mdlPlayers().players(),

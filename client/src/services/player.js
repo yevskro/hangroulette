@@ -10,10 +10,10 @@ class ServicePlayer{
                     correct: "", wrong: "",
                     word: "loading",
                     status: GAMESTATUS.LOADING,
-                    players: [0], turn: 1
+                    players: 0, turn: 1
                 }
             },
-            seconds: 12,
+            seconds: 10,
             timestamp: 0
         }
     }
@@ -27,7 +27,11 @@ class ServicePlayer{
                     correct: "", wrong: "",
                     word: "session error",
                     status: GAMESTATUS.LOADING,
+<<<<<<< HEAD
                     players: [0], turn: 1 
+=======
+                    players: 0, turn: 1 
+>>>>>>> server
                 }
             },
             seconds: 0,

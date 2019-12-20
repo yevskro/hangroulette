@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { GAMESTATUS } from '../../../../../../models/Game'
+import './game.css'
 
 /* TODO: clean up code and refactor components */
 
@@ -36,7 +37,7 @@ class GameClient extends Component{
         const mdlGame           = this.props.mdlGame
         const mdlPlayers        = mdlGame.mdlPlayers()
 
-        return <div>
+        return <div class='game'>
             GameClient {mdlGame.gameStatus()}<br/>
             <label>{mdlGame.word()}</label><br/>
             <div>{buttons}</div>

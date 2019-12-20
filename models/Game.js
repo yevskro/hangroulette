@@ -59,9 +59,14 @@ export class PlayersModel {
         this.turn = () => {
             return _turn
         }
+
+        this.nextTurn = () => {
+            return turn % players + 1
+        }
+
         this.validatePlayers = (players) => {
-            if(!(players instanceof Array)){
-                throw new Error(`players must be an array{${players}}`)
+            if(typeof(players) !== 'number' || players < 0 || players > 3){
+                throw new Error(`players must be an number between 0 and 3 {${players}}`)
             }
             if(players.length > 3){
                 throw new Error(`maximum of 3 players allowed{${players}}`)
@@ -78,17 +83,6 @@ export class PlayersModel {
             }
             return this
         }
-        /*
-        this.validateSeconds = (seconds) => {
-            if(typeof(seconds) !== 'number'){
-                throw new Error(`seconds must a number{${seconds}}`)
-            }
-
-            if(seconds < 0 && seconds > 12){
-                throw new Error(`seconds must be with game range 0..12{${seconds}}`)
-            }
-            return this
-        }*/
         /* MAIN CONSTRUCTOR CODE */
         /*************************/
         this.validateTurn(turn, this.validatePlayers(players))

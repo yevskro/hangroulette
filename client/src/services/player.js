@@ -27,11 +27,7 @@ class ServicePlayer{
                     correct: "", wrong: "",
                     word: "session error",
                     status: GAMESTATUS.LOADING,
-<<<<<<< HEAD
-                    players: [0], turn: 1 
-=======
                     players: 0, turn: 1 
->>>>>>> server
                 }
             },
             seconds: 0,

@@ -17,7 +17,7 @@ import ServerGameModel from '../models/server/ServerGame'
 export default class ServerGame{
     constructor(MAXCLIENTS, PORT, MAXCONNECTIONSPERUSER, UNIQUEPLAY){
         const _newClient = (client) => {
-            _created.clients++
+            ++_created.clients
             /* _sessionForClient() will create a new session if none avail */
             const aSession = _sessionForClient(client)
             aSession.addPlayer(client) 
@@ -134,7 +134,7 @@ export default class ServerGame{
         }
 
         const _createSession = (word) => {
-            _created.sessions++
+            ++_created.sessions
             const mdlScore          = new ScoreModel(0, 0) 
             const mdlGameGuesses    = new GuessesModel("", "")
             const mdlPlayers        = new PlayersModel(0, 0, 0)

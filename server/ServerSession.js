@@ -1,8 +1,6 @@
 import SessionModel, { ScoreModel } from '../models/Session'
 import { GAMESTATUS, PlayersModel, GuessesModel } from '../models/Game'
 import ServerGameModel, { ServerGameError, SGERRORS } from '../models/server/ServerGame'
-import sessionService from '../client/src/services/session'
-import { Server } from 'http'
 
 export default class ServerSession{
     static sessionErrorJSON(error){
@@ -13,7 +11,6 @@ export default class ServerSession{
         const session           = new SessionModel(1, mdlScore, mdlGame, 0)
         return JSON.stringify({timestamp: Date.now(), player: {id: 1, session: session.jsonObj()}})        
     }
-
     constructor(session){
         /*              public methods                 */
         /***********************************************/
@@ -32,6 +29,7 @@ export default class ServerSession{
 
             _players.push(client)
             const newMdlGame    = _session.mdlGame().addPlayer()
+            /* update session */
             _session            = new SessionModel(_session.id(), 
                                         _session.mdlScore(),
                                         newMdlGame,
@@ -58,6 +56,7 @@ export default class ServerSession{
                     newMdlGame = newMdlGame.nextTurn()
                 }
 
+                /* update session */
                 _session = new SessionModel(_session.id(), 
                                             _session.mdlScore(),
                                             newMdlGame,
@@ -73,12 +72,14 @@ export default class ServerSession{
                 return new ServerGameError(SGERRORS.INVALIDTURN)
             }
 
+            /* geuss() will return a new servergamemodel or servergame error if data is corrupt */
             const newGameState = _session.mdlGame().guess(guess)
 
             if(newGameState instanceof ServerGameError){
                 return newGameState
             }
 
+            /* at this point the guess is valid. update session score if won/lost, reset turn seconds */
             const gameStatus    = newGameState.gameStatus()
             let mdlScore        = _session.mdlScore()
             let seconds         = _TURNSECONDS
@@ -104,6 +105,7 @@ export default class ServerSession{
         const _isClientsTurn = (client) => {
             const turn = _session.mdlGame().turn()
             const index = _players.findIndex((el) => el === client)
+            /* players are saved as 1,2,3 so shift the index by 1 to correlate */
             if(index + 1 === turn){
                 return true
             }
@@ -111,6 +113,7 @@ export default class ServerSession{
         }
 
         const _broadcastState = () => {
+            /* send all connected clients the session state, which includes game state */
             const session = _session.jsonObj()
             _players.forEach((el, index) => el.send(JSON.stringify({timestamp: Date.now(), player: {id: index + 1, session}})))
         }
@@ -120,6 +123,7 @@ export default class ServerSession{
                 const newSecond = _session.seconds() - 1 || _TURNSECONDS
                 const mdlGame   = _session.mdlGame()
                 if(newSecond === _TURNSECONDS){
+                    /* new turn has started, update state of turn accordingly, with .nextTurn() */
                     const newMdlPlyrs   = new PlayersModel(mdlGame.mdlPlayers().players(),
                                                             mdlGame.mdlPlayers().nextTurn())
                     const newMdlGame    = new ServerGameModel(mdlGame.mdlGuesses(),
@@ -132,6 +136,7 @@ export default class ServerSession{
                                                             newSecond)
                 }
                 else{
+                    /* no game state to change, only update the session second state */
                     _session            = new SessionModel(_session.id(), 
                                                             _session.mdlScore(),
                                                             _session.mdlGame(),
@@ -150,6 +155,7 @@ export default class ServerSession{
         const _startTimerRestartGame = (gameStatus) => {
             let seconds = _RESTARTSECONDS
             const mdlGame = _session.mdlGame()
+            /* new game feedback to the players */
             let newMdlGame = new ServerGameModel(mdlGame.mdlGuesses(),
                                                     mdlGame.mdlPlayers(),
                                                     "NEW GAME",
@@ -158,7 +164,9 @@ export default class ServerSession{
             const restartTurn = () => {
                 seconds--
                 if(seconds === 1){
+                    /* end of the timer */
                     _stopTimerRestartGame()
+                    /* start new game with a word */
                     newMdlGame = new ServerGameModel(new GuessesModel("", ""),
                                                         mdlGame.mdlPlayers(),
                                                         "____",
@@ -166,6 +174,7 @@ export default class ServerSession{
                                                         mdlGame.serverWord())
                     _startTimerTurn()
                 }
+                /* update session seconds state */
                 _session = new SessionModel(_session.id(), 
                                             _session.mdlScore(),
                                             newMdlGame,

@@ -1,35 +1,44 @@
 const path = require("path");
-const webpack = require("webpack");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: "./client/src/index.js",
   mode: "development",
+  output: {
+    path: path.resolve(__dirname, "dist"),
+    filename: "bundle.js",
+    publicPath: "/"
+  },
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        exclude: /(node_modules|bower_components)/,
+        exclude: /node_modules/,
         loader: "babel-loader",
         options: { presets: ["@babel/env"] }
       },
       {
         test: /\.css$/,
         use: ["style-loader", "css-loader"]
+      },
+      {
+        test: /\.(jpg)$/i,
+        loader: "url-loader"
       }
     ]
   },
-  resolve: { extensions: ["*", ".js", ".jsx"] },
-  output: {
-    path: path.resolve(__dirname, "dist/"),
-    publicPath: "/client/dist/",
-    filename: "bundle.js"
-  },
   devServer: {
-    contentBase: path.join(__dirname, "/client/public/"),
     port: 3000,
-    publicPath: "http://localhost:3000/dist/",
-    hotOnly: true,
-    proxy: {"/": "http://localhost:5000"}
+    hot: true,
+    open: true,
+    proxy: {"/": "http://localhost:5000"},
+    contentBase: path.resolve(__dirname, "public"),
+    publicPath: "/"
   },
-  plugins: [new webpack.HotModuleReplacementPlugin()]
+  plugins: [
+    new HtmlWebpackPlugin({
+        template: './client/public/index.html',
+        inject: true
+    })
+  ]  
 };

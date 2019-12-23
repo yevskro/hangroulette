@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { GAMESTATUS } from '../../../../../../models/Game'
 import './game.css'
 
+
 /* TODO: clean up code and refactor components */
 
 class GameClient extends Component{

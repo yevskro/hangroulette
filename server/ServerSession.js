@@ -176,11 +176,12 @@ export default class ServerSession{
                     /* end of the timer */
                     _stopTimerRestartGame()
                     /* start new game with a word */
+                    const newWord = mdlGame.serverWord()
                     newMdlGame = new ServerGameModel(new GuessesModel("", ""),
                                                         mdlGame.mdlPlayers(),
-                                                        "____",
+                                                        ServerGameModel.convertWordToHidden(newWord),
                                                         GAMESTATUS.PLAYING,
-                                                        mdlGame.serverWord())
+                                                        newWord)
                     _startTimerTurn()
                 }
                 else {

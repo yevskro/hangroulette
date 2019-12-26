@@ -194,7 +194,6 @@ export default class ServerGame{
                     const newSrvSession = _action(client, action, srvSession)
                     if(newSrvSession instanceof ServerGameError){
                         srvSession.errorPlayer(client, newSrvSession.error)
-                        console.log(newSrvSession.error)
                         client.close()
                     }
                     else{
@@ -203,11 +202,7 @@ export default class ServerGame{
                 }
 
                 const handleOnClose = () => {
-                    console.log("close")
                     if(_users[client.remoteAddress] !== undefined){
-                        console.log('remove player')
-                        console.log(srvSession.removePlayer(client))
-                        console.log('players' + srvSession.players())
                         if(srvSession.players() === _ZERO){
                             _removeSession(srvSession)
                         }

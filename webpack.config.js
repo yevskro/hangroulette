@@ -24,6 +24,10 @@ module.exports = {
       {
         test: /\.(jpg)$/i,
         loader: "url-loader"
+      },
+      {
+        test: /\.ttf$/,
+        loader: 'url-loader'
       }
     ]
   },

@@ -72,14 +72,14 @@ class Player extends Component {
         const mdlSession    = this.state.mdlPlayer.mdlSession()
         const mdlGame       = mdlSession.mdlGame()
 
-        /*
-                        <div class="latency">Latency: {this.state.latency}ms</div>
-                <Session    mdlSession  ={mdlSession}/>*/
         return <div className="player-window">
                 <GameClient mdlGame     ={mdlGame}
-                            playerId    ={this.state.mdlPlayer.id()}
+                            id    ={this.state.mdlPlayer.id()}
                             onGuess     ={this.onGameGuess} 
-                            onNext      ={this.onGameNext}/>
+                            onNext      ={this.onGameNext}
+                            latency     ={this.state.latency}
+                            seconds     ={mdlSession.seconds()}
+                            />
             </div>
     }
 }

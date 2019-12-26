@@ -32,14 +32,48 @@ class GameClient extends Component{
         })
     }
     
+    generatePlayerList = (players, id, turn, seconds) => {
+        const list = []
+        let classGuessTime = ""
+        if(seconds > 7){
+            classGuessTime = "player-guess-time-good"
+        }
+        else if (seconds > 3){
+            classGuessTime = "player-guess-time-caution"
+        }
+        else {
+            classGuessTime = "player-guess-time-bad"
+        }
+        
+        for(let i = 0; i < players; i++){
+            if(i + 1 === id){
+                list.push(<React.Fragment>you</React.Fragment>)
+            }
+            else{
+                list.push(<React.Fragment>player{i+1}</React.Fragment>)
+            }
+            if(i + 1 === turn){
+                list.push(<div className={"turn " + classGuessTime}>{seconds}</div>)
+            }
+            else{
+                list.push(<div className={"turn " + classGuessTime}></div>)
+            }
+        }
+        return list
+    }
+
+    generateWord(word){
+        const letterContainers = []
+    }
+
     render(){
         const mdlGame           = this.props.mdlGame
         const mdlPlayers        = mdlGame.mdlPlayers()
 
         return <div className='game'>
             <Scroll/>
-            <div>Players:{mdlPlayers.players()}</div>
-            <div>Turn:{mdlPlayers.turn()}</div>
+            <div className="latency">{this.props.latency}ms</div>
+            <div className="players">{this.generatePlayerList(mdlPlayers.players(), this.props.id, mdlPlayers.turn(), this.props.seconds)}</div>
             <div className="word-container">
                 <div className="letter-container">
                     <div className="letter">y</div>
@@ -101,7 +135,7 @@ class GameClient extends Component{
                     <div className="bar"></div>
                 </div>
             </div>
-            <div className="findNextGame"><div className="right-arrow"></div>&nbsp;find next best available game</div>
+            <div className="findNextGame"><div className="right-arrow"></div>find next best available game</div>
         </div>
     }
 }

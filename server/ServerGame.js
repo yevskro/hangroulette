@@ -59,7 +59,7 @@ export default class ServerGame{
             const sessionIndex = _bestSessionFromIndex(0, client)
 
             if(sessionIndex === _NOFOUNDSESSION){
-                const newSession = _createSession("word")
+                const newSession = _createSession("yevgeniy is a god")
                 _sessions.push(newSession)
                 return newSession
             }

@@ -95,9 +95,10 @@ export default class ServerSession{
                 _stopTimerTurn()
                 _startTimerRestartGame(gameStatus)
             }
-
-            _session = new SessionModel(_session.id(), mdlScore, newGameState, seconds)
-            _broadcastState()
+            else{
+                _session = new SessionModel(_session.id(), mdlScore, newGameState, seconds)
+                _broadcastState()
+            }
             return this
         }
         /*              private methods                */
@@ -120,7 +121,10 @@ export default class ServerSession{
 
         const _startTimerTurn = () => {
             const timerTurn = () => {
-                const newSecond = _session.seconds() - 1 || _TURNSECONDS
+                let newSecond = _session.seconds() - 1
+                if(newSecond <= 0){
+                    newSecond = _TURNSECONDS
+                }
                 const mdlGame   = _session.mdlGame()
                 if(newSecond === _TURNSECONDS){
                     /* new turn has started, update state of turn accordingly, with .nextTurn() */
@@ -154,24 +158,21 @@ export default class ServerSession{
 
         const _startTimerRestartGame = (gameStatus) => {
             let seconds = _RESTARTSECONDS
-            const mdlGame = _session.mdlGame()
+            let mdlGame = _session.mdlGame()
             /* new game feedback to the players */
             let msg
             if(gameStatus === GAMESTATUS.WON){
-                msg = "congratualtions!!! you live another day!"
+                msg = "congrats!!! you live another day!"
             }
             else{
                 msg = "you bastard! you wanted him to die!!!!"
             }
 
-            let newMdlGame = new ServerGameModel(mdlGame.mdlGuesses(),
-                                                    mdlGame.mdlPlayers(),
-                                                    msg,
-                                                    gameStatus,
-                                                    mdlGame.serverWord())
             const restartTurn = () => {
+                mdlGame = _session.mdlGame()
                 seconds--
-                if(seconds === 1){
+                let newMdlGame
+                if(seconds === 0){
                     /* end of the timer */
                     _stopTimerRestartGame()
                     /* start new game with a word */
@@ -181,6 +182,13 @@ export default class ServerSession{
                                                         GAMESTATUS.PLAYING,
                                                         mdlGame.serverWord())
                     _startTimerTurn()
+                }
+                else {
+                    newMdlGame = new ServerGameModel(mdlGame.mdlGuesses(),
+                                                        mdlGame.mdlPlayers(),
+                                                        msg,
+                                                        gameStatus,
+                                                        mdlGame.serverWord())
                 }
                 /* update session seconds state */
                 _session = new SessionModel(_session.id(), 
@@ -198,7 +206,7 @@ export default class ServerSession{
         /***********************************************/
         const _players              = []
         const _TURNSECONDS          = 10
-        const _RESTARTSECONDS       = 7
+        const _RESTARTSECONDS       = 6
         const _PLAYERDOESNTEXIST    = -1
         let _session                = session
         let _timerTurn              = 0

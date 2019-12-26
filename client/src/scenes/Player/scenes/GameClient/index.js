@@ -62,27 +62,27 @@ class GameClient extends Component{
         return list
     }
 
-    generateWord(word){
+    generateWord(word, status){
         const letterContainers = []
-
-        for(const c of word){
-            if(c === " "){
+        console.log(status)
+        for(let i in word){
+            if(word[i] === " "){
                 letterContainers.push(<div></div>)
             }
             else{
                 const container = []
-                if(c === ' '){
+                if(word[i] === ' '){
                     letterContainers.push(<div></div>)
                 }
                 else{
-                    if(c === '_'){
+                    if(word[i] === '_'){
                         container.push(<div></div>)
                     }
                     else{
-                        container.push(<div className="letter">{c}</div>)
+                        container.push(<div className="letter">{word[i]}</div>)
                     }
                     container.push(<div className="bar"></div>)
-                    letterContainers.push(<div className="letter-container">
+                    letterContainers.push(<div className="letter-container" key={i + ' ' + status}> 
                         {container}
                     </div>)
                 }
@@ -94,12 +94,12 @@ class GameClient extends Component{
     render(){
         const mdlGame           = this.props.mdlGame
         const mdlPlayers        = mdlGame.mdlPlayers()
-
+        //{this.generateWord(this.props.mdlGame.word(), this.props.mdlGame.gameStatus())}
         return <div className='game'>
             <Scroll onItemClick={this.onGuess}/>
             <div className="latency">{this.props.latency}ms</div>
             <div className="players">{this.generatePlayerList(mdlPlayers.players(), this.props.id, mdlPlayers.turn(), this.props.seconds)}</div>
-            <div className="word-container">{this.generateWord(this.props.mdlGame.word())}</div>
+            <div className="word-container">{this.generateWord(this.props.mdlGame.word(), this.props.mdlGame.gameStatus())}</div>
             <div className="findNextGame"><div className="right-arrow"></div>find next best available game</div>
         </div>
     }

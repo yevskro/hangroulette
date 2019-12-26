@@ -72,6 +72,7 @@
     align-items: center;
     border-radius: 25%;
     background-color: RGB(6,6,6);
+    font-size: 24px;
 }
 
 .scroll-item-content {
@@ -103,17 +104,27 @@
 
 @keyframes shiftLetter {
     0% {
-      visibility: visible;
-      margin: -100px;
+        visibility: visible;
+        margin: -100px;
     }
     100% {
         visibility: visible;
-      margin: 10px;
+        margin: 6px auto;
+        /* 3 differenct effects we can do 
+            1. margin: 6px;
+            2. margin: 6px auto;
+            3. remove margin add
+                display: flex;
+                justify-content: center;
+                align-items: center;
+        */
     }
   }
 
 .letter {
     visibility: hidden;
+    font-size: 22px;
+    margin: -100px;
     animation: 0.3s ease-out 0s 1 shiftLetter forwards;
 }
 
@@ -124,8 +135,8 @@
 .letter-container:nth-of-type(5) .letter{ animation-delay: 0.5s; } 
 .letter-container:nth-of-type(6) .letter{ animation-delay: 0.1s; }
 .letter-container:nth-of-type(7) .letter{ animation-delay: 0.5s; } 
-.letter-container:nth-of-type(8) .letter{ animation-delay: 0.56s; } 
-.letter-container:nth-of-type(9) .letter{ animation-delay: 0.64s; } 
+.letter-container:nth-of-type(8) .letter{ animation-delay: 0.7s; } 
+.letter-container:nth-of-type(9) .letter{ animation-delay: 0.54s; } 
 .letter-container:nth-of-type(10) .letter{ animation-delay: 0.20s; } 
 .letter-container:nth-of-type(11) .letter{ animation-delay: 0.50s; } 
 .letter-container:nth-of-type(12) .letter{ animation-delay: 0.62s; }
@@ -134,7 +145,7 @@
 .letter-container:nth-of-type(15) .letter{ animation-delay: 0.1s; }
 .letter-container:nth-of-type(16) .letter{ animation-delay: 0.45s; } 
 .letter-container:nth-of-type(17) .letter{ animation-delay: 0.20s; } 
-.letter-container:nth-of-type(18) .letter{ animation-delay: 0.85s; }
+.letter-container:nth-of-type(18) .letter{ animation-delay: 0.77s; }
 .letter-container:nth-of-type(19) .letter{ animation-delay: 0.30s; } 
 .letter-container:nth-of-type(20) .letter{ animation-delay: 0.55s; }
 .letter-container:nth-of-type(21) .letter{ animation-delay: 0.2s; } 
@@ -146,7 +157,7 @@
 .letter-container:nth-of-type(27) .letter{ animation-delay: 0.1s; } 
 .letter-container:nth-of-type(28) .letter{ animation-delay: 0.64s; } 
 .letter-container:nth-of-type(29) .letter{ animation-delay: 0.30s; } 
-.letter-container:nth-of-type(30) .letter{ animation-delay: 0.80s; } 
+.letter-container:nth-of-type(30) .letter{ animation-delay: 0.73s; } 
 .letter-container:nth-of-type(31) .letter{ animation-delay: 0.30s; } 
 .letter-container:nth-of-type(32) .letter{ animation-delay: 0.1s; }
 .letter-container:nth-of-type(33) .letter{ animation-delay: 0.33s; } 

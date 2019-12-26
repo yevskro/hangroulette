@@ -64,6 +64,31 @@ class GameClient extends Component{
 
     generateWord(word){
         const letterContainers = []
+
+        for(const c of word){
+            if(c === " "){
+                letterContainers.push(<div></div>)
+            }
+            else{
+                const container = []
+                if(c === ' '){
+                    letterContainers.push(<div></div>)
+                }
+                else{
+                    if(c === '_'){
+                        container.push(<div></div>)
+                    }
+                    else{
+                        container.push(<div className="letter">{c}</div>)
+                    }
+                    container.push(<div className="bar"></div>)
+                    letterContainers.push(<div className="letter-container">
+                        {container}
+                    </div>)
+                }
+            }
+        }
+        return letterContainers
     }
 
     render(){
@@ -74,67 +99,7 @@ class GameClient extends Component{
             <Scroll/>
             <div className="latency">{this.props.latency}ms</div>
             <div className="players">{this.generatePlayerList(mdlPlayers.players(), this.props.id, mdlPlayers.turn(), this.props.seconds)}</div>
-            <div className="word-container">
-                <div className="letter-container">
-                    <div className="letter">y</div>
-                    <div className="bar"></div>
-                </div>
-                <div className="letter-container">
-                    <div className="letter">e</div>
-                    <div className="bar"></div>
-                </div>
-                <div className="letter-container">
-                    <div className="letter">v</div>
-                    <div className="bar"></div>
-                </div>
-                <div className="letter-container">
-                    <div className="letter">g</div>
-                    <div className="bar"></div>
-                </div>
-                <div className="letter-container">
-                    <div className="letter">e</div>
-                    <div className="bar"></div>
-                </div>
-                <div className="letter-container">
-                    <div className="letter">n</div>
-                    <div className="bar"></div>
-                </div>
-                <div className="letter-container">
-                    <div className="letter">i</div>
-                    <div className="bar"></div>
-                </div>
-                <div className="letter-container">
-                    <div className="letter">y</div>
-                    <div className="bar"></div>
-                </div>
-                <div></div>
-                <div className="letter-container">
-                    <div className="letter">i</div>
-                    <div className="bar"></div>
-                </div>
-                <div className="letter-container">
-                    <div className="letter">s</div>
-                    <div className="bar"></div>
-                </div>
-                <div></div>
-                <div className="letter-container">
-                    <div className="letter">a</div>
-                    <div className="bar"></div>
-                </div>
-                <div></div>
-                <div className="letter-container">
-                    <div className="letter">g</div>
-                    <div className="bar"></div>
-                </div>
-                <div className="letter-container">
-                    <div className="letter">o</div>
-                    <div className="bar"></div>
-                </div>
-                <div className="letter-container">
-                    <div className="letter">d</div>
-                    <div className="bar"></div>
-                </div>
-            </div>
+            <div className="word-container">{this.generateWord(this.props.mdlGame.word())}</div>
             <div className="findNextGame"><div className="right-arrow"></div>find next best available game</div>
         </div>
     }

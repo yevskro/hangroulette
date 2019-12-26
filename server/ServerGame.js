@@ -139,7 +139,7 @@ export default class ServerGame{
             const mdlGameGuesses    = new GuessesModel("", "")
             const mdlPlayers        = new PlayersModel(0, 0, 0)
             const mdlGame           = new ServerGameModel(mdlGameGuesses, mdlPlayers, ServerGameModel.convertWordToHidden(word), GAMESTATUS.PLAYING, word)    
-            return new ServerSession(new SessionModel(_created.sessions, mdlScore, mdlGame, 11))
+            return new ServerSession(new SessionModel(_created.sessions, mdlScore, mdlGame, 10))
         }
 
         const _removeSession = (session) => {

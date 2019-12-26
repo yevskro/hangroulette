@@ -22,7 +22,7 @@ export default class ServerGameModel extends GameModel{
     static convertWordToHidden(word){
         /* ex input: "word", output: "____" */
         let hiddenWord = ""
-        for(const char in word){
+        for(const char of word){
             if(char !== ' '){
                 hiddenWord += "_"
             }

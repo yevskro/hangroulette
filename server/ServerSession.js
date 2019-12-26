@@ -156,9 +156,17 @@ export default class ServerSession{
             let seconds = _RESTARTSECONDS
             const mdlGame = _session.mdlGame()
             /* new game feedback to the players */
+            let msg
+            if(gameStatus === GAMESTATUS.WON){
+                msg = "congratualtions!!! you live another day!"
+            }
+            else{
+                msg = "you bastard! you wanted him to die!!!!"
+            }
+
             let newMdlGame = new ServerGameModel(mdlGame.mdlGuesses(),
                                                     mdlGame.mdlPlayers(),
-                                                    "NEW GAME",
+                                                    msg,
                                                     gameStatus,
                                                     mdlGame.serverWord())
             const restartTurn = () => {
@@ -190,7 +198,7 @@ export default class ServerSession{
         /***********************************************/
         const _players              = []
         const _TURNSECONDS          = 10
-        const _RESTARTSECONDS       = 4
+        const _RESTARTSECONDS       = 7
         const _PLAYERDOESNTEXIST    = -1
         let _session                = session
         let _timerTurn              = 0

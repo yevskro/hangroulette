@@ -96,7 +96,7 @@ class GameClient extends Component{
         const mdlPlayers        = mdlGame.mdlPlayers()
 
         return <div className='game'>
-            <Scroll/>
+            <Scroll onItemClick={this.onGuess}/>
             <div className="latency">{this.props.latency}ms</div>
             <div className="players">{this.generatePlayerList(mdlPlayers.players(), this.props.id, mdlPlayers.turn(), this.props.seconds)}</div>
             <div className="word-container">{this.generateWord(this.props.mdlGame.word())}</div>

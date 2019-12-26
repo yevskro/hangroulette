@@ -33,7 +33,7 @@ export default class Scroll extends Component{
         }
         const scrollItems = []
         for(let k = this.state.index; k < endPoint; k++){
-            scrollItems.push(<div className="scroll-item" key={`item-${k}`}><span className="scroll-item-content">{this.state.items[k]}</span></div>)
+            scrollItems.push(<div className="scroll-item" key={`item-${k}`} onClick={this.props.onItemClick}><span className="scroll-item-content">{this.state.items[k]}</span></div>)
         }
         return scrollItems
     }

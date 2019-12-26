@@ -159,6 +159,7 @@ export default class ServerGame{
             wsServer.on('request', (request) => {
                 const client    = request.accept(null,  request.origin)
                 let srvSession  = undefined
+                console.log(client.remoteAddress + " connected")
                 const handleRequest = () => {
                     if(_created.clients === _MAXCLIENTS){
                         const json = ServerSession.sessionErrorJSON(SGERRORS.SERVERISFULL)
@@ -201,13 +202,16 @@ export default class ServerGame{
                 }
 
                 const handleOnClose = () => {
-                    srvSession.removePlayer(client)
-                    if(srvSession.players() === _ZERO){
-                        _removeSession(srvSession)
-                    }
-                    _users[client.remoteAddress].connections--
-                    if(_users[client.remoteAddress].connections === _ZERO){
-                        delete _users[client.remoteAddress]
+                    if(_users[client.remoteAddress] !== undefined){
+                        srvSession.removePlayer(client)
+                        if(srvSession.players() === _ZERO){
+                            _removeSession(srvSession)
+                        }
+                        --_users[client.remoteAddress].connections
+                        --_created.clients
+                        if(_users[client.remoteAddress].connections === _ZERO){
+                            delete _users[client.remoteAddress]
+                        }
                     }
                 }
 

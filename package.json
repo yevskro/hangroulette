@@ -7,7 +7,8 @@
     "server": "nodemon --exec babel-node server/app.js",
     "client": "webpack-dev-server --mode development",
     "start": "concurrently \"npm run server\" \"npm run client\"",
-    "build": "webpack --mode development"
+    "build": "webpack --mode development",
+    "bs": "npm run build && npm run server"
   },
   "repository": {
     "type": "git",

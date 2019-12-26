@@ -10,6 +10,7 @@ import PlayerModel          from '../../../../models/Player'
 import servicePlayer       from '../../services/player'
 import Session              from './components/Session'
 import GameClient           from './scenes/GameClient'
+import "./player.css"
 
 class Player extends Component {
     constructor(props){
@@ -24,7 +25,7 @@ class Player extends Component {
 
     componentDidMount(){
         window.WebSocket    = window.WebSocket || window.MozWebSocket;
-        this.wsGameClient   = new WebSocket('ws://127.0.0.1:5001');
+        this.wsGameClient   = new WebSocket('ws://72.225.121.91:5001');
 
         this.wsGameClient.onmessage = (msg) => {
             console.log(msg.data)
@@ -71,10 +72,10 @@ class Player extends Component {
         const mdlSession    = this.state.mdlPlayer.mdlSession()
         const mdlGame       = mdlSession.mdlGame()
 
-        return <div>
-                Latency: {this.state.latency}ms
-                <Session    mdlSession  ={mdlSession}/>
-
+        /*
+                        <div class="latency">Latency: {this.state.latency}ms</div>
+                <Session    mdlSession  ={mdlSession}/>*/
+        return <div className="player-window">
                 <GameClient mdlGame     ={mdlGame}
                             playerId    ={this.state.mdlPlayer.id()}
                             onGuess     ={this.onGameGuess} 

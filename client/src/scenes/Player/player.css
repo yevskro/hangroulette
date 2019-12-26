@@ -1,0 +1,19 @@
+.latency{
+    background-color: RGB(38,38,38);;
+    color: green;
+}
+
+.session-board{
+    background-color: RGB(38,38,38);
+    color: RGB(223,223,233);
+}
+
+.player-window{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: RGB(38,38,38);
+    background: url("../../../public/mobilebackground.jpg") no-repeat;
+}

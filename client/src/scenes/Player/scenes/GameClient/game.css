@@ -1,6 +1,128 @@
 .game {
-    width: 800px;
-    height: 600px;
-    border: 1px solid blue;
-    background: url('../../../../../public/800x600-1x2x.jpg');
+    width: 400px;
+    height: 300px;
+    border: 1px solid RGB(6,6,6);
+    border-radius: 10% 25% 10% 25%;
+    background: url('../../../../../public/800x600-1x2x.jpg') no-repeat;
+    background-size: contain;
+    color: RGB(233,233,233);
+}
+
+.scroll {
+    height: 90%;
+    width: 60px;
+    overflow-y: hidden;
+    float: right;
+    margin: 0px 3px;
+}
+
+.scroll-up-arrow {
+    width: 0; 
+    height: 0; 
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 10px solid red;
+}
+
+.right-arrow{
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-left: 7px solid RGB(100,100,100);
+    border-bottom: 5px solid transparent;
+}
+
+.scroll-down-arrow {
+    width: 0; 
+    height: 0; 
+    border-top: 10px solid red;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+}
+
+.scroll-up, .scroll-down{
+    height: 10%;
+    border: 2px solid RGB(233,233,233);
+    background-color: RGB(6,6,6);
+    border-radius: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.scroll-body {
+    height: 77%;
+}
+
+@keyframes becomeVisible {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+.scroll-item {
+    height: 18%;
+    border: 2px solid rgb(168, 161, 161);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 25%;
+    background-color: RGB(6,6,6);
+}
+
+.scroll-item-content {
+    animation: 0.25s ease-out 0s 1 becomeVisible;
+}
+
+.word-container {
+    height: 200px;
+    width: 200px;
+    margin: 2px 130px 0px;
+    display: grid;
+    grid-template-columns: 25px 25px 25px 25px 25px 25px 25px 25px;
+    grid-template-rows: 40px 40px 40px 40px 40px;
+}
+
+.letter-container {
+    display: grid;
+    grid-template-columns: 25px;
+    grid-template-rows: 30px 10px;
+}
+
+.bar {
+    height: 5px;
+    width: 20px;
+    background-color: rgb(233,233,233);
+    margin: 0 auto;
+    background: url("../../../../../public/gamebar1x.jpg");
+    animation: 0.9s ease-out 0s 1 becomeVisible;
+}
+
+@keyframes shiftLetter {
+    0% {
+      margin: 0px;
+    }
+    100% {
+      margin: 10px;
+    }
+  }
+
+.letter {
+    margin: 10px;
+    animation: 0.5s ease-out 0s 1 shiftLetter;
+}
+
+.findNextGame {
+    border: 2px solid RGB(233,233,233);
+    width: 230px;
+    height: 30px;
+    margin: 20px 75px;
+    border-radius: 10% 25% 10% 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

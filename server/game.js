@@ -4,7 +4,7 @@ import SessionModel, {
     ScoreModel 
     }     from '../models/Session'
 
-import ServerSession from './ServerSession'
+import ServerSession from './session'
 import { ServerGameError, SGERRORS } from '../models/server/ServerGame'
 import { GAMESTATUS, 
     GuessesModel,
@@ -12,7 +12,7 @@ import { GAMESTATUS,
    }     from '../models/Game'
 
 import ServerGameModel from '../models/server/ServerGame'
-import wordsService from './Words'
+import wordsService from './services/words'
 
 export default class ServerGame{
     constructor(MAXCLIENTS, PORT, MAXCONNECTIONSPERUSER, UNIQUEPLAY){

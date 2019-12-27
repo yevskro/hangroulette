@@ -329,8 +329,10 @@ img.smiley{
     width: 35px;
 }
 
-.wrong-guesses-grid-item{
+.wrong {
     color: red;
+}
+.wrong-guesses-grid-item{
     text-align: center;
 }
 

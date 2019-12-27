@@ -95,6 +95,16 @@ class GameClient extends Component{
         return <div className="latency progress-bad">{latency}ms</div>
     }
 
+    generateWrongGuesses = (wrong) => {
+        const wrongGuesses = []
+        for(let i = 0; i < 6; i++){
+            wrongGuesses.push(<div className="wrong-guesses-grid-item">
+                <div className="letter wrong" key={wrong[6 - (i + 1)] + ' wrong'}>{wrong[6 - (i + 1)] || ""}</div>
+            </div>)
+        }
+        return wrongGuesses
+    }
+
     render(){
         const mdlGame           = this.props.mdlGame
         const mdlPlayers        = mdlGame.mdlPlayers()
@@ -107,28 +117,11 @@ class GameClient extends Component{
             <div className="players">{this.generatePlayerList(mdlPlayers.players(), this.props.id, mdlPlayers.turn(), this.props.seconds)}</div>
             <div className="main-container">
                 <div className="wrong-guesses-grid">
-                    <div className="wrong-guesses-grid-item">
-                        <div className="letter wrong" key={0 + ' wrong'}>{wrong[5]}</div>
-                    </div>
-                    <div className="wrong-guesses-grid-item">
-                        <div className="letter wrong" key={1 + ' wrong'}>{wrong[4]}</div>
-                    </div>
-                    <div className="wrong-guesses-grid-item">
-                        <div className="letter wrong" key={2 + ' wrong'}>{wrong[3]}</div>
-                    </div>
-                    <div className="wrong-guesses-grid-item">
-                        <div className="letter wrong" key={3 + ' wrong'}>{wrong[2]}</div>
-                    </div>
-                    <div className="wrong-guesses-grid-item">
-                        <div className="letter wrong" key={4 + ' wrong'}>{wrong[1]}</div>
-                    </div>
-                    <div className="wrong-guesses-grid-item">
-                        <div className="letter wrong" key={5 + ' wrong'}>{wrong[0]}</div>
-                    </div>
+                    {this.generateWrongGuesses(mdlGuesses.wrong())}
                 </div>
                 <div className="word-container">{this.generateWord(this.props.mdlGame.word(), this.props.mdlGame.gameStatus())}</div>
             </div>
-            <div className="findNextGame"><div className="right-arrow"></div>find next best available game</div>
+            <div className="findNextGame" onClick={this.props.onNext}><div className="right-arrow"></div>find next best available game</div>
         </div>
     }
 }

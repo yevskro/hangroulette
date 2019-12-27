@@ -103,19 +103,19 @@
 }
 
 .scroll-item-big {
-    width: 84%;
+    width: 85%;
 }
 
 .scroll-item-big:hover{
-    width: 94%;
+    width: 90%;
 }
 
 .scroll-item-small:hover{
-    width: 60%;
+    width: 70%;
 }
 
 .scroll-item-small{
-    width: 72%;
+    width: 75%;
 }
 
 /*

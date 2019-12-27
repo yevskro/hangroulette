@@ -379,8 +379,7 @@ img.smiley{
     height: 300px;
     border: 1px solid RGB(6,6,6);
     border-radius: 10% 25% 10% 25%;
-    background-color: RGB(6,6,6);
-    opacity: 50%;
+    background-color: RGBA(6,6,6, 0.5);
     position: absolute;
     top: 0px;
     color: red;

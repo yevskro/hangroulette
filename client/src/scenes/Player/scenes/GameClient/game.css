@@ -86,12 +86,12 @@
     border-radius: 25%;
     background-color: RGB(6,6,6);
     font-size: 24px;
-    width: 75%;
+    width: 90%;
     margin: 0px auto;
 }
 
 .scroll-item:nth-child(even){
-    width: 65%;
+    width: 93%;
 }
 .scroll-item-content {
     animation: 0.25s ease-out 0s 1 becomeVisible;

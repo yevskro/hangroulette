@@ -93,12 +93,13 @@ export default class ServerSession{
                     mdlScore = mdlScore.lost()
                 }
                 _stopTimerTurn()
+                _session = new SessionModel(_session.id(), mdlScore, newGameState, seconds)
                 _startTimerRestartGame(gameStatus)
             }
             else{
                 _session = new SessionModel(_session.id(), mdlScore, newGameState, seconds)
-                _broadcastState()
             }
+            _broadcastState()
             return this
         }
         /*              private methods                */
@@ -188,7 +189,7 @@ export default class ServerSession{
                     newMdlGame = new ServerGameModel(mdlGame.mdlGuesses(),
                                                         mdlGame.mdlPlayers(),
                                                         gameOverMsg,
-                                                        gameStatus,
+                                                        GAMESTATUS.LOADING,
                                                         mdlGame.serverWord())
                 }
                 /* update session seconds state */
@@ -198,7 +199,13 @@ export default class ServerSession{
                                             seconds)
                 _broadcastState()
             }
-            _timerRestartGame = setInterval(restartTurn, 1000)
+
+            const delayTime = () => {
+                clearInterval(delayTimer)
+                _timerRestartGame = setInterval(restartTurn, 1000)
+            }
+
+            const delayTimer = setInterval(delayTime, 2500)
         }
 
         const _stopTimerRestartGame = () => {

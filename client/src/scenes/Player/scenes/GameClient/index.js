@@ -109,7 +109,7 @@ class GameClient extends Component{
         const l = <div className="latency progress-bad">{this.generateLatency}ms</div>
         //{this.generateWord(this.props.mdlGame.word(), this.props.mdlGame.gameStatus())}
         return <div className='game'>
-            <Scroll onItemClick={this.onGuess}/>
+            <Scroll onItemClick={this.onGuess} disabled={false} skull={mdlGame.correct()} smiley={mdlGame.wrong()}/>
             {this.generateLatency(this.props.latency)}
             <div className="players">{this.generatePlayerList(mdlPlayers.players(), this.props.id, mdlPlayers.turn(), this.props.seconds)}</div>
             <div className="word-container">{this.generateWord(this.props.mdlGame.word(), this.props.mdlGame.gameStatus())}</div>

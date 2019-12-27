@@ -131,11 +131,10 @@
 .word-container {
     height: 200px;
     width: 200px;
-    margin: 2px 130px 0px;
-    display: grid;
+    margin: 0px 0px 0px 20px;
+    display: inline-grid;
     grid-template-columns: 25px 25px 25px 25px 25px 25px 25px 25px;
     grid-template-rows: 40px 40px 40px 40px 40px;
-    clear: left;
 }
 
 .letter-container {
@@ -266,7 +265,7 @@
     color: RGB(233,233,233);
     width: 285px;
     height: 30px;
-    margin: 20px 55px;
+    margin: 10px 55px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -319,4 +318,55 @@ img.skull{
 img.smiley{
     width: 35px;
     height: 35px;
+}
+
+.wrong-guesses-grid{
+    display: inline-grid;
+    font-size: 22px;
+    grid-template-columns: 30px;
+    grid-template-rows: 35px 35px 35px 35px 35px 35px;
+    margin: 1px 40px 0px 40px;
+    width: 35px;
+}
+
+.wrong-guesses-grid-item{
+    color: red;
+    text-align: center;
+}
+
+.wrong-guesses-grid-item:nth-child(1){
+    border-bottom: 1px solid RGB(233,233,233);
+    border-right: 2px solid RGB(233,233,233);
+}
+
+.wrong-guesses-grid-item:nth-child(2){
+    border-top: 1px solid RGB(233,233,233);
+    border-left: 2px solid RGB(233,233,233);
+    border-bottom: 1px solid RGB(233,233,233);
+}
+
+.wrong-guesses-grid-item:nth-child(3){
+    border-top: 1px solid RGB(233,233,233);
+    border-right: 2px solid RGB(233,233,233);
+    border-bottom: 1px solid RGB(233,233,233);
+}
+
+.wrong-guesses-grid-item:nth-child(4){
+    border-bottom: 1px solid RGB(233,233,233);
+    border-left: 2px solid RGB(233,233,233);
+    border-top: 1px solid RGB(233,233,233);
+}
+.wrong-guesses-grid-item:nth-child(5){
+    border-top: 1px solid RGB(233,233,233);
+    border-right: 2px solid RGB(233,233,233);
+    border-bottom: 1px solid RGB(233,233,233);
+}
+
+.wrong-guesses-grid-item:nth-child(6){
+    border-top: 1px solid RGB(233,233,233);
+    border-left: 2px solid RGB(233,233,233);
+}
+.main-container{
+    display: flex;   
+    align-items: center;
 }

@@ -11,7 +11,7 @@ class GameClient extends Component{
     }
 
     onGuess = (e) => {
-        if(this.props.id === this.props.mdlGame.mdlPlayers().turn()){
+        if(this.props.mdlGame.gameStatus() === "playing" && this.props.id === this.props.mdlGame.mdlPlayers().turn()){
             this.props.mdlGame.mdlGuesses().validateGuess(e.target.innerHTML)
             this.props.onGuess(e.target.innerHTML)
         }
@@ -24,14 +24,6 @@ class GameClient extends Component{
             default:
                 return <div><button onClick={this.props.onNext}>Next Game</button></div>
         }
-    }
-
-    guessButtons = () => {
-        /* Loop through ASCII codes 'a to z' = '97 to 122' */
-        return [...Array(122-97)].map( (element, index) => {
-            const char = String.fromCharCode(index + 97)
-            return <button className="btn-guess" key={`guess-${char}`} onClick={this.onGuess}>{char}</button>
-        })
     }
     
     generatePlayerList = (players, id, turn, seconds) => {
@@ -107,12 +99,35 @@ class GameClient extends Component{
         const mdlGame           = this.props.mdlGame
         const mdlPlayers        = mdlGame.mdlPlayers()
         const mdlGuesses        = mdlGame.mdlGuesses()
+        const wrong             = mdlGuesses.wrong()
         //{this.generateWord(this.props.mdlGame.word(), this.props.mdlGame.gameStatus())}
         return <div className='game'>
             <Scroll onItemClick={this.onGuess} skull={mdlGame.mdlGuesses().wrong()} smiley={mdlGame.mdlGuesses().correct()}/>
             {this.generateLatency(this.props.latency)}
             <div className="players">{this.generatePlayerList(mdlPlayers.players(), this.props.id, mdlPlayers.turn(), this.props.seconds)}</div>
-            <div className="word-container">{this.generateWord(this.props.mdlGame.word(), this.props.mdlGame.gameStatus())}</div>
+            <div className="main-container">
+                <div className="wrong-guesses-grid">
+                    <div className="wrong-guesses-grid-item">
+                        <div className="letter wrong" key={0 + ' wrong'}>{wrong[5]}</div>
+                    </div>
+                    <div className="wrong-guesses-grid-item">
+                        <div className="letter wrong" key={1 + ' wrong'}>{wrong[4]}</div>
+                    </div>
+                    <div className="wrong-guesses-grid-item">
+                        <div className="letter wrong" key={2 + ' wrong'}>{wrong[3]}</div>
+                    </div>
+                    <div className="wrong-guesses-grid-item">
+                        <div className="letter wrong" key={3 + ' wrong'}>{wrong[2]}</div>
+                    </div>
+                    <div className="wrong-guesses-grid-item">
+                        <div className="letter wrong" key={4 + ' wrong'}>{wrong[1]}</div>
+                    </div>
+                    <div className="wrong-guesses-grid-item">
+                        <div className="letter wrong" key={5 + ' wrong'}>{wrong[0]}</div>
+                    </div>
+                </div>
+                <div className="word-container">{this.generateWord(this.props.mdlGame.word(), this.props.mdlGame.gameStatus())}</div>
+            </div>
             <div className="findNextGame"><div className="right-arrow"></div>find next best available game</div>
         </div>
     }

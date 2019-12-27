@@ -66,7 +66,6 @@ export default class Scroll extends Component{
             const top = {top: `${this.state.top}%`}
             const size = (k + 1) % 2 ? this.state.odd : this.state.even 
             let scrollItemContent = this.state.items[k]
-            console.log(this.props.smiley)
             if(this.props.skull.includes(this.state.items[k])){
                 scrollItemContent = <img className="skull" src={svgSkull}/>
             }

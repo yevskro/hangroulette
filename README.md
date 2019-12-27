@@ -1,6 +1,5 @@
-# simplehangman
+# hangroulette
 
-This a simple hangman web game using postgresql with one table
-and a simple react front end. The game is handled server side for
-protection from hacks.
+a hangman game concept on the client side and a chatroulette concept on the server side. no need to create an account
+load up the page and start playing with strangers from all over the world. everything is server side. everything is validated preventing hackers spoil the sportsmanship. enjoy!
 [For the logic breakdown check out blueprint.md](../master/blueprint.md)

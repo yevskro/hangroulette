@@ -202,7 +202,9 @@ export default class ServerGame{
                 }
 
                 const handleOnClose = () => {
+                    srvSession.removePlayer(client)
                     if(_users[client.remoteAddress] !== undefined){
+                        srvSession.removePlayer()
                         if(srvSession.players() === _ZERO){
                             _removeSession(srvSession)
                         }

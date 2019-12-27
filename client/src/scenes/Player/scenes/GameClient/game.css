@@ -67,6 +67,10 @@
     border-color: RGB(100,100,100);
 }
 
+.scroll-up:active, .scroll-down:active{
+    border-color: RGB(100,100,100);
+}
+
 .scroll-body {
     height: 77%;
     text-align: center;

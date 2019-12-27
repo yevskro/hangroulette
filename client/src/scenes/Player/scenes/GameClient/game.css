@@ -65,6 +65,7 @@
 .scroll-body {
     height: 77%;
     text-align: center;
+    overflow: hidden;
 }
 
 @keyframes becomeVisible {
@@ -86,13 +87,25 @@
     border-radius: 25%;
     background-color: RGB(6,6,6);
     font-size: 24px;
-    width: 90%;
+    width: 80%;
     margin: 0px auto;
+    position: relative;
+    transition: top 2s, width 0.2s;
 }
 
+.scroll-item-big {
+    width: 88%;
+}
+
+.scroll-item-small{
+    width: 78%;
+}
+
+/*
 .scroll-item:nth-child(even){
     width: 93%;
 }
+*/
 .scroll-item-content {
     animation: 0.25s ease-out 0s 1 becomeVisible;
 }

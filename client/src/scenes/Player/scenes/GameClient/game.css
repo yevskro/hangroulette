@@ -60,6 +60,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: border-width 0.2s;
+}
+
+.scroll-up:hover, .scroll-down:hover{
+    border-color: RGB(100,100,100);
 }
 
 .scroll-body {
@@ -93,8 +98,29 @@
     transition: top 2s, width 0.2s;
 }
 
+.scroll-item:active {
+    color: RGB(100,100,100);
+}
+
+.scroll-item:hover {
+    color: red;   
+    border-color: RGB(100,100,100);
+}
+
+.scroll-item:active {
+    color: red;   
+    border-color: RGB(100,100,100);
+}
 .scroll-item-big {
     width: 88%;
+}
+
+.scroll-item-big:hover{
+    width: 90%;
+}
+
+.scroll-item-small:hover{
+    width: 80%;
 }
 
 .scroll-item-small{
@@ -109,6 +135,7 @@
 .scroll-item-content {
     animation: 0.25s ease-out 0s 1 becomeVisible;
 }
+
 
 .word-container {
     height: 200px;
@@ -254,6 +281,13 @@
     align-items: center;
 }
 
+.findNextGame:hover {
+    color: RGB(100,100,100);
+}
+
+.findNextGame:active{
+    color: RGB(100,100,100);
+}
 .players {
     display: flex;
     height: 40px;

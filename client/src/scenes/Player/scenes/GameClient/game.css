@@ -67,10 +67,6 @@
     border-color: RGB(100,100,100);
 }
 
-.scroll-up:active, .scroll-down:active{
-    border-color: RGB(100,100,100);
-}
-
 .scroll-body {
     height: 77%;
     text-align: center;
@@ -102,19 +98,11 @@
     transition: top 2s, width 0.2s;
 }
 
-.scroll-item:active {
-    color: RGB(100,100,100);
-}
-
 .scroll-item:hover {
     color: red;   
     border-color: RGB(100,100,100);
 }
 
-.scroll-item:active {
-    color: red;   
-    border-color: RGB(100,100,100);
-}
 .scroll-item-big {
     width: 88%;
 }
@@ -289,9 +277,6 @@
     color: RGB(100,100,100);
 }
 
-.findNextGame:active{
-    color: RGB(100,100,100);
-}
 .players {
     display: flex;
     height: 40px;

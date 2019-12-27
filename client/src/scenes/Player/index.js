@@ -19,7 +19,8 @@ class Player extends Component {
         const mdlPlayer = this.createPlayerFromObj(player)
         this.state = {
             mdlPlayer: mdlPlayer,
-            latency: 0 
+            latency: 0,
+            search: 'search'
         }
     }
 
@@ -30,6 +31,9 @@ class Player extends Component {
         this.wsGameClient.onmessage = (msg) => {
             console.log(msg.data)
             this.setStateFromJson(msg.data)
+            this.setState({
+                search: 'nosearch'
+            })
         }
     }
 
@@ -65,6 +69,7 @@ class Player extends Component {
 
     onGameNext = () => {
         const string = JSON.stringify({action: {next: "game"}})
+        this.setState({search: "search"})
         this.wsGameClient.send(string)
     }
 
@@ -79,6 +84,7 @@ class Player extends Component {
                             onNext      ={this.onGameNext}
                             latency     ={this.state.latency}
                             seconds     ={mdlSession.seconds()}
+                            search      ={this.state.search}
                             />
             </div>
     }

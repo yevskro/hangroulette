@@ -122,6 +122,7 @@ class GameClient extends Component{
                 <div className="word-container">{this.generateWord(this.props.mdlGame.word(), this.props.mdlGame.gameStatus())}</div>
             </div>
             <div className="findNextGame" onClick={this.props.onNext}><div className="right-arrow"></div>find next best available game</div>
+            <div className={this.props.search}>searching..</div>
         </div>
     }
 }

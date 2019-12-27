@@ -17,6 +17,7 @@
     background-size: contain;
     color: RGB(233,233,233);
     font-family: 'Pixel';
+    position: absolute;
 }
 
 .scroll {
@@ -371,4 +372,23 @@ img.smiley{
 .main-container{
     display: flex;   
     align-items: center;
+}
+
+.search {
+    width: 400px;
+    height: 300px;
+    border: 1px solid RGB(6,6,6);
+    border-radius: 10% 25% 10% 25%;
+    background-color: RGB(6,6,6);
+    opacity: 50%;
+    position: absolute;
+    top: 0px;
+    color: red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nosearch{
+    visibility: hidden;
 }

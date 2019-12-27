@@ -1,6 +1,7 @@
 import SessionModel, { ScoreModel } from '../models/Session'
 import { GAMESTATUS, PlayersModel, GuessesModel } from '../models/Game'
 import ServerGameModel, { ServerGameError, SGERRORS } from '../models/server/ServerGame'
+import wordService from './Words'
 
 export default class ServerSession{
     static sessionErrorJSON(error){
@@ -177,7 +178,7 @@ export default class ServerSession{
                     /* end of the timer */
                     _stopTimerRestartGame()
                     /* start new game with a word */
-                    const newWord = mdlGame.serverWord()
+                    const newWord = wordService.getRandomWord()
                     newMdlGame = new ServerGameModel(new GuessesModel("", ""),
                                                         mdlGame.mdlPlayers(),
                                                         ServerGameModel.convertWordToHidden(newWord),

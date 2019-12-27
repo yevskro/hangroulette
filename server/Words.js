@@ -1,7 +1,7 @@
 const LineByLine = require('n-readlines');
 
 class WordsService{
-    constructor(filePath){
+    constructor(wordFile, wonFile, lostFile){
         const loadFromFileTo = (file, toArray) => {
             let liner, line, lineNumber = 0
             try{
@@ -28,9 +28,9 @@ class WordsService{
         const WORD_LENGTH = 40
 
         console.log("WordService loading...")
-        loadFromFileTo('./words.txt', words)
-        loadFromFileTo('./lost.txt', lostMsg)
-        loadFromFileTo('./won.txt', wonMsg)
+        loadFromFileTo(wordFile, words)
+        loadFromFileTo(wonFile, wonMsg)
+        loadFromFileTo(lostFile, lostMsg)
         console.log("WordService loaded...")
     
         this.randomWord = () => {
@@ -47,6 +47,6 @@ class WordsService{
     }
 }
 
-const wordsService = new WordsService("./words.txt")
+const wordsService = new WordsService("./words.txt", "./won.txt", "./lost.txt")
 
 export default wordsService

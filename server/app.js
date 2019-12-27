@@ -14,3 +14,4 @@ app.get('*', (req, res) => {
 
 const serverGame = new ServerGame(10, 5001, 5, false)
 app.listen(port)
+console.log("http server launched")

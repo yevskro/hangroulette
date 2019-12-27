@@ -72,7 +72,7 @@ export default class Scroll extends Component{
             else if(this.props.smiley.includes(this.state.items[k])){
                 scrollItemContent = <img className="smiley" src={svgSmiley}/>
             }
-            scrollItems.push(<div className={"scroll-item " + size} style={top} key={`item-${k}`} onClick={this.props.onItemClick}><span className="scroll-item-content">{scrollItemContent}</span></div>)
+            scrollItems.push(<div className={"scroll-item " + size} style={top} key={`item-${k}`}><span className="scroll-item-content" onClick={this.props.onItemClick}>{scrollItemContent}</span></div>)
         }
         return scrollItems
     }

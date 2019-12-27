@@ -259,5 +259,6 @@ export default class ServerGame{
         const   _ZERO                   = 0
         /***********************************************/
         _server.listen(_PORT);
+        console.log("game server launched")
     }
 }  

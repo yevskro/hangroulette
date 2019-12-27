@@ -36,13 +36,13 @@ class GameClient extends Component{
         const list = []
         let classGuessTime = ""
         if(seconds > 7){
-            classGuessTime = "player-guess-time-good"
+            classGuessTime = "progress-good"
         }
         else if (seconds > 3){
-            classGuessTime = "player-guess-time-caution"
+            classGuessTime = "progress-caution"
         }
         else {
-            classGuessTime = "player-guess-time-bad"
+            classGuessTime = "progress-bad"
         }
         
         for(let i = 0; i < players; i++){
@@ -91,13 +91,26 @@ class GameClient extends Component{
         return letterContainers
     }
 
+    generateLatency = (latency) => {
+        if(latency < 100){
+            return <div className="latency progress-good">{latency}ms</div>
+        }
+        else if(latency < 200){
+            return <div className="latency progress-caution">{latency}ms</div>
+        }
+        
+        return <div className="latency progress-bad">{latency}ms</div>
+    }
+
     render(){
         const mdlGame           = this.props.mdlGame
         const mdlPlayers        = mdlGame.mdlPlayers()
+        const latency           = this.generateLatency(this.props.latency)
+        const l = <div className="latency progress-bad">{this.generateLatency}ms</div>
         //{this.generateWord(this.props.mdlGame.word(), this.props.mdlGame.gameStatus())}
         return <div className='game'>
             <Scroll onItemClick={this.onGuess}/>
-            <div className="latency">{this.props.latency}ms</div>
+            {this.generateLatency(this.props.latency)}
             <div className="players">{this.generatePlayerList(mdlPlayers.players(), this.props.id, mdlPlayers.turn(), this.props.seconds)}</div>
             <div className="word-container">{this.generateWord(this.props.mdlGame.word(), this.props.mdlGame.gameStatus())}</div>
             <div className="findNextGame"><div className="right-arrow"></div>find next best available game</div>

@@ -92,7 +92,6 @@
     border-radius: 25%;
     background-color: RGB(6,6,6);
     font-size: 24px;
-    width: 80%;
     margin: 0px auto;
     position: relative;
     transition: top 2s, width 0.2s;
@@ -104,19 +103,19 @@
 }
 
 .scroll-item-big {
-    width: 88%;
+    width: 84%;
 }
 
 .scroll-item-big:hover{
-    width: 90%;
+    width: 94%;
 }
 
 .scroll-item-small:hover{
-    width: 80%;
+    width: 60%;
 }
 
 .scroll-item-small{
-    width: 78%;
+    width: 72%;
 }
 
 /*
@@ -284,15 +283,15 @@
     font-size: 12px;
 }
 
-.player-guess-time-good{
+.progress-good{
     color: green;
 }
 
-.player-guess-time-caution{
+.progress-caution{
     color: yellow;
 }
 
-.player-guess-time-bad{
+.progress-bad{
     color: red;
 }
 
@@ -306,7 +305,6 @@
 }
 
 .latency{
-    color: green;
     font-size: 13px;
     margin-left: 15px;
     margin-top: 23px;

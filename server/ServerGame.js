@@ -59,7 +59,7 @@ export default class ServerGame{
             const sessionIndex = _bestSessionFromIndex(0, client)
 
             if(sessionIndex === _NOFOUNDSESSION){
-                const newSession = _createSession(wordsService.getRandomWord())
+                const newSession = _createSession(wordsService.randomWord())
                 _sessions.push(newSession)
                 return newSession
             }

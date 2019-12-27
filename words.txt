@@ -45,7 +45,6 @@ vodka
 rum
 tequila
 patron
-imagination is more important than knowledge
 knowledge is power
 united states of america
 the big lebowski
@@ -70,7 +69,6 @@ hells kitchen
 west side
 east side
 brazil
-madness is or is not the loftiest intelligence
 durran durran
 ace of spades
 texas hold en
@@ -100,3 +98,4 @@ stone temple pilots
 sound garden
 alice n chains
 for whom the bell tolls
+american psycho

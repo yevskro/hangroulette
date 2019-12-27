@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import svgSkull from '../../../../../../public/skull.svg'
+import svgSmiley from '../../../../../../public/smiley.svg'
 
 export default class Scroll extends Component{
     constructor(props){
@@ -59,23 +61,24 @@ export default class Scroll extends Component{
     } 
 
     generateScrollItems = () => {
-        /*let endPoint = this.state.index + this.state.show
-        if(endPoint > this.state.items.length){
-            endPoint = this.state.index + (this.state.items.length - this.state.index)
-        }*/
-
-        //let k = this.state.index
         const scrollItems = []
         for(let k = 0; k < this.state.items.length; k++){
             const top = {top: `${this.state.top}%`}
             const size = (k + 1) % 2 ? this.state.odd : this.state.even 
-            scrollItems.push(<div className={"scroll-item " + size} style={top} key={`item-${k}`} onClick={this.props.onItemClick}><span className="scroll-item-content">{this.state.items[k]}</span></div>)
+            let scrollItemContent = this.state.items[k]
+            console.log(this.props.smiley)
+            if(this.props.skull.includes(this.state.items[k])){
+                scrollItemContent = <img className="skull" src={svgSkull}/>
+            }
+            else if(this.props.smiley.includes(this.state.items[k])){
+                scrollItemContent = <img className="smiley" src={svgSmiley}/>
+            }
+            scrollItems.push(<div className={"scroll-item " + size} style={top} key={`item-${k}`} onClick={this.props.onItemClick}><span className="scroll-item-content">{scrollItemContent}</span></div>)
         }
         return scrollItems
     }
 
     render(){
-        //const scrollItems = this.generateScrollItems()
         return <div className="scroll">
                     <div className="scroll-up" onClick={this.onUp}><div className="scroll-up-arrow"></div></div>
                     <div className="scroll-body">

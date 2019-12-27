@@ -11,8 +11,10 @@ class GameClient extends Component{
     }
 
     onGuess = (e) => {
-        this.props.mdlGame.mdlGuesses().validateGuess(e.target.innerHTML)
-        this.props.onGuess(e.target.innerHTML)
+        if(this.props.id === this.props.mdlGame.mdlPlayers().turn()){
+            this.props.mdlGame.mdlGuesses().validateGuess(e.target.innerHTML)
+            this.props.onGuess(e.target.innerHTML)
+        }
     }
 
     nextGameButton = () => {
@@ -64,7 +66,6 @@ class GameClient extends Component{
 
     generateWord(word, status){
         const letterContainers = []
-        console.log(status)
         for(let i in word){
             if(word[i] === " "){
                 letterContainers.push(<div></div>)
@@ -105,11 +106,10 @@ class GameClient extends Component{
     render(){
         const mdlGame           = this.props.mdlGame
         const mdlPlayers        = mdlGame.mdlPlayers()
-        const latency           = this.generateLatency(this.props.latency)
-        const l = <div className="latency progress-bad">{this.generateLatency}ms</div>
+        const mdlGuesses        = mdlGame.mdlGuesses()
         //{this.generateWord(this.props.mdlGame.word(), this.props.mdlGame.gameStatus())}
         return <div className='game'>
-            <Scroll onItemClick={this.onGuess} disabled={false} skull={mdlGame.correct()} smiley={mdlGame.wrong()}/>
+            <Scroll onItemClick={this.onGuess} skull={mdlGame.mdlGuesses().wrong()} smiley={mdlGame.mdlGuesses().correct()}/>
             {this.generateLatency(this.props.latency)}
             <div className="players">{this.generatePlayerList(mdlPlayers.players(), this.props.id, mdlPlayers.turn(), this.props.seconds)}</div>
             <div className="word-container">{this.generateWord(this.props.mdlGame.word(), this.props.mdlGame.gameStatus())}</div>

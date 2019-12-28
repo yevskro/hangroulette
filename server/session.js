@@ -47,7 +47,7 @@ export default class ServerSession{
             if(playerIndex !== _PLAYERDOESNTEXIST){
                 const turn              = _session.mdlGame().turn()
                 const playerPosition    = playerIndex + 1
-                const newMdlGame        = _session.mdlGame().removePlayer()
+                const newMdlGame        = _session.mdlGame().removePlayer(playerPosition)
                 let seconds             = _session.seconds()
   
                 // turn = 3 ->

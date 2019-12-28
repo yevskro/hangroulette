@@ -58,14 +58,14 @@ export default class ServerGameModel extends GameModel{
             return new ServerGameModel(this.mdlGuesses(),newMdlPlayers,this.word(),this.gameStatus(),_serverWord)
         }
 
-        this.removePlayer = () => {
+        this.removePlayer = (player) => {
             let newMdlPlayers = undefined
             const mdlPlayers = this.mdlPlayers()
             if(mdlPlayers.players() === 0){
                 return new ServerGameError(SGERRORS.CANTREMOVEPLAYER)
             }
             else{
-                newMdlPlayers = mdlPlayers.removePlayer()
+                newMdlPlayers = mdlPlayers.removePlayer(player)
             }
 
             return new ServerGameModel(this.mdlGuesses(),newMdlPlayers,this.word(),this.gameStatus(),_serverWord)

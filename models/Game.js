@@ -64,11 +64,14 @@ export class PlayersModel {
             return turn % players + 1
         }
 
-        this.removePlayer = () => {
-            if(_players === _turn){
-                return new PlayersModel(_players - 1, 1)
+        this.removePlayer = (player) => {
+            if(player === _turn){
+                if(_players === player){
+                    return new PlayersModel(_players - 1, 1)
+                }
+                return new PlayersModel(_players - 1, _turn)
             }
-            return new PlayersModel(_players - 1, _turn)
+            return new PlayersModel(_players - 1, _turn - 1)
         }
 
         this.validatePlayers = (players) => {

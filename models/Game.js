@@ -67,10 +67,16 @@ export class PlayersModel {
         this.removePlayer = (player) => {
             if(player === _turn){
                 if(_players === player){
+                    /* last player is leaving, shift players by 1, reset turn to the first player*/
                     return new PlayersModel(_players - 1, 1)
                 }
+                /*  
+                    player leaving is not last, shift players by 1, but keep the turn position same because the next
+                    player will be shifted to the turn position
+                */
                 return new PlayersModel(_players - 1, _turn)
             }
+            /* player leaving is not in a turn, shift players by 1 and sync up turn */
             return new PlayersModel(_players - 1, _turn - 1)
         }
 

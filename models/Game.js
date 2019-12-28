@@ -65,9 +65,12 @@ export class PlayersModel {
         }
 
         this.removePlayer = () => {
-
+            if(_players === _turn){
+                return new PlayersModel(_players - 1, 1)
+            }
+            return new PlayersModel(_players - 1, _turn)
         }
-        
+
         this.validatePlayers = (players) => {
             if(typeof(players) !== 'number' || players < 0 || players > 3){
                 throw new Error(`players must be an number between 0 and 3 {${players}}`)

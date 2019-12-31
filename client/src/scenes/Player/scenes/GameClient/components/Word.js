@@ -1,28 +1,25 @@
 import React from 'react'
 
+const EmptySpace = () => <div></div>
+const Letter = (props) => <div className="letter">{props.letter}</div>
+const Bar = () => <div className="bar"></div>
+const LetterContainer = (props) => <div className="letter-container"> 
+                                        {props.letter === ' ' ? <EmptySpace/> : <Letter letter={props.letter}/>}
+                                        <Bar/>
+                                    </div>
+
 const generateWord = (word, status) => {
     const letterContainers = []
     for(let i in word){
         if(word[i] === " "){
-            letterContainers.push(<div></div>)
+            letterContainers.push(<EmptySpace key={i + ' ' + status}/>)
         }
         else{
-            const container = []
-            if(word[i] === ' '){
-                letterContainers.push(<div></div>)
+            let letter = word[i]
+            if(word[i] === '_'){
+                letter = " "
             }
-            else{
-                if(word[i] === '_'){
-                    container.push(<div></div>)
-                }
-                else{
-                    container.push(<div className="letter">{word[i]}</div>)
-                }
-                container.push(<div className="bar"></div>)
-                letterContainers.push(<div className="letter-container" key={i + ' ' + status}> 
-                    {container}
-                </div>)
-            }
+            letterContainers.push(<LetterContainer letter={letter} key={i + ' ' + status}/>)
         }
     }
     return letterContainers

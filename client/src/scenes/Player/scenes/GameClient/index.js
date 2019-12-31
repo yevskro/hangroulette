@@ -1,16 +1,14 @@
 import React, { Component } from 'react'
-import { GAMESTATUS } from '../../../../../../models/Game'
+import Scroll               from './components/Scroll'
+import Search               from './components/Search'
+import Latency              from './components/Latency'
+import Players              from './components/Players'
+import GameButton           from './components/GameButton'
+import Main                 from './components/Main'
+import Wrong                from './components/Wrong'
+import Word                 from './components/Word'
 import './game.css'
-import Scroll from './components/Scroll'
-import Search from './components/Search'
-import Latency from './components/Latency'
-import Players from './components/Players'
-import GameButton from './components/GameButton'
-import Main from './components/Main'
-import Wrong from './components/Wrong'
-import Word from './components/Word'
-
-/* TODO: clean up code and refactor components */
+////import { GAMESTATUS } from '../../../../../../models/Game'
 
 class GameClient extends Component{
     constructor(props){
@@ -24,48 +22,27 @@ class GameClient extends Component{
         }
     }
 
-    nextGameButton = () => {
-        switch(this.props.gameStatus){
-            case GAMESTATUS.LOADING:
-                return <React.Fragment></React.Fragment>
-            default:
-                return <div><button onClick={this.props.onNext}>Next Game</button></div>
-        }
-    }
-
     render(){
         const mdlGame           = this.props.mdlGame
         const mdlPlayers        = mdlGame.mdlPlayers()
         const mdlGuesses        = mdlGame.mdlGuesses()
 
         return <div className='game'>
-            <Scroll onItemClick={this.onGuess} skull={mdlGame.mdlGuesses().wrong()} smiley={mdlGame.mdlGuesses().correct()}/>
-            <Latency latency={this.props.latency}/>
-            <Players    player={this.props.id}
-                        players={mdlPlayers.players()}
-                        turn={mdlPlayers.turn()}
-                        seconds={this.props.seconds}
-            />
-            <Main>
-                <Wrong guesses={mdlGuesses.wrong()}/>
-                <Word word={this.props.mdlGame.word()} gameStatus={this.props.mdlGame.gameStatus()}/>
-            </Main>
-            <GameButton onClick={this.props.onNext} title="find next best available game"/>
-            <Search status={this.props.search}/>
-        </div>
+                <Scroll onItemClick={this.onGuess} skull={mdlGame.mdlGuesses().wrong()} smiley={mdlGame.mdlGuesses().correct()}/>
+                <Latency latency={this.props.latency}/>
+                <Players    player={this.props.id}
+                            players={mdlPlayers.players()}
+                            turn={mdlPlayers.turn()}
+                            seconds={this.props.seconds}
+                />
+                <Main>
+                    <Wrong guesses={mdlGuesses.wrong()}/>
+                    <Word word={this.props.mdlGame.word()} gameStatus={this.props.mdlGame.gameStatus()}/>
+                </Main>
+                <GameButton onClick={this.props.onNext} title="find next best available game"/>
+                <Search status={this.props.search}/>
+            </div>
     }
 }
 
-/* <Main>
-    <Wrong guesses={mdlGuesses.wrong()}/>
-    <Word word={this.props.mdlGame.word()} gameStatus={this.props.mdlGame.gameStatus()}/>
-</Main> */
-/*
-           <div className="main-container">
-                <div className="wrong-guesses-grid">
-                    {this.generateWrongGuesses(mdlGuesses.wrong())}
-                </div>
-                <div className="word-container">{this.generateWord(this.props.mdlGame.word(), this.props.mdlGame.gameStatus())}</div>
-            </div>
-            */
 export default GameClient

@@ -1,12 +1,12 @@
 import React from 'react'
+import Letter from './Letter'
 
-const EmptySpace = () => <div></div>
-const Letter = (props) => <div className="letter">{props.letter}</div>
-const Bar = () => <div className="bar"></div>
-const LetterContainer = (props) => <div className="letter-container"> 
-                                        {props.letter === ' ' ? <EmptySpace/> : <Letter letter={props.letter}/>}
-                                        <Bar/>
-                                    </div>
+const EmptySpace        = ()        => <div></div>
+const Bar               = ()        => <div className="bar"></div>
+const WordGridItem      = (props)   => <div className="word-grid-item"> 
+                                          {props.letter === ' ' ? <EmptySpace/> : <Letter letter={props.letter}/>}
+                                          <Bar/>
+                                        </div>
 
 const generateWord = (word, status) => {
     const letterContainers = []
@@ -19,12 +19,12 @@ const generateWord = (word, status) => {
             if(word[i] === '_'){
                 letter = " "
             }
-            letterContainers.push(<LetterContainer letter={letter} key={i + ' ' + status}/>)
+            letterContainers.push(<WordGridItem letter={letter} key={i + ' ' + status}/>)
         }
     }
     return letterContainers
 }
 
-const Word = (props) => <div className="word-container">{generateWord(props.word, props.gameStatus)}</div>
+const Word = (props) => <div className="word-grid">{generateWord(props.word, props.gameStatus)}</div>
 
 export default Word

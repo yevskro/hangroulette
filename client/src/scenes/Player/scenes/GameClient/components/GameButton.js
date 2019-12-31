@@ -1,6 +1,6 @@
 import React from 'react'
 
-const GameButton = (props) => <div className="findNextGame" onClick={props.onClick}>
+const GameButton = (props) => <div className={props.name} onClick={props.onClick}>
                                             <div className="right-arrow"></div>
                                             {props.title}
                                         </div>

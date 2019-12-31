@@ -21,16 +21,16 @@ const generatePlayers = (player, players, turn, seconds) => {
     
     for(let i = 0; i < players; i++){
         if(i + 1 === player){
-            list.push(<React.Fragment>you</React.Fragment>)
+            list.push(<React.Fragment key={i + " player"}>you</React.Fragment>)
         }
         else{
-            list.push(<React.Fragment>player{i+1}</React.Fragment>)
+            list.push(<React.Fragment key={i + " player"}>player{i+1}</React.Fragment>)
         }
         if(i + 1 === turn){
-            list.push(<div className={"turn " + classGuessTime}>{seconds}</div>)
+            list.push(<div className={"turn " + classGuessTime} key={i + " turn"}>{seconds}</div>)
         }
         else{
-            list.push(<div className={"turn " + classGuessTime}></div>)
+            list.push(<div className={"turn " + classGuessTime} key={i + " turn"}></div>)
         }
     }
     return list

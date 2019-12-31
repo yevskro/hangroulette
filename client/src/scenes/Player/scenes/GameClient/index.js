@@ -39,7 +39,7 @@ class GameClient extends Component{
                     <Wrong guesses={mdlGuesses.wrong()}/>
                     <Word word={this.props.mdlGame.word()} gameStatus={this.props.mdlGame.gameStatus()}/>
                 </Main>
-                <GameButton onClick={this.props.onNext} title="find next best available game"/>
+                <GameButton name="find-next-game" onClick={this.props.onNext} title="find next best available game"/>
                 <Search status={this.props.search}/>
             </div>
     }

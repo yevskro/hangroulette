@@ -65,23 +65,35 @@ export class PlayersModel {
         }
 
         this.removePlayer = (player) => {
-            console.log(`remove players turn ${_turn} player ${player} with total players ${_players}`)
-            let newTurn = _turn
+            /*
+                game logic: 
+                    when a player leaves all the player positions
+                    will be shifted down by one, we need to handle
+                    to whom the turn belongs after the shift.
+
+                    if player leaving is in front of the turn
+                    then the turn does not get effected, keep the turn
+                    
+                    if player leaving is in turn by keeping the turn
+                    as is we technically shift it for the forward player 
+                    who has been shifted down, however if the player
+                    leaving is at the end of the list we need to transverse
+                    the turn to the beginning at player position 1 to give the effect
+                    of moving the turn to the next incoming player
+
+                    if player leaving behind turn we need to
+                    shift the turn by one to keep in sync with
+                    newly shifted player positions
+            */
+            let newTurn = _turn /* left unchanged will justify player in front of turn and in turn */
             if(player === _turn){
-                if(_players === player){
-                    /* last player is leaving reset turn to the first player */
+                if(_players === player){ /* in turn and at the end */
                     newTurn = 1
                 }
-                /*  
-                    player leaving is not last, shift players by 1, but keep the turn position same because the next
-                    player will be shifted to the turn position
-                */
-                //return new PlayersModel(_players - 1, _turn)
             }
-            else if(player < _turn){
+            else if(player < _turn){ /* behind turn */
                 --newTurn
             }
-            /* player leaving is not in a turn, shift players by 1 and sync up turn */
             return new PlayersModel(_players - 1, newTurn)
         }
 

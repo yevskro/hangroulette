@@ -65,9 +65,7 @@ export default class ServerGameModel extends GameModel{
                 return new ServerGameError(SGERRORS.CANTREMOVEPLAYER)
             }
             else{
-                console.log(`removing player ${player} in player model with turn ${mdlPlayers.turn()}`)
                 newMdlPlayers = mdlPlayers.removePlayer(player)
-                console.log(`new mdl players ${newMdlPlayers.players()} with turn ${mdlPlayers.turn()}`)
             }
 
             return new ServerGameModel(this.mdlGuesses(),newMdlPlayers,this.word(),this.gameStatus(),_serverWord)

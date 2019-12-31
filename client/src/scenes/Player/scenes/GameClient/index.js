@@ -8,7 +8,6 @@ import Main                 from './components/Main'
 import Wrong                from './components/Wrong'
 import Word                 from './components/Word'
 import './game.css'
-////import { GAMESTATUS } from '../../../../../../models/Game'
 
 class GameClient extends Component{
     constructor(props){

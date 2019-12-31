@@ -1,7 +1,7 @@
 import SessionModel, { ScoreModel } from '../models/Session'
 import { GAMESTATUS, PlayersModel, GuessesModel } from '../models/Game'
 import ServerGameModel, { ServerGameError, SGERRORS } from '../models/server/ServerGame'
-import wordsService from './services/words'
+import wordsService from './services/Words'
 
 export default class ServerSession{
     static sessionErrorJSON(error){
@@ -50,10 +50,6 @@ export default class ServerSession{
                 const newMdlGame        = _session.mdlGame().removePlayer(playerPosition)
                 let seconds             = _session.seconds()
   
-                // turn = 3 ->
-                // removePlayer = players = 2
-                // next turn should be 1
-                console.log(newMdlGame.players())
                 _players.splice(playerIndex, 1)
                 if(turn === playerPosition){
                     /* if we are removing a player whos in the middle of a turn, reset turn */

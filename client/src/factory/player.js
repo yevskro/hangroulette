@@ -1,6 +1,6 @@
 import { GAMESTATUS } from '../../../models/Game'
 
-class ServicePlayer{
+class PlayerFactory{
     emptyPlayer = () => {
         return { 
             id: 0, 
@@ -36,6 +36,6 @@ class ServicePlayer{
     }
 }
 
-const servicePlayer = new ServicePlayer()
+const playerFactory = new PlayerFactory()
 
-export default servicePlayer
+export default playerFactory

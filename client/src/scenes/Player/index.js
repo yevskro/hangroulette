@@ -7,15 +7,14 @@ import GameModel, {
          PlayersModel 
         }                   from '../../../../models/Game'
 import PlayerModel          from '../../../../models/Player'
-import servicePlayer       from '../../services/player'
-import Session              from './components/Session'
+import playerFactory       from '../../factory/player'
 import GameClient           from './scenes/GameClient'
 import "./player.css"
 
 class Player extends Component {
     constructor(props){
         super(props)
-        const player    = servicePlayer.emptyPlayer()
+        const player    = playerFactory.emptyPlayer()
         const mdlPlayer = this.createPlayerFromObj(player)
         this.state = {
             mdlPlayer: mdlPlayer,
@@ -50,7 +49,7 @@ class Player extends Component {
         }
         catch(e){
             console.log(e)
-            return this.createPlayerFromObj(servicePlayer.errorPlayer())
+            return this.createPlayerFromObj(playerFactory.errorPlayer())
         }
     }
 

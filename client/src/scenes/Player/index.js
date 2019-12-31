@@ -20,7 +20,7 @@ class Player extends Component {
         this.state = {
             mdlPlayer: mdlPlayer,
             latency: 0,
-            search: 'search'
+            search: true
         }
     }
 
@@ -29,10 +29,9 @@ class Player extends Component {
         this.wsGameClient   = new WebSocket('ws://72.225.121.91:5001');
 
         this.wsGameClient.onmessage = (msg) => {
-            console.log(msg.data)
             this.setStateFromJson(msg.data)
             this.setState({
-                search: 'nosearch'
+                search: false
             })
         }
     }
@@ -69,7 +68,7 @@ class Player extends Component {
 
     onGameNext = () => {
         const string = JSON.stringify({action: {next: "game"}})
-        this.setState({search: "search"})
+        this.setState({search: true})
         this.wsGameClient.send(string)
     }
 
@@ -79,7 +78,7 @@ class Player extends Component {
 
         return <div className="player-window">
                 <GameClient mdlGame     ={mdlGame}
-                            id    ={this.state.mdlPlayer.id()}
+                            id          ={this.state.mdlPlayer.id()}
                             onGuess     ={this.onGameGuess} 
                             onNext      ={this.onGameNext}
                             latency     ={this.state.latency}

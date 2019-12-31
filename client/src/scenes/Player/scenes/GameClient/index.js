@@ -2,6 +2,13 @@ import React, { Component } from 'react'
 import { GAMESTATUS } from '../../../../../../models/Game'
 import './game.css'
 import Scroll from './components/Scroll'
+import Search from './components/Search'
+import Latency from './components/Latency'
+import Players from './components/Players'
+import GameButton from './components/GameButton'
+import Main from './components/Main'
+import Wrong from './components/Wrong'
+import Word from './components/Word'
 
 /* TODO: clean up code and refactor components */
 
@@ -25,106 +32,40 @@ class GameClient extends Component{
                 return <div><button onClick={this.props.onNext}>Next Game</button></div>
         }
     }
-    
-    generatePlayerList = (players, id, turn, seconds) => {
-        const list = []
-        let classGuessTime = ""
-        if(seconds > 7){
-            classGuessTime = "progress-good"
-        }
-        else if (seconds > 3){
-            classGuessTime = "progress-caution"
-        }
-        else {
-            classGuessTime = "progress-bad"
-        }
-        
-        for(let i = 0; i < players; i++){
-            if(i + 1 === id){
-                list.push(<React.Fragment>you</React.Fragment>)
-            }
-            else{
-                list.push(<React.Fragment>player{i+1}</React.Fragment>)
-            }
-            if(i + 1 === turn){
-                list.push(<div className={"turn " + classGuessTime}>{seconds}</div>)
-            }
-            else{
-                list.push(<div className={"turn " + classGuessTime}></div>)
-            }
-        }
-        return list
-    }
-
-    generateWord(word, status){
-        const letterContainers = []
-        for(let i in word){
-            if(word[i] === " "){
-                letterContainers.push(<div></div>)
-            }
-            else{
-                const container = []
-                if(word[i] === ' '){
-                    letterContainers.push(<div></div>)
-                }
-                else{
-                    if(word[i] === '_'){
-                        container.push(<div></div>)
-                    }
-                    else{
-                        container.push(<div className="letter">{word[i]}</div>)
-                    }
-                    container.push(<div className="bar"></div>)
-                    letterContainers.push(<div className="letter-container" key={i + ' ' + status}> 
-                        {container}
-                    </div>)
-                }
-            }
-        }
-        return letterContainers
-    }
-
-    generateLatency = (latency) => {
-        if(latency < 100){
-            return <div className="latency progress-good">{latency}ms</div>
-        }
-        else if(latency < 200){
-            return <div className="latency progress-caution">{latency}ms</div>
-        }
-        
-        return <div className="latency progress-bad">{latency}ms</div>
-    }
-
-    generateWrongGuesses = (wrong) => {
-        const wrongGuesses = []
-        for(let i = 0; i < 6; i++){
-            wrongGuesses.push(<div className="wrong-guesses-grid-item">
-                <div className="letter wrong" key={wrong[6 - (i + 1)] + ' wrong'}>{wrong[6 - (i + 1)] || ""}</div>
-            </div>)
-        }
-        return wrongGuesses
-    }
 
     render(){
         const mdlGame           = this.props.mdlGame
         const mdlPlayers        = mdlGame.mdlPlayers()
         const mdlGuesses        = mdlGame.mdlGuesses()
-        const wrong             = mdlGuesses.wrong()
 
         return <div className='game'>
             <Scroll onItemClick={this.onGuess} skull={mdlGame.mdlGuesses().wrong()} smiley={mdlGame.mdlGuesses().correct()}/>
-            {this.generateLatency(this.props.latency)}
-            <div className="players">{this.generatePlayerList(mdlPlayers.players(), this.props.id, mdlPlayers.turn(), this.props.seconds)}</div>
-            <div className="main-container">
+            <Latency latency={this.props.latency}/>
+            <Players    player={this.props.id}
+                        players={mdlPlayers.players()}
+                        turn={mdlPlayers.turn()}
+                        seconds={this.props.seconds}
+            />
+            <Main>
+                <Wrong guesses={mdlGuesses.wrong()}/>
+                <Word word={this.props.mdlGame.word()} gameStatus={this.props.mdlGame.gameStatus()}/>
+            </Main>
+            <GameButton onClick={this.props.onNext} title="find next best available game"/>
+            <Search status={this.props.search}/>
+        </div>
+    }
+}
+
+/* <Main>
+    <Wrong guesses={mdlGuesses.wrong()}/>
+    <Word word={this.props.mdlGame.word()} gameStatus={this.props.mdlGame.gameStatus()}/>
+</Main> */
+/*
+           <div className="main-container">
                 <div className="wrong-guesses-grid">
                     {this.generateWrongGuesses(mdlGuesses.wrong())}
                 </div>
                 <div className="word-container">{this.generateWord(this.props.mdlGame.word(), this.props.mdlGame.gameStatus())}</div>
             </div>
-            <div className="findNextGame" onClick={this.props.onNext}><div className="right-arrow"></div>find next best available game</div>
-            <div className={this.props.search}>searching..</div>
-        </div>
-    }
-}
-
+            */
 export default GameClient

@@ -43,7 +43,7 @@ class WordsService{
         loadFromFileTo(wordFile, words)
         loadFromFileTo(wonFile, wonMsg)
         loadFromFileTo(lostFile, lostMsg)
-        console.log("WordService loaded...")
+        console.log("WordService loaded...")    
     }
 }
 

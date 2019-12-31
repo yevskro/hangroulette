@@ -1,9 +1,3 @@
-/*<Players  player={this.props.id}
-            players={mdlPlayers.players()}
-            turn={mdlPlayers.turn()}
-            seconds={this.props.seconds()}
-/>*/
-
 import React from 'react'
 
 const Player = (props) => {
@@ -37,7 +31,12 @@ const generatePlayers = (player, players, turn, seconds) => {
     }
     
     for(let i = 0; i < players; i++){
-        list.push(<Player player={i + 1} you={i + 1 === player} turn={turn} progress={classGuessTime} seconds={seconds} key={i}/>)
+        list.push(<Player   player={i + 1} 
+                            you={i + 1 === player}
+                            turn={turn} 
+                            progress={classGuessTime} 
+                            seconds={seconds} 
+                            key={i}/>)
     }
 
     return list

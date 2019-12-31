@@ -65,19 +65,24 @@ export class PlayersModel {
         }
 
         this.removePlayer = (player) => {
+            console.log(`remove players turn ${_turn} player ${player} with total players ${_players}`)
+            let newTurn = _turn
             if(player === _turn){
                 if(_players === player){
-                    /* last player is leaving, shift players by 1, reset turn to the first player*/
-                    return new PlayersModel(_players - 1, 1)
+                    /* last player is leaving reset turn to the first player */
+                    newTurn = 1
                 }
                 /*  
                     player leaving is not last, shift players by 1, but keep the turn position same because the next
                     player will be shifted to the turn position
                 */
-                return new PlayersModel(_players - 1, _turn)
+                //return new PlayersModel(_players - 1, _turn)
+            }
+            else if(player < _turn){
+                --newTurn
             }
             /* player leaving is not in a turn, shift players by 1 and sync up turn */
-            return new PlayersModel(_players - 1, _turn - 1)
+            return new PlayersModel(_players - 1, newTurn)
         }
 
         this.validatePlayers = (players) => {
@@ -95,7 +100,7 @@ export class PlayersModel {
                 throw new Error(`turn must be a number{${turn}}`)
             }
             if(turn < 0 || turn > players){
-                throw new Error(`turn is out of scope from players{${turn}}`)
+                throw new Error(`turn{${turn}} is out of scope from players{${players}}`)
             }
             return this
         }

@@ -53,6 +53,7 @@ export default class ServerSession{
                 // turn = 3 ->
                 // removePlayer = players = 2
                 // next turn should be 1
+                console.log(newMdlGame.players())
                 _players.splice(playerIndex, 1)
                 if(turn === playerPosition){
                     /* if we are removing a player whos in the middle of a turn, reset turn */

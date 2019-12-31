@@ -271,13 +271,6 @@
     color: RGB(100,100,100);
 }
 
-.players {
-    display: flex;
-    height: 40px;
-    align-items: center;
-    font-size: 12px;
-}
-
 .progress-good{
     color: green;
 }
@@ -291,12 +284,25 @@
 }
 
 .turn {
-    width: 50px;
+    width: 45px;
     font-size: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: 'Jersey';
+}
+
+.players {
+    display: flex;
+    height: 40px;
+    align-items: center;
+    font-size: 12px;
+}
+
+.player {
+    display: flex;
+    height: 40px; 
+    align-items: center;
 }
 
 .latency{

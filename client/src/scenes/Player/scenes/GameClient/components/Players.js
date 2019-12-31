@@ -6,6 +6,23 @@
 
 import React from 'react'
 
+const Player = (props) => {
+    let player, turn
+    if(props.you){
+        player = (<React.Fragment>you</React.Fragment>)
+    }
+    else{
+        player = (<React.Fragment>player{props.player}</React.Fragment>)
+    }
+    if(props.player === props.turn){
+        turn = (<div className={"turn " + props.progress}>{props.seconds}</div>)
+    }
+    else{
+        turn= (<div className={"turn " + props.progress}></div>)
+    }
+    return <div className="player">{player}{turn}</div>
+}
+
 const generatePlayers = (player, players, turn, seconds) => {
     const list = []
     let classGuessTime = ""
@@ -20,19 +37,9 @@ const generatePlayers = (player, players, turn, seconds) => {
     }
     
     for(let i = 0; i < players; i++){
-        if(i + 1 === player){
-            list.push(<React.Fragment key={i + " player"}>you</React.Fragment>)
-        }
-        else{
-            list.push(<React.Fragment key={i + " player"}>player{i+1}</React.Fragment>)
-        }
-        if(i + 1 === turn){
-            list.push(<div className={"turn " + classGuessTime} key={i + " turn"}>{seconds}</div>)
-        }
-        else{
-            list.push(<div className={"turn " + classGuessTime} key={i + " turn"}></div>)
-        }
+        list.push(<Player player={i + 1} you={i + 1 === player} turn={turn} progress={classGuessTime} seconds={seconds} key={i}/>)
     }
+
     return list
 }
 

@@ -10,5 +10,5 @@ html, body, #root {
     justify-content: center;
     align-items: center;
     background-color: RGB(38,38,38);
-    background: url("../public/desktopbackground.jpg") no-repeat;
+    background: url("../public/desktopbackground-min.jpg") no-repeat;
 }

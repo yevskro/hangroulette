@@ -1,9 +1,11 @@
 const path = require("path");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 module.exports = {
   entry: "./client/src/index.js",
-  mode: "development",
+  mode: "production",
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "bundle.js",
@@ -38,6 +40,27 @@ module.exports = {
     proxy: {"/": "http://localhost:5000"},
     contentBase: path.resolve(__dirname, "public"),
     publicPath: "/"
+  },
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          compress: {
+            comparisons: false
+          },
+          mangle: {
+            safari10: true
+          },
+          output: {
+            comments: false,
+            ascii_only: true
+          },
+          warnings: false
+        }
+      }),
+      new OptimizeCssAssetsPlugin()
+    ]
   },
   plugins: [
     new HtmlWebpackPlugin({

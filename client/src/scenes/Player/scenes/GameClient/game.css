@@ -9,8 +9,8 @@
 }
 
 .game {
-    width: 400px;
-    height: 300px;
+    width: 200px; /* 200px 150px 12px - 400px 300px 24px 800px 600px 48px */
+    height: 150px;
     border: 1px solid RGB(6,6,6);
     border-radius: 10% 25% 10% 25%;
     background: url('../../../../../public/800x600-1x2x.jpg') no-repeat;
@@ -18,7 +18,7 @@
     color: RGB(233,233,233);
     font-family: 'Pixel';
     position: absolute;
-    font-size: 24px;
+    font-size: 12px;
 }
 
 .scroll {
@@ -300,7 +300,7 @@
     height: 14%;
     align-items: center;
     font-size: 50%;
-    width: 69%;
+    width: 68%; /* 69 */
 }
 
 .player {
@@ -340,7 +340,7 @@ img.smiley{
     display: inline-grid;
     font-size: 93%; 
     grid-template-columns: 100%;
-    grid-template-rows: 17% 17% 17% 17% 17% 16%;
+    grid-template-rows: 16.7% 16.7% 16.7% 16.7% 16.7% 16.7%;
     height: 100%;
     width: 11%;
     margin-left: 12%;
@@ -388,7 +388,7 @@ img.smiley{
     display: flex;   
     align-items: center;
     height: 69%;
-    width: 83%;
+    width: 82%;
 }
 
 .search {

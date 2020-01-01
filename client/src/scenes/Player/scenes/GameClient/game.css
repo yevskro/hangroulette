@@ -9,8 +9,8 @@
 }
 
 .game {
-    width: 400px;
-    height: 300px;
+    width: 800px;
+    height: 600px;
     border: 1px solid RGB(6,6,6);
     border-radius: 10% 25% 10% 25%;
     background: url('../../../../../public/800x600-1x2x.jpg') no-repeat;
@@ -18,7 +18,7 @@
     color: RGB(233,233,233);
     font-family: 'Pixel';
     position: absolute;
-    font-size: 24px;
+    font-size: 48px;
 }
 
 .scroll {
@@ -170,7 +170,7 @@
 
 .letter {
     visibility: hidden;
-    font-size: 22px;
+    font-size: 93%;
     margin: -100px;
     animation: 0.3s ease-out 0s 1 shiftLetter forwards;
 }
@@ -258,11 +258,11 @@
 .word-grid-item:nth-of-type(40) .bar{ animation-delay: 0.66s; }
 
 .find-next-game {
-    font-size: 12px;
+    font-size: 50%;
     color: RGB(233,233,233);
-    width: 285px;
-    height: 30px;
-    margin: 10px 55px;
+    width: 68%;
+    height: 13%;
+    margin: 3% 14%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -324,26 +324,28 @@
 }
 
 img.skull{
-    width: 60px;
-    height: 60px;
+    width: 2.5em;
+    height: 2.5em; 
 }
 img.smiley{
-    width: 35px;
-    height: 35px;
-}
-
-.wrong-guesses-grid{
-    display: inline-grid;
-    font-size: 22px;
-    grid-template-columns: 30px;
-    grid-template-rows: 35px 35px 35px 35px 35px 35px;
-    margin: 1px 40px 0px 40px;
-    width: 35px;
+    width: 1.5em;
+    height: 1.5em;
 }
 
 .wrong {
     color: red;
 }
+
+.wrong-guesses-grid{
+    display: inline-grid;
+    font-size: 93%; /* 93 */
+    grid-template-columns: 100%;
+    grid-template-rows: 17% 17% 17% 17% 17% 16%;
+    height: 100%;
+    width: 100%;
+    margin: 1px 40px 0px 40px;
+}
+
 .wrong-guesses-grid-item{
     text-align: center;
 }
@@ -380,9 +382,12 @@ img.smiley{
     border-top: 1px solid RGB(233,233,233);
     border-left: 2px solid RGB(233,233,233);
 }
+
 .main-container{
     display: flex;   
     align-items: center;
+    height: 69%;
+    width: 83%;
 }
 
 .search {

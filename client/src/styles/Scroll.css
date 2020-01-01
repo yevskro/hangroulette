@@ -17,42 +17,13 @@
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
 }
+
 .scrl-btn-up {
     border-bottom: 4px solid;
 }
 
 .scrl-btn-dwn { 
     border-top: 4px solid;
-}
-
-@media only screen and (min-width: 400px){
-    .scrl-btn-dwn, .scrl-btn-up {
-        width: 0; 
-        height: 0; 
-        border-left: 8px solid transparent;
-        border-right: 8px solid transparent;
-    }
-    .scrl-btn-up {
-        border-bottom: 8px solid;
-    }
-    .scrl-btn-dwn { 
-        border-top: 8px solid;
-    }
-}
-
-@media only screen and (min-width: 800px){
-    .scrl-btn-dwn, .scrl-btn-up {
-        width: 0; 
-        height: 0; 
-        border-left: 16px solid transparent;
-        border-right: 16px solid transparent;
-    }
-    .scrl-btn-up {
-        border-bottom: 16px solid;
-    }
-    .scrl-btn-dwn { 
-        border-top: 16px solid;
-    }
 }
 
 .scrl-btn-up-red, .scrl-btn-dwn-red {
@@ -120,4 +91,34 @@
 .scrl-itm-crct{
     width: 1.5em;
     height: 1.5em;
+}
+
+@media only screen and (min-width: 400px){
+    .scrl-btn-dwn, .scrl-btn-up {
+        width: 0; 
+        height: 0; 
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+    }
+    .scrl-btn-up {
+        border-bottom: 8px solid;
+    }
+    .scrl-btn-dwn { 
+        border-top: 8px solid;
+    }
+}
+
+@media only screen and (min-width: 800px){
+    .scrl-btn-dwn, .scrl-btn-up {
+        width: 0; 
+        height: 0; 
+        border-left: 16px solid transparent;
+        border-right: 16px solid transparent;
+    }
+    .scrl-btn-up {
+        border-bottom: 16px solid;
+    }
+    .scrl-btn-dwn { 
+        border-top: 16px solid;
+    }
 }

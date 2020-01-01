@@ -16,3 +16,8 @@
 .flx--clm{
     flex-direction: column;
 }
+
+.box--pos-abs-top{
+    position: absolute;
+    top: 0px;
+}

@@ -9,8 +9,8 @@
 }
 
 .game {
-    width: 800px;
-    height: 600px;
+    width: 400px;
+    height: 300px;
     border: 1px solid RGB(6,6,6);
     border-radius: 10% 25% 10% 25%;
     background: url('../../../../../public/800x600-1x2x.jpg') no-repeat;
@@ -18,7 +18,7 @@
     color: RGB(233,233,233);
     font-family: 'Pixel';
     position: absolute;
-    font-size: 48px;
+    font-size: 24px;
 }
 
 .scroll {
@@ -128,22 +128,22 @@
 .word-grid {
     height: 100%;
     width: 70%;
-    margin: 0px 0px 0px 20px;
+    margin-left: 6%;
     display: inline-grid;
-    grid-template-columns: 25px 25px 25px 25px 25px 25px 25px 25px;
-    grid-template-rows: 40px 40px 40px 40px 40px;
+    grid-template-columns: 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5%;/* 25px */
+    grid-template-rows: 19% 19% 19% 19% 19%;/* 40px */
 }
 
 .word-grid-item {
     display: grid;
-    grid-template-columns: 25px;
-    grid-template-rows: 30px 10px;
+    grid-template-columns: 100%;
+    grid-template-rows: 83% 17%; /* 30px 10px */
 }
 
 .bar {
-    height: 5px;
-    width: 20px;
-    background: url("../../../../../public/gamebar1x.jpg");
+    height: 70%;
+    width: 80%;
+    background: url("../../../../../public/gamebar2x.jpg");
     animation: 3s ease-out 0s 1 becomeVisible forwards;
     margin: 0 auto;
     visibility: hidden;
@@ -338,7 +338,7 @@ img.smiley{
 
 .wrong-guesses-grid{
     display: inline-grid;
-    font-size: 93%; /* 93 */
+    font-size: 93%; 
     grid-template-columns: 100%;
     grid-template-rows: 17% 17% 17% 17% 17% 16%;
     height: 100%;

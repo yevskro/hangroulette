@@ -7,7 +7,7 @@ import GameButton           from './components/GameButton'
 import Main                 from './components/Main'
 import Wrong                from './components/Wrong'
 import Word                 from './components/Word'
-import './game.css'
+import './Game.css'
 
 class GameClient extends Component{
     constructor(props){

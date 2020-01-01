@@ -1,11 +1,11 @@
 @font-face {
     font-family: 'Jersey';
-    src: url("../../../../../public/justme54s_jersey-m54/JerseyM54-aLX9.ttf");
+    src: url("../../../../../public/fonts/jersey/JerseyM54-aLX9.ttf");
 }
 
 @font-face {
     font-family: 'Pixel';
-    src: url("../../../../../public/pixel-sagas_pixel-emulator/PixelEmulator-xq08.ttf");
+    src: url("../../../../../public/fonts/pixel/PixelEmulator-xq08.ttf");
 }
 
 .game {
@@ -18,11 +18,12 @@
     color: RGB(233,233,233);
     font-family: 'Pixel';
     position: absolute;
+    font-size: 24px;
 }
 
 .scroll {
     height: 90%;
-    width: 60px;
+    width: 15%;
     overflow-y: hidden;
     float: right;
     margin: 0px 3px;
@@ -31,18 +32,9 @@
 .scroll-up-arrow {
     width: 0; 
     height: 0; 
-    border-left: 5px solid transparent;
+    border-left: 5px solid transparent; /* 5px 10px*/
     border-right: 5px solid transparent;
     border-bottom: 10px solid red;
-}
-
-.right-arrow{
-    width: 0;
-    height: 0;
-    border-top: 5px solid transparent;
-    border-left: 7px solid red;
-    border-bottom: 5px solid transparent;
-    margin-right: 4px;
 }
 
 .scroll-down-arrow {
@@ -70,8 +62,19 @@
 
 .scroll-body {
     height: 77%;
-    text-align: center;
+    display: flex;
     overflow: hidden;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.right-arrow{
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-left: 7px solid red;
+    border-bottom: 5px solid transparent;
+    margin-right: 4px;
 }
 
 @keyframes becomeVisible {
@@ -92,8 +95,7 @@
     align-items: center;
     border-radius: 25%;
     background-color: RGB(6,6,6);
-    font-size: 24px;
-    margin: 0px auto;
+    font-size: 100%;
     position: relative;
     transition: top 2s, width 0.2s;
 }
@@ -122,7 +124,6 @@
 .scroll-item-content {
     animation: 0.25s ease-out 0s 1 becomeVisible;
 }
-
 
 .word-grid {
     height: 200px;
@@ -284,33 +285,42 @@
 }
 
 .turn {
-    width: 45px;
-    font-size: 40px;
+    font-size: 400%; /* 400% */
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     font-family: 'Jersey';
+    width: 33%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .players {
     display: flex;
-    height: 40px;
+    height: 14%;
     align-items: center;
-    font-size: 12px;
+    font-size: 50%;
+    width: 69%;
 }
 
 .player {
     display: flex;
-    height: 40px; 
     align-items: center;
+    width: 38%;
+}
+
+.you {
+    display: flex;
+    align-items: center;
+    width: 24%;
 }
 
 .latency{
-    font-size: 13px;
-    margin-left: 15px;
-    margin-top: 23px;
+    font-size: 50%;
+    margin-left: 4%;
+    margin-top: 6%;
     float: left;
-    width: 3em;
+    width: 10%;
 }
 
 img.skull{

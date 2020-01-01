@@ -9,7 +9,6 @@ import GameModel, {
 import PlayerModel          from '../../../../models/Player'
 import playerFactory       from '../../factory/player'
 import GameClient           from './scenes/GameClient'
-import "./player.css"
 
 class Player extends Component {
     constructor(props){
@@ -76,8 +75,7 @@ class Player extends Component {
         const mdlSession    = this.state.mdlPlayer.mdlSession()
         const mdlGame       = mdlSession.mdlGame()
 
-        return <div className="player-window">
-                <GameClient mdlGame     ={mdlGame}
+        return  <GameClient mdlGame     ={mdlGame}
                             id          ={this.state.mdlPlayer.id()}
                             onGuess     ={this.onGameGuess} 
                             onNext      ={this.onGameNext}
@@ -85,7 +83,6 @@ class Player extends Component {
                             seconds     ={mdlSession.seconds()}
                             search      ={this.state.search}
                             />
-            </div>
     }
 }
 

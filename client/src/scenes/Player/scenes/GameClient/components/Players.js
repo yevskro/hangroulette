@@ -2,7 +2,9 @@ import React from 'react'
 
 const Player = (props) => {
     let player, turn
+    let className = "player"
     if(props.you){
+        className += " you"
         player = (<React.Fragment>you</React.Fragment>)
     }
     else{
@@ -12,9 +14,9 @@ const Player = (props) => {
         turn = (<div className={"turn " + props.progress}>{props.seconds}</div>)
     }
     else{
-        turn= (<div className={"turn " + props.progress}></div>)
+        turn = (<div className={"turn " + props.progress}></div>)
     }
-    return <div className="player">{player}{turn}</div>
+    return <div className={className}>{player}{turn}</div>
 }
 
 const generatePlayers = (player, players, turn, seconds) => {

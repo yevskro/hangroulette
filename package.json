@@ -5,9 +5,9 @@
   "main": "0",
   "scripts": {
     "server": "nodemon --exec babel-node server/app.js",
-    "client": "webpack-dev-server --mode production",
+    "client": "webpack-dev-server --mode development",
     "start": "concurrently \"npm run server\" \"npm run client\"",
-    "build": "webpack --mode production",
+    "build": "webpack --mode development",
     "bs": "npm run build && npm run server"
   },
   "repository": {

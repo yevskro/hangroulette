@@ -1,0 +1,18 @@
+
+.flt--rght{
+    float: right
+}
+
+.flx--mdl{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.jstfy--cntr{
+    justify-content: center;
+}
+
+.flx--clm{
+    flex-direction: column;
+}

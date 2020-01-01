@@ -1,6 +1,25 @@
 import React, { Component } from 'react'
 import svgSkull from '../../../../../../public/skull.svg'
 import svgSmiley from '../../../../../../public/smiley.svg'
+import '../../../../../styles/Scroll.css'
+
+const ItemContentWrong      = (props) => <img className="scrl-itm-wrng" src={props.image}/>
+const ItemContentCorrect    = (props) => <img className="scrl-itm-crct" src={props.image}/>
+const ItemContent           = (props) => <span className="scrl-itm-cntnt" onClick={props.onClick}>{props.content}</span>
+const Item                  = (props) => <div className={`scrl-itm scrl-itm-styl-1 flx--mdl ${props.size}`} style={props.top}>
+                                        {props.content}
+                                    </div>
+const ScrollBody            = (props) => <div className="scrl-bdy jstfy--cntr">{props.items}</div>
+const ScrollButton          = (props) => {
+        let btn = "scrl-btn-up"
+        if(props.down){
+            btn = "scrl-btn-dwn"
+        }
+        return <div className="scrl-btn scrl-btn-styl-1 flx--mdl" onClick={props.onClick}>
+                    <div className={`${btn} scrl-btn-up-red`}></div>
+                </div>
+}
+                    
 
 export default class Scroll extends Component{
     constructor(props){
@@ -8,8 +27,8 @@ export default class Scroll extends Component{
         this.state = {
             items: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q","r","s","t","u","v","w","x","y","z"],
             index: 0,
-            odd: "scroll-item-small",
-            even: "scroll-item-big",
+            odd: "scrl-itm-sml",
+            even: "scrl-itm-big",
             top: 0,
             show: 5
         }
@@ -19,19 +38,20 @@ export default class Scroll extends Component{
         if(this.state.top === 0){
             return
         }
-        let currentOdd = this.state.odd
-        let newOdd, newEven
-        if(currentOdd === "scroll-item-small"){
-            newOdd = "scroll-item-big"
-            newEven = "scroll-item-small"
-        }
-        else{
-            newOdd = "scroll-item-small"
-            newEven = "scroll-item-big"
-        }
+
+        this.swapOddEvenSizes()
+
         const newTop = this.state.top + (18 * this.state.show)
         this.setState({
-            top: newTop,
+            top: newTop
+        })
+    }
+
+    swapOddEvenSizes = () => {
+        const currentOddIsSmall = this.state.odd === "scrl-itm-sml"
+        const newOdd = currentOddIsSmall ? "scrl-itm-big" : "scrl-itm-sml"
+        const newEven = currentOddIsSmall ? "scrl-itm-sml" : "scrl-itm-big"
+        this.setState({
             odd: newOdd,
             even: newEven
         })
@@ -41,22 +61,12 @@ export default class Scroll extends Component{
         if(this.state.top <= (this.state.items.length - this.state.show) * -18){
             return
         }
-        const newTop = this.state.top - (18 * this.state.show)
-        let currentOdd = this.state.odd
-        let newOdd, newEven
-        if(currentOdd === "scroll-item-small"){
-            newOdd = "scroll-item-big"
-            newEven = "scroll-item-small"
-        }
-        else{
-            newOdd = "scroll-item-small"
-            newEven = "scroll-item-big"
-        }
+
+        this.swapOddEvenSizes()
         
+        const newTop = this.state.top - (18 * this.state.show)
         this.setState({
-            top: newTop,
-            odd: newOdd,
-            even: newEven
+            top: newTop
         })
     } 
 
@@ -65,25 +75,23 @@ export default class Scroll extends Component{
         for(let k = 0; k < this.state.items.length; k++){
             const top = {top: `${this.state.top}%`}
             const size = (k + 1) % 2 ? this.state.odd : this.state.even 
-            let scrollItemContent = this.state.items[k]
+            let scrollItemContent = <ItemContent content={this.state.items[k]} onClick={this.props.onItemClick}/>
             if(this.props.skull.includes(this.state.items[k])){
-                scrollItemContent = <img className="skull" src={svgSkull}/>
+                scrollItemContent = <ItemContentWrong image={svgSkull}/>
             }
             else if(this.props.smiley.includes(this.state.items[k])){
-                scrollItemContent = <img className="smiley" src={svgSmiley}/>
+                scrollItemContent = <ItemContentCorrect image={svgSmiley}/>
             }
-            scrollItems.push(<div className={"scroll-item " + size} style={top} key={`item-${k}`}><span className="scroll-item-content" onClick={this.props.onItemClick}>{scrollItemContent}</span></div>)
+            scrollItems.push(<Item top={top} size={size} key={`item-${k}`} content={scrollItemContent}/>)
         }
         return scrollItems
-    }
+    }       
 
     render(){
-        return <div className="scroll">
-                    <div className="scroll-up" onClick={this.onUp}><div className="scroll-up-arrow"></div></div>
-                    <div className="scroll-body">
-                        {this.generateScrollItems()}
-                    </div>
-                    <div className="scroll-down" onClick={this.onDown}><div className="scroll-down-arrow"></div></div>
-                </div>
+        return <div className="scrl flt--rght">
+                    <ScrollButton onClick={this.onUp}/>
+                    <ScrollBody items={this.generateScrollItems()}/>
+                    <ScrollButton down={true} onClick={this.onDown}/>
+            </div>
     }
 }

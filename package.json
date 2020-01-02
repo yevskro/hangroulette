@@ -8,11 +8,12 @@
     "client": "webpack-dev-server --mode development",
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "build": "webpack --mode development",
-    "bs": "npm run build && npm run server"
+    "bs": "npm run build && npm run server",
+    "prod": "webpack --mode production && npm run server"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wingedking/simplehangman.git"
+    "url": "git+https://github.com/wingedking/hangroulette"
   },
   "keywords": [
     "react",
@@ -22,9 +23,9 @@
   "author": "Yevgeniy Skroznikov",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/wingedking/simplehangman/issues"
+    "url": "https://github.com/wingedking/hangroulette/issues"
   },
-  "homepage": "https://github.com/wingedking/simplehangman#readme",
+  "homepage": "https://github.com/wingedking/hangroulette#readme",
   "devDependencies": {
     "@babel/cli": "^7.7.4",
     "@babel/core": "^7.7.4",

@@ -1,7 +1,7 @@
 import SessionModel, { ScoreModel } from '../models/Session'
 import { GAMESTATUS, PlayersModel, GuessesModel } from '../models/Game'
 import ServerGameModel, { ServerGameError, SGERRORS } from '../models/server/ServerGame'
-import wordsService from './services/Words'
+import wordsService from './services/Words/Words'
 
 export default class ServerSession{
     static sessionErrorJSON(error){

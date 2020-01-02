@@ -17,10 +17,11 @@ class WordsService{
         const loadFromFileTo = (file, toArray) => {
             let liner, line, lineNumber = 0
             try{
-                liner = new LineByLine(file)
+                liner = new LineByLine(__dirname + file)
             }
             catch(e){
-                console.log(`WordService did not load. See if the file ${file} exists in the right directory.`)
+                console.log(`WordService did not load ${file}.`)
+                console.log(e)
                 return
             }
             while(line = liner.next()){
@@ -33,6 +34,7 @@ class WordsService{
                     toArray.push(line)
                 }
             }
+            console.log(`WordService ${file} loaded...`)
         }
         const words = []
         const lostMsg = []
@@ -42,11 +44,10 @@ class WordsService{
         console.log("WordService loading...")
         loadFromFileTo(wordFile, words)
         loadFromFileTo(wonFile, wonMsg)
-        loadFromFileTo(lostFile, lostMsg)
-        console.log("WordService loaded...")    
+        loadFromFileTo(lostFile, lostMsg) 
     }
 }
 
-const wordsService = new WordsService("./words.txt", "./won.txt", "./lost.txt")
+const wordsService = new WordsService("/words.txt", "/won.txt", "/lost.txt")
 
 export default wordsService

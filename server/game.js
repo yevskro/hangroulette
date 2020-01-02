@@ -12,7 +12,7 @@ import { GAMESTATUS,
    }     from '../models/Game'
 
 import ServerGameModel from '../models/server/ServerGame'
-import wordsService from './services/Words'
+import wordsService from './services/Words/Words'
 
 export default class ServerGame{
     constructor(MAXCLIENTS, PORT, MAXCONNECTIONSPERUSER, UNIQUEPLAY){

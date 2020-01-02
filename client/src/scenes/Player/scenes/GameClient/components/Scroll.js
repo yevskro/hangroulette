@@ -5,7 +5,7 @@ import '../../../../../styles/Scroll.css'
 
 const ItemContentWrong      = (props) => <img className="scrl__wrng" src={props.image}/>
 const ItemContentCorrect    = (props) => <img className="scrl__crct" src={props.image}/>
-const ItemContent           = (props) => <span className="scrl__cntnt" onClick={props.onClick}>{props.content}</span>
+const ItemContentText       = (props) => <span className="scrl__cntnt" onClick={props.onClick}>{props.text}</span>
 const Item                  = (props) => <div className={`scrl__itm scrl__itm--prmry flx--mdl ${props.size}`} style={props.top}>
                                         {props.content}
                                     </div>
@@ -70,27 +70,32 @@ export default class Scroll extends Component{
         })
     } 
 
-    generateScrollItems = () => {
-        const scrollItems = []
-        for(let k = 0; k < this.state.items.length; k++){
-            const top = {top: `${this.state.top}%`}
-            const size = (k + 1) % 2 ? this.state.odd : this.state.even 
-            let scrollItemContent = <ItemContent content={this.state.items[k]} onClick={this.props.onItemClick}/>
-            if(this.props.skull.includes(this.state.items[k])){
-                scrollItemContent = <ItemContentWrong image={svgSkull}/>
-            }
-            else if(this.props.smiley.includes(this.state.items[k])){
-                scrollItemContent = <ItemContentCorrect image={svgSmiley}/>
-            }
-            scrollItems.push(<Item top={top} size={size} key={`item-${k}`} content={scrollItemContent}/>)
+    itemContentForScroll = (letter) => {
+        if(this.props.skull.includes(letter)){
+            return <ItemContentWrong image={svgSkull}/>
         }
-        return scrollItems
+        if(this.props.smiley.includes(letter)){
+            return <ItemContentCorrect image={svgSmiley}/>
+        }
+        return <ItemContentText text={letter} onClick={this.props.onItemClick}/>
+    }
+
+    generateScrollItems = (arr, count) => {
+        if(count === this.state.items.length){
+            return arr
+        }
+        
+        const size = (count + 1) % 2 ? this.state.odd : this.state.even 
+        const scrollItemContent = this.itemContentForScroll(this.state.items[count])
+        arr.push(<Item top={{top: `${this.state.top}%`}} size={size} key={`item-${count}`} content={scrollItemContent}/>)
+
+        return this.generateScrollItems(arr, count + 1)
     }       
 
     render(){
         return <div className="scrl flt--rght">
                     <ScrollButton onClick={this.onUp}/>
-                    <ScrollBody items={this.generateScrollItems()}/>
+                    <ScrollBody items={this.generateScrollItems([],0)}/>
                     <ScrollButton down={true} onClick={this.onDown}/>
             </div>
     }

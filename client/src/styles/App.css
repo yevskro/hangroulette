@@ -197,17 +197,6 @@ html, body, #root {
     color: RGB(100,100,100);
 }
 
-.progress-good{
-    color: green;
-}
-
-.progress-caution{
-    color: yellow;
-}
-
-.progress-bad{
-    color: red;
-}
 
 .turn {
     font-size: 400%; /* 400% */
@@ -223,9 +212,11 @@ html, body, #root {
 .players {
     display: flex;
     height: 14%;
+    float: right;
     align-items: center;
     font-size: 50%;
     width: 68%; /* 69 */
+    top: 0px;
 }
 
 .player {
@@ -238,14 +229,6 @@ html, body, #root {
     display: flex;
     align-items: center;
     width: 24%;
-}
-
-.latency{
-    font-size: 50%;
-    margin-left: 4%;
-    margin-top: 6%;
-    float: left;
-    width: 10%;
 }
 
 .wrong {

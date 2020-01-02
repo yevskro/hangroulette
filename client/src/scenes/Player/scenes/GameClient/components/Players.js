@@ -23,13 +23,13 @@ const generatePlayers = (player, players, turn, seconds) => {
     const list = []
     let classGuessTime = ""
     if(seconds > 7){
-        classGuessTime = "progress-good"
+        classGuessTime = "prg-good"
     }
     else if (seconds > 3){
-        classGuessTime = "progress-caution"
+        classGuessTime = "prg-caution"
     }
     else {
-        classGuessTime = "progress-bad"
+        classGuessTime = "prg-bad"
     }
     
     for(let i = 0; i < players; i++){

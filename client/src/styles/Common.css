@@ -3,6 +3,10 @@
     float: right
 }
 
+.flt--lft{
+    float: left
+}
+
 .flx--mdl{
     display: flex;
     justify-content: center;
@@ -20,4 +24,16 @@
 .box--pos-abs-top{
     position: absolute;
     top: 0px;
+}
+
+.prg-good{
+    color: green;
+}
+
+.prg-caution{
+    color: yellow;
+}
+
+.prg-bad{
+    color: red;
 }

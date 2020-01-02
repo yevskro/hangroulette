@@ -72,7 +72,7 @@ export default class ServerGameModel extends GameModel{
             return new ServerGameModel(this.mdlGuesses(),newMdlPlayers,this.word(),this.gameStatus(),_serverWord)
         }
 
-        this.guess = (guess) => {
+        this.didClientSendInvalidGuess = (guess) => {
             try{
                 mdlGuesses.validateGuess(guess)
             }
@@ -91,7 +91,15 @@ export default class ServerGameModel extends GameModel{
             /* the client should be responsible for not sending the same guess */
                 return new ServerGameError(SGERRORS.INVALIDGUESS)
             }
+            return false
+        }
 
+        this.guess = (guess) => {
+            const invalidGuessError = this.didClientSendInvalidGuess(guess)
+            if(invalidGuessError){
+                return invalidGuess
+            }
+            
             if(_serverWord.includes(guess)){
             /* guess is correct, change the visible word for clients */
                 let newHiddenWord = ""

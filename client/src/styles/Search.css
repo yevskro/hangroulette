@@ -4,16 +4,12 @@
     font-size: 100%;
 }
 
-.srch-lrg {
+.srch--lrg {
     width: 100%;
     height: 100%;
 }
 
-.srch-prmry {
+.srch--prmry {
     border: 1px solid RGB(6,6,6);
     background-color: RGBA(6,6,6, 0.5);
-}
-
-.no-srch {
-    visibility: hidden;
 }

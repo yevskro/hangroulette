@@ -27,12 +27,13 @@
 }
 
 
-.scrl__btn-prmry{
+.scrl__btn--prmry{
     border: 2px solid RGB(233,233,233);
     background-color: RGB(6,6,6);
 }
 
-.scrl__btn:hover{
+.scrl__btn:hover,
+.scrl__btn:focus{
     border-color: RGB(100,100,100);
 }
 
@@ -50,30 +51,33 @@
     font-size: 100%;
 }
 
-.scrl__itm-prmry{
+.scrl__itm--prmry{
     border: 2px solid RGB(168, 161, 161);
     border-radius: 25%;
     background-color: RGB(6,6,6);
 }
 
-.scrl__itm:hover {
+.scrl__itm:hover,
+.scrl__itm:focus {
     color: red;   
     border-color: RGB(100,100,100);
 }
 
-.scrl__itm-big {
+.scrl__itm--big {
     width: 85%;
 }
 
-.scrl__itm-big:hover{
+.scrl__itm--big:hover,
+.scrl__itm--big:focus{
     width: 90%;
 }
 
-.scrl__itm-sml:hover{
+.scrl__itm--sml:hover,
+.scrl__itm--sml:focus{
     width: 70%;
 }
 
-.scrl__itm-sml{
+.scrl__itm--sml{
     width: 75%;
 }
 
@@ -81,11 +85,12 @@
     animation: 0.25s ease-out 0s 1 becomeVisible;
 }
 
-.scrl-itm-wrng{
+.scrl__wrng{
     width: 2.5em;
     height: 2.5em; 
 }
-.scrl-itm-crct{
+
+.scrl__crct{
     width: 1.5em;
     height: 1.5em;
 }

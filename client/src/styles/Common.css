@@ -1,13 +1,13 @@
 
-.flt--rght{
+.flt--rght {
     float: right
 }
 
-.flt--lft{
+.flt--lft {
     float: left
 }
 
-.flx--mdl{
+.flx--mdl {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -22,35 +22,39 @@
     flex-direction: row;
 }
 
-.jstfy-cntnt--cntr{
+.jstfy-cntnt--cntr {
     justify-content: center;
 }
 
-.algn-itms--cntr{
+.algn-itms--cntr {
     align-items: center;
 }
 
-.flx--clm{
+.flx--clm {
     flex-direction: column;
 }
 
-.box--pos-abs-top{
+.box--pos-abs-top {
     position: absolute;
     top: 0px;
 }
 
-.clr--grn{
+.clr--grn {
     color: green;
 }
 
-.clr--ylw{
+.clr--ylw {
     color: yellow;
 }
 
-.clr--wht{
+.clr--wht {
     color: RGB(233,233,233);
 }
 
-.clr--rd{
+.clr--rd {
     color: red
+}
+
+.vsblty--hdn {
+    visibility: hidden;
 }

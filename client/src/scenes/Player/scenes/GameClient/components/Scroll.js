@@ -3,20 +3,20 @@ import svgSkull from '../../../../../../public/skull.svg'
 import svgSmiley from '../../../../../../public/smiley.svg'
 import '../../../../../styles/Scroll.css'
 
-const ItemContentWrong      = (props) => <img className="scrl__itm-wrng" src={props.image}/>
-const ItemContentCorrect    = (props) => <img className="scrl__itm-crct" src={props.image}/>
+const ItemContentWrong      = (props) => <img className="scrl__wrng" src={props.image}/>
+const ItemContentCorrect    = (props) => <img className="scrl__crct" src={props.image}/>
 const ItemContent           = (props) => <span className="scrl__cntnt" onClick={props.onClick}>{props.content}</span>
-const Item                  = (props) => <div className={`scrl__itm scrl__itm-prmry flx--mdl ${props.size}`} style={props.top}>
+const Item                  = (props) => <div className={`scrl__itm scrl__itm--prmry flx--mdl ${props.size}`} style={props.top}>
                                         {props.content}
                                     </div>
 const ScrollBody            = (props) => <div className="scrl__bdy jstfy-cntnt--cntr">{props.items}</div>
 const ScrollButton          = (props) => {
-        let btn = "scrl__ptr-up"
+        let ptr = "scrl__ptr-up"
         if(props.down){
-            btn = "scrl__ptr-dwn"
+            ptr = "scrl__ptr-dwn"
         }
-        return <div className="scrl__btn scrl__btn-prmry flx--mdl" onClick={props.onClick}>
-                    <div className={`scrl__ptr-up clr--rd`}></div>
+        return <div className="scrl__btn scrl__btn--prmry flx--mdl" onClick={props.onClick}>
+                    <div className={`${ptr} clr--rd`}></div>
                 </div>
 }
                     
@@ -27,8 +27,8 @@ export default class Scroll extends Component{
         this.state = {
             items: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q","r","s","t","u","v","w","x","y","z"],
             index: 0,
-            odd: "scrl__itm-sml",
-            even: "scrl__itm-big",
+            odd: "scrl__itm--sml",
+            even: "scrl__itm--big",
             top: 0,
             show: 5
         }
@@ -48,9 +48,9 @@ export default class Scroll extends Component{
     }
 
     swapOddEvenSizes = () => {
-        const currentOddIsSmall = this.state.odd === "scrl__itm-sml"
-        const newOdd = currentOddIsSmall ? "scrl__itm-big" : "scrl__itm-sml"
-        const newEven = currentOddIsSmall ? "scrl__itm-sml" : "scrl__itm-big"
+        const currentOddIsSmall = this.state.odd === "scrl__itm--sml"
+        const newOdd = currentOddIsSmall ? "scrl__itm--big" : "scrl__itm--sml"
+        const newEven = currentOddIsSmall ? "scrl__itm--sml" : "scrl__itm--big"
         this.setState({
             odd: newOdd,
             even: newEven

@@ -50,13 +50,13 @@
     height: 18%;
     position: relative;
     transition: top 2s, width 0.2s;
+    font-size: 100%;
 }
 
 .scrl-itm-styl-1{
     border: 2px solid RGB(168, 161, 161);
     border-radius: 25%;
     background-color: RGB(6,6,6);
-    font-size: 100%;
 }
 
 .scrl-itm:hover {

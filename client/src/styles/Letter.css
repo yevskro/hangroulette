@@ -1,0 +1,13 @@
+.ltr {
+    visibility: hidden;
+    margin: -100px;
+    animation: 0.3s ease-out 0s 1 shiftLetter forwards;
+}
+
+.ltr-lrg {
+    font-size: 93%;
+}
+
+.ltr-wrng {
+    color: red;
+}

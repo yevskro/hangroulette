@@ -10,6 +10,10 @@ const WordGridItem      = (props)   => <div className="wrd-grd__itm">
                                         </div>
 
 const generateWord = (word, status) => {
+    /* 
+        returns an array of WordGridItems that represent a char in the word
+        and n EmptySpace to represent a space between words
+    */
     return Array.prototype.map.call(word, (char, index) => {
         if(char === " "){
             return <EmptySpace key={`${index}  ${status}`}/>

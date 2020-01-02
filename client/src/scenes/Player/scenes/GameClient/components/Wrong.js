@@ -7,6 +7,7 @@ const WrongGridItem = (props) => <div className="wrng-gss-grd__itm wrng-gss-grd_
                                  </div>
 
 const generateWrongGuesses = (items, count, guesses, totalGuesses) => {
+    /* returns an array of WrongGridItems */
     if(count === totalGuesses){
         return items
     }

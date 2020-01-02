@@ -58,3 +58,12 @@
 .vsblty--hdn {
     visibility: hidden;
 }
+
+@keyframes becomeVisible {
+    0% {
+      visibility: hidden;
+    }
+    100% {
+      visibility: visible;
+    }
+  }

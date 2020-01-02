@@ -1,0 +1,108 @@
+.wrd-grd {
+    height: 100%;
+    width: 70%;
+    margin-left: 6%;
+    display: inline-grid;
+    grid-template-columns: 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5%;/* 25px */
+    grid-template-rows: 19% 19% 19% 19% 19%;/* 40px */
+}
+
+.wrd-grd__itm {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 83% 17%; /* 30px 10px */
+}
+
+.wrd-grd__bar {
+    height: 70%;
+    width: 80%;
+    animation: 3s ease-out 0s 1 becomeVisible forwards;
+    margin: 0 auto;
+    visibility: hidden;
+}
+
+.wrd-grd__bar--prmry {
+    background: url("../../public/gamebar2x.jpg");
+}
+
+.wrd-grd__itm:nth-of-type(1) .ltr { animation-delay: 0.8s; } 
+.wrd-grd__itm:nth-of-type(2) .ltr { animation-delay: 0.3s; } 
+.wrd-grd__itm:nth-of-type(3) .ltr { animation-delay: 0.16s; } 
+.wrd-grd__itm:nth-of-type(4) .ltr { animation-delay: 0.24s; } 
+.wrd-grd__itm:nth-of-type(5) .ltr { animation-delay: 0.5s; } 
+.wrd-grd__itm:nth-of-type(6) .ltr { animation-delay: 0.1s; }
+.wrd-grd__itm:nth-of-type(7) .ltr { animation-delay: 0.5s; } 
+.wrd-grd__itm:nth-of-type(8) .ltr { animation-delay: 0.7s; } 
+.wrd-grd__itm:nth-of-type(9) .ltr { animation-delay: 0.54s; } 
+.wrd-grd__itm:nth-of-type(10) .ltr{ animation-delay: 0.20s; } 
+.wrd-grd__itm:nth-of-type(11) .ltr{ animation-delay: 0.50s; } 
+.wrd-grd__itm:nth-of-type(12) .ltr{ animation-delay: 0.62s; }
+.wrd-grd__itm:nth-of-type(13) .ltr{ animation-delay: 0.33s; } 
+.wrd-grd__itm:nth-of-type(14) .ltr{ animation-delay: 0.82s; } 
+.wrd-grd__itm:nth-of-type(15) .ltr{ animation-delay: 0.1s; }
+.wrd-grd__itm:nth-of-type(16) .ltr{ animation-delay: 0.45s; } 
+.wrd-grd__itm:nth-of-type(17) .ltr{ animation-delay: 0.20s; } 
+.wrd-grd__itm:nth-of-type(18) .ltr{ animation-delay: 0.77s; }
+.wrd-grd__itm:nth-of-type(19) .ltr{ animation-delay: 0.30s; } 
+.wrd-grd__itm:nth-of-type(20) .ltr{ animation-delay: 0.55s; }
+.wrd-grd__itm:nth-of-type(21) .ltr{ animation-delay: 0.2s; } 
+.wrd-grd__itm:nth-of-type(22) .ltr{ animation-delay: 0.63s; } 
+.wrd-grd__itm:nth-of-type(23) .ltr{ animation-delay: 0.16s; } 
+.wrd-grd__itm:nth-of-type(24) .ltr{ animation-delay: 0.5s; } 
+.wrd-grd__itm:nth-of-type(25) .ltr{ animation-delay: 0.23s; } 
+.wrd-grd__itm:nth-of-type(26) .ltr{ animation-delay: 0.6s; }
+.wrd-grd__itm:nth-of-type(27) .ltr{ animation-delay: 0.1s; } 
+.wrd-grd__itm:nth-of-type(28) .ltr{ animation-delay: 0.64s; } 
+.wrd-grd__itm:nth-of-type(29) .ltr{ animation-delay: 0.30s; } 
+.wrd-grd__itm:nth-of-type(30) .ltr{ animation-delay: 0.73s; } 
+.wrd-grd__itm:nth-of-type(31) .ltr{ animation-delay: 0.30s; } 
+.wrd-grd__itm:nth-of-type(32) .ltr{ animation-delay: 0.1s; }
+.wrd-grd__itm:nth-of-type(33) .ltr{ animation-delay: 0.33s; } 
+.wrd-grd__itm:nth-of-type(34) .ltr{ animation-delay: 0.70s; } 
+.wrd-grd__itm:nth-of-type(35) .ltr{ animation-delay: 0.22s; }
+.wrd-grd__itm:nth-of-type(36) .ltr{ animation-delay: 0.75s; } 
+.wrd-grd__itm:nth-of-type(37) .ltr{ animation-delay: 0.26s; } 
+.wrd-grd__itm:nth-of-type(38) .ltr{ animation-delay: 0.58s; }
+.wrd-grd__itm:nth-of-type(39) .ltr{ animation-delay: 0.33s; } 
+.wrd-grd__itm:nth-of-type(40) .ltr{ animation-delay: 0.66s; }
+
+.wrd-grd__itm:nth-of-type(1) .wrd-grd__bar{ animation-delay: 0.8s; } 
+.wrd-grd__itm:nth-of-type(2) .wrd-grd__bar{ animation-delay: 0.3s; } 
+.wrd-grd__itm:nth-of-type(3) .wrd-grd__bar{ animation-delay: 0.16s; } 
+.wrd-grd__itm:nth-of-type(4) .wrd-grd__bar{ animation-delay: 0.24s; } 
+.wrd-grd__itm:nth-of-type(5) .wrd-grd__bar{ animation-delay: 0.5s; } 
+.wrd-grd__itm:nth-of-type(6) .wrd-grd__bar{ animation-delay: 0.1s; }
+.wrd-grd__itm:nth-of-type(7) .wrd-grd__bar{ animation-delay: 0.5s; } 
+.wrd-grd__itm:nth-of-type(8) .wrd-grd__bar{ animation-delay: 0.7s; } 
+.wrd-grd__itm:nth-of-type(9) .wrd-grd__bar{ animation-delay: 0.54s; } 
+.wrd-grd__itm:nth-of-type(10) .wrd-grd__bar{ animation-delay: 0.20s; } 
+.wrd-grd__itm:nth-of-type(11) .wrd-grd__bar{ animation-delay: 0.50s; } 
+.wrd-grd__itm:nth-of-type(12) .wrd-grd__bar{ animation-delay: 0.62s; }
+.wrd-grd__itm:nth-of-type(13) .wrd-grd__bar{ animation-delay: 0.33s; } 
+.wrd-grd__itm:nth-of-type(14) .wrd-grd__bar{ animation-delay: 0.82s; } 
+.wrd-grd__itm:nth-of-type(15) .wrd-grd__bar{ animation-delay: 0.1s; }
+.wrd-grd__itm:nth-of-type(16) .wrd-grd__bar{ animation-delay: 0.45s; } 
+.wrd-grd__itm:nth-of-type(17) .wrd-grd__bar{ animation-delay: 0.20s; } 
+.wrd-grd__itm:nth-of-type(18) .wrd-grd__bar{ animation-delay: 0.77s; }
+.wrd-grd__itm:nth-of-type(19) .wrd-grd__bar{ animation-delay: 0.30s; } 
+.wrd-grd__itm:nth-of-type(20) .wrd-grd__bar{ animation-delay: 0.55s; }
+.wrd-grd__itm:nth-of-type(21) .wrd-grd__bar{ animation-delay: 0.2s; } 
+.wrd-grd__itm:nth-of-type(22) .wrd-grd__bar{ animation-delay: 0.63s; } 
+.wrd-grd__itm:nth-of-type(23) .wrd-grd__bar{ animation-delay: 0.16s; } 
+.wrd-grd__itm:nth-of-type(24) .wrd-grd__bar{ animation-delay: 0.5s; } 
+.wrd-grd__itm:nth-of-type(25) .wrd-grd__bar{ animation-delay: 0.23s; } 
+.wrd-grd__itm:nth-of-type(26) .wrd-grd__bar{ animation-delay: 0.6s; }
+.wrd-grd__itm:nth-of-type(27) .wrd-grd__bar{ animation-delay: 0.1s; } 
+.wrd-grd__itm:nth-of-type(28) .wrd-grd__bar{ animation-delay: 0.64s; } 
+.wrd-grd__itm:nth-of-type(29) .wrd-grd__bar{ animation-delay: 0.30s; } 
+.wrd-grd__itm:nth-of-type(30) .wrd-grd__bar{ animation-delay: 0.73s; } 
+.wrd-grd__itm:nth-of-type(31) .wrd-grd__bar{ animation-delay: 0.30s; } 
+.wrd-grd__itm:nth-of-type(32) .wrd-grd__bar{ animation-delay: 0.1s; }
+.wrd-grd__itm:nth-of-type(33) .wrd-grd__bar{ animation-delay: 0.33s; } 
+.wrd-grd__itm:nth-of-type(34) .wrd-grd__bar{ animation-delay: 0.70s; } 
+.wrd-grd__itm:nth-of-type(35) .wrd-grd__bar{ animation-delay: 0.22s; }
+.wrd-grd__itm:nth-of-type(36) .wrd-grd__bar{ animation-delay: 0.75s; } 
+.wrd-grd__itm:nth-of-type(37) .wrd-grd__bar{ animation-delay: 0.26s; } 
+.wrd-grd__itm:nth-of-type(38) .wrd-grd__bar{ animation-delay: 0.58s; }
+.wrd-grd__itm:nth-of-type(39) .wrd-grd__bar{ animation-delay: 0.33s; } 
+.wrd-grd__itm:nth-of-type(40) .wrd-grd__bar{ animation-delay: 0.66s; }

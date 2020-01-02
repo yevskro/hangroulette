@@ -7,6 +7,8 @@ import GameButton           from './components/GameButton'
 import Main                 from './components/Main'
 import Wrong                from './components/Wrong'
 import Word                 from './components/Word'
+import { GAMESTATUS }       from '../../../../../../models/Game'
+
 import "../../../../styles/Game.css"
 
 class GameClient extends Component{
@@ -15,7 +17,7 @@ class GameClient extends Component{
     }
 
     onGuess = (e) => {
-        if(this.props.mdlGame.gameStatus() === "playing" && this.props.id === this.props.mdlGame.mdlPlayers().turn()){
+        if(this.props.mdlGame.gameStatus() === GAMESTATUS.PLAYING && this.props.id === this.props.mdlGame.mdlPlayers().turn()){
             this.props.mdlGame.mdlGuesses().validateGuess(e.target.innerHTML)
             this.props.onGuess(e.target.innerHTML)
         }

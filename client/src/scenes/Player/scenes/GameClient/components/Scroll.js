@@ -9,7 +9,7 @@ const ItemContent           = (props) => <span className="scrl-itm-cntnt" onClic
 const Item                  = (props) => <div className={`scrl-itm scrl-itm-styl-1 flx--mdl ${props.size}`} style={props.top}>
                                         {props.content}
                                     </div>
-const ScrollBody            = (props) => <div className="scrl-bdy jstfy--cntr">{props.items}</div>
+const ScrollBody            = (props) => <div className="scrl-bdy jstfy-cntnt--cntr">{props.items}</div>
 const ScrollButton          = (props) => {
         let btn = "scrl-btn-up"
         if(props.down){
@@ -63,7 +63,7 @@ export default class Scroll extends Component{
         }
 
         this.swapOddEvenSizes()
-        
+
         const newTop = this.state.top - (18 * this.state.show)
         this.setState({
             top: newTop

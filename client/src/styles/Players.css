@@ -1,0 +1,32 @@
+.trn {
+    width: 33%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.trn-styl-1 {
+    font-size: 400%;
+    font-family: 'Jersey';
+}
+
+.plyrs-lst {
+    padding-inline-start: 0px;
+    width: 100%;
+}
+
+.plyrs-contnr {
+    height: 14%;
+    width: 68%;
+}
+
+.plyrs-cntnr-styl-1 {
+    font-size: 50%;
+}
+
+.plyr {
+    width: 38%;
+}
+
+.plyr-you {
+    width: 24%;
+}

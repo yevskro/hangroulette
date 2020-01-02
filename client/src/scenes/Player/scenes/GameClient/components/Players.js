@@ -1,22 +1,24 @@
 import React from 'react'
+import "../../../../../styles/Players.css"
 
 const Player = (props) => {
-    let player, turn
-    let className = "player"
+    let player, turn, className
+    
     if(props.you){
-        className += " you"
+        className = "plyr-you flx algn-itms--cntr"
         player = (<React.Fragment>you</React.Fragment>)
     }
     else{
+        className = "plyr flx algn-itms--cntr"
         player = (<React.Fragment>player{props.player}</React.Fragment>)
     }
     if(props.player === props.turn){
-        turn = (<div className={"turn " + props.progress}>{props.seconds}</div>)
+        turn = (<div className={"trn trn-styl-1 flx--mdl " + props.progress}>{props.seconds}</div>)
     }
     else{
-        turn = (<div className={"turn " + props.progress}></div>)
+        turn = (<div className={"trn trn-styl-1 flx--mdl " + props.progress}></div>)
     }
-    return <div className={className}>{player}{turn}</div>
+    return <li className={className}>{player}{turn}</li>
 }
 
 const generatePlayers = (player, players, turn, seconds) => {
@@ -44,8 +46,10 @@ const generatePlayers = (player, players, turn, seconds) => {
     return list
 }
 
-const Players = (props) => <div className="players">
-                                {generatePlayers(props.player, props.players, props.turn, props.seconds)}
+const Players = (props) => <div className="plyrs-contnr plyrs-cntnr-styl-1 flx flt--rght algn-itms--cntr">
+                                <ul className="plyrs-lst flx--row">
+                                    {generatePlayers(props.player, props.players, props.turn, props.seconds)}
+                                </ul>
                             </div>
 
 export default Players

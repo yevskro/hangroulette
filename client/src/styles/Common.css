@@ -13,8 +13,21 @@
     align-items: center;
 }
 
-.jstfy--cntr{
+.flx {
+    display: flex;
+}
+
+.flx--row {
+    display: flex;
+    flex-direction: row;
+}
+
+.jstfy-cntnt--cntr{
     justify-content: center;
+}
+
+.algn-itms--cntr{
+    align-items: center;
 }
 
 .flx--clm{

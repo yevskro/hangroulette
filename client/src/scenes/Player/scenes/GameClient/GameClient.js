@@ -10,6 +10,7 @@ import Word                 from './components/Word'
 import { GAMESTATUS }       from '../../../../../../models/Game'
 
 import "../../../../styles/Game.css"
+const TOTOLWRONGGUESSES = 6
 
 class GameClient extends Component{
     constructor(props){
@@ -37,7 +38,7 @@ class GameClient extends Component{
                             seconds={this.props.seconds}
                 />
                 <Main>
-                    <Wrong guesses={mdlGuesses.wrong()}/>
+                    <Wrong guesses={mdlGuesses.wrong()} totalGuesses={TOTALWRONGGUESSES}/>
                     <Word word={this.props.mdlGame.word()} gameStatus={this.props.mdlGame.gameStatus()}/>
                 </Main>
                 <GameButton onClick={this.props.onNext} title="find next best available game"/>

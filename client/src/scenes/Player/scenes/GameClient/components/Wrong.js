@@ -6,15 +6,15 @@ const WrongGridItem = (props) => <div className="wrng-gss-grd__itm wrng-gss-grd_
                                    <Letter letter={props.letter} wrong={true}/>
                                  </div>
 
-const generateWrongGuesses = (wrong) => {
-    const wrongGuesses = []
-    for(let i = 0; i < 6; i++){
-        let letter = wrong[6 - (i + 1)] || ""
-        wrongGuesses.push(<WrongGridItem key={`${6 - (i + 1)} ${letter}`} letter={letter}/>)
+const generateWrongGuesses = (items, count, guesses, totalGuesses) => {
+    if(count === totalGuesses){
+        return items
     }
-    return wrongGuesses
+    const letter = wrong[totalGuesses - (count + 1)] || ""
+    items.push(<WrongGridItem key={`${totalGuesses - (i + 1)} ${letter}`} letter={letter}/>)
+    return generateWrongGuesses(items, count + 1, guesses, totalGuesses)
 }
 
-const Wrong = (props) => <div className="wrng-gss-grd">{generateWrongGuesses(props.guesses)}</div>
+const Wrong = (props) => <div className="wrng-gss-grd">{generateWrongGuesses([], 0, props.guesses, props.totalGuesses)}</div>
 
 export default Wrong

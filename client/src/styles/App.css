@@ -32,15 +32,6 @@ html, body, #root {
     font-size: 12px;
 }
 
-.right-arrow{
-    width: 0;
-    height: 0;
-    border-top: 5px solid transparent;
-    border-left: 7px solid red;
-    border-bottom: 5px solid transparent;
-    margin-right: 4px;
-}
-
 @keyframes becomeVisible {
     0% {
       visibility: hidden;
@@ -181,55 +172,6 @@ html, body, #root {
 .word-grid-item:nth-of-type(38) .bar{ animation-delay: 0.58s; }
 .word-grid-item:nth-of-type(39) .bar{ animation-delay: 0.33s; } 
 .word-grid-item:nth-of-type(40) .bar{ animation-delay: 0.66s; }
-
-.find-next-game {
-    font-size: 50%;
-    color: RGB(233,233,233);
-    width: 68%;
-    height: 13%;
-    margin: 3% 14%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.find-next-game:hover {
-    color: RGB(100,100,100);
-}
-
-
-.turn {
-    font-size: 400%; /* 400% */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Jersey';
-    width: 33%;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.players {
-    display: flex;
-    height: 14%;
-    float: right;
-    align-items: center;
-    font-size: 50%;
-    width: 68%; /* 69 */
-    top: 0px;
-}
-
-.player {
-    display: flex;
-    align-items: center;
-    width: 38%;
-}
-
-.you {
-    display: flex;
-    align-items: center;
-    width: 24%;
-}
 
 .wrong {
     color: red;

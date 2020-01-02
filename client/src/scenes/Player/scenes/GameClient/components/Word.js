@@ -9,7 +9,7 @@ const WordGridItem      = (props)   => <div className="wrd-grd__itm">
                                           <Bar/>
                                         </div>
 
-const generateWord = (word, status) => {
+const generateWord      = (word, status) => {
     /* 
         returns an array of WordGridItems that represent a char in the word
         and n EmptySpace to represent a space between words

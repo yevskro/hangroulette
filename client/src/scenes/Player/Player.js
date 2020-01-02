@@ -7,7 +7,7 @@ import GameModel, {
          PlayersModel 
         }                   from '../../../../models/Game'
 import PlayerModel          from '../../../../models/Player'
-import playerFactory       from '../../factory/Player'
+import playerFactory        from '../../factory/Player'
 import GameClient           from './scenes/GameClient/GameClient.js'
 
 class Player extends Component {
@@ -15,7 +15,7 @@ class Player extends Component {
         super(props)
         const player    = playerFactory.emptyPlayer()
         const mdlPlayer = this.createPlayerFromObj(player)
-        this.state = {
+        this.state      = {
             mdlPlayer: mdlPlayer,
             latency: 0,
             search: true
@@ -52,9 +52,9 @@ class Player extends Component {
     }
 
     setStateFromJson = (json) => {
-        const now = Date.now()
-        const obj = JSON.parse(json)
-        const latency = now - parseInt(obj.timestamp)
+        const now       = Date.now()
+        const obj       = JSON.parse(json)
+        const latency   = now - parseInt(obj.timestamp)
         const mdlPlayer = this.createPlayerFromObj(obj.player)
         this.setState({mdlPlayer, latency})
     }

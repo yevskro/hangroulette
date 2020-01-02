@@ -2,11 +2,11 @@ import React from 'react'
 import Letter from './Letter'
 import "../../../../../styles/Wrong.css"
 
-const WrongGridItem = (props) => <div className="wrng-gss-grd__itm wrng-gss-grd__itm--prmry">
+const WrongGridItem         = (props) => <div className="wrng-gss-grd__itm wrng-gss-grd__itm--prmry">
                                    <Letter letter={props.letter} wrong={true}/>
                                  </div>
 
-const generateWrongGuesses = (guesses, totalGuesses) => {
+const generateWrongGuesses  = (guesses, totalGuesses) => {
     /* returns an array of WrongGridItems */
     const generate = (arr, count) => {
         if(count === totalGuesses){

@@ -6,7 +6,7 @@ import "../src/styles/Utilities.css";
 import "../src/styles/App.css";
 
 const App = (props) => {
-  return <div className="app flx--mdl">
+  return <div className="app app--prmry flx--mdl">
           <Route exact path="/" component={Player} />
         </div>
 };

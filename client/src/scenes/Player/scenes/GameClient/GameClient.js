@@ -7,6 +7,7 @@ import GameButton           from './components/GameButton'
 import Main                 from './components/Main'
 import Wrong                from './components/Wrong'
 import Word                 from './components/Word'
+import "../../../../styles/Game.css"
 
 class GameClient extends Component{
     constructor(props){
@@ -25,7 +26,7 @@ class GameClient extends Component{
         const mdlPlayers        = mdlGame.mdlPlayers()
         const mdlGuesses        = mdlGame.mdlGuesses()
 
-        return <div className='game'>
+        return <div className='gm gm--prmry clr--wht'>
                 <Scroll onItemClick={this.onGuess} skull={mdlGame.mdlGuesses().wrong()} smiley={mdlGame.mdlGuesses().correct()}/>
                 <Latency latency={this.props.latency}/>
                 <Players    player={this.props.id}

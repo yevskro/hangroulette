@@ -1,0 +1,34 @@
+
+.gm {
+    width: 200px; /* 200px 150px 12px - 400px 300px 24px 800px 600px 48px */
+    height: 150px;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 10% 25% 10% 25%;
+    font-size: 12px;
+    position: absolute;
+}
+
+.gm--prmry {
+    border-color: RGB(6,6,6);
+    background: url('../../public/800x600-1x2x-min.jpg') no-repeat;
+    background-size: contain;
+    font-family: 'Pixel';
+}
+/* 200px 150px 12px - 400px 300px 24px 800px 600px 48px */
+/* 12px 24 48px*/
+@media only screen and (min-width: 400px){
+    .gm{
+        width: 400px;
+        height: 300px;
+        font-size: 24px;
+    }
+}
+
+@media only screen and (min-width: 800px){
+    .gm{
+        width: 800px;
+        height: 600px;
+        font-size: 48px;
+    }
+}

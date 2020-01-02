@@ -1,7 +1,8 @@
 import React from 'react'
 import Letter from './Letter'
+import "../../../../../styles/Wrong.css"
 
-const WrongGridItem = (props) => <div className="wrong-guesses-grid-item">
+const WrongGridItem = (props) => <div className="wrng-gss-grd__itm wrng-gss-grd__itm--prmry">
                                    <Letter letter={props.letter} wrong={true}/>
                                  </div>
 
@@ -14,6 +15,6 @@ const generateWrongGuesses = (wrong) => {
     return wrongGuesses
 }
 
-const Wrong = (props) => <div className="wrong-guesses-grid">{generateWrongGuesses(props.guesses)}</div>
+const Wrong = (props) => <div className="wrng-gss-grd">{generateWrongGuesses(props.guesses)}</div>
 
 export default Wrong

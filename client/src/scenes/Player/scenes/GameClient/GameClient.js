@@ -10,7 +10,7 @@ import Word                 from './components/Word'
 import { GAMESTATUS }       from '../../../../../../models/Game'
 
 import "../../../../styles/Game.css"
-const TOTOLWRONGGUESSES = 6
+const TOTALWRONGGUESSES = 6
 
 class GameClient extends Component{
     constructor(props){

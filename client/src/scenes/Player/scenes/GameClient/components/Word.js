@@ -10,20 +10,13 @@ const WordGridItem      = (props)   => <div className="wrd-grd__itm">
                                         </div>
 
 const generateWord = (word, status) => {
-    const letterContainers = []
-    for(let i in word){
-        if(word[i] === " "){
-            letterContainers.push(<EmptySpace key={i + ' ' + status}/>)
+    return Array.prototype.map.call(word, (char, index) => {
+        if(char === " "){
+            return <EmptySpace key={`${index}  ${status}`}/>
         }
-        else{
-            let letter = word[i]
-            if(word[i] === '_'){
-                letter = " "
-            }
-            letterContainers.push(<WordGridItem letter={letter} key={i + ' ' + status}/>)
-        }
-    }
-    return letterContainers
+        const letter = char === '_' ? " " : char
+        return <WordGridItem letter={letter} key={`${index}  ${status}`}/>
+    })
 }
 
 const Word = (props) => <div className="wrd-grd">{generateWord(props.word, props.gameStatus)}</div>

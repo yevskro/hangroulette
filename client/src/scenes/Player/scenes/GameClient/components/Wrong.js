@@ -10,8 +10,8 @@ const generateWrongGuesses = (items, count, guesses, totalGuesses) => {
     if(count === totalGuesses){
         return items
     }
-    const letter = wrong[totalGuesses - (count + 1)] || ""
-    items.push(<WrongGridItem key={`${totalGuesses - (i + 1)} ${letter}`} letter={letter}/>)
+    const letter = guesses[totalGuesses - (count + 1)] || ""
+    items.push(<WrongGridItem key={`${totalGuesses - (count + 1)} ${letter}`} letter={letter}/>)
     return generateWrongGuesses(items, count + 1, guesses, totalGuesses)
 }
 

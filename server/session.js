@@ -49,7 +49,8 @@ export default class ServerSession{
                 const playerPosition    = playerIndex + 1
                 const newMdlGame        = _session.mdlGame().removePlayer(playerPosition)
                 let seconds             = _session.seconds()
-  
+                
+                console.log(`Session.js: removePlayer() newMdlGame.players()${newMdlGame.players()}`)
                 _players.splice(playerIndex, 1)
                 if(turn === playerPosition){
                     /* if we are removing a player whos in the middle of a turn, reset turn */

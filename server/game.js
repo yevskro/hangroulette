@@ -4,7 +4,7 @@ import SessionModel, {
     ScoreModel 
     }     from '../models/Session'
 
-import ServerSession from './session'
+import ServerSession from './Session'
 import { ServerGameError, SGERRORS } from '../models/server/ServerGame'
 import { GAMESTATUS, 
     GuessesModel,
@@ -12,7 +12,7 @@ import { GAMESTATUS,
    }     from '../models/Game'
 
 import ServerGameModel from '../models/server/ServerGame'
-import wordsService from './services/words'
+import wordsService from './services/Words'
 
 export default class ServerGame{
     constructor(MAXCLIENTS, PORT, MAXCONNECTIONSPERUSER, UNIQUEPLAY){
@@ -168,13 +168,16 @@ export default class ServerGame{
                         return
                     }
     
+                    if(_users[client.remoteAddress] && _users[client.remoteAddress].connections === _MAXCONNECTIONSPERUSER){
+                        const json = ServerSession.sessionErrorJSON(SGERRORS.MAXCONNECTIONS)
+                        client.send(json)
+                        client.close()
+                        return
+                    }
+
                     srvSession = _newClient(client)
                     if(_users[client.remoteAddress] === _IPDOESNTEXIST){
                         _users[client.remoteAddress] = {connections: _ZERO}
-                    }
-                    if(_users[client.remoteAddress].connections === _MAXCONNECTIONSPERUSER){
-                        client.close()
-                        return
                     }
                     _users[client.remoteAddress].connections++
                 }
@@ -202,6 +205,10 @@ export default class ServerGame{
                 }
 
                 const handleOnClose = () => {
+                    if(!srvSession){
+                        /* connection was closed before creating a session */
+                        return 
+                    }
                     srvSession.removePlayer(client)
                     if(_users[client.remoteAddress] !== undefined){
                         srvSession.removePlayer()

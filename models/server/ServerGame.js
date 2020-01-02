@@ -5,10 +5,11 @@ export const SGERRORS = {
     OUTOFSYNCGUESS: `out of sync guess`,
     INVALIDTURN: `player guessing is out of turn`,
     NOAVAILABLESESSION: `no available session found`,
-    CANTADDPLAYER: `can't add player game already has 3, full`,
-    CANTREMOVEPLAYER: `can't remove player game has 0 players`,
+    CANTADDPLAYER: `can't add player to full game`,
+    CANTREMOVEPLAYER: `can't remove player game`,
     SERVERISFULL: `server is currently full`,
-    SERVERERROR: `server error`
+    SERVERERROR: `server error`,
+    MAXCONNECTIONS: `connects per user has maxed`
 }
 
 

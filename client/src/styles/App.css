@@ -214,13 +214,6 @@ html, body, #root {
     border-left: 2px solid RGB(233,233,233);
 }
 
-.main-container{
-    display: flex;   
-    align-items: center;
-    height: 69%;
-    width: 82%;
-}
-
 /* 200px 150px 12px - 400px 300px 24px 800px 600px 48px */
 /* 12px 24 48px*/
 @media only screen and (min-width: 400px){

@@ -5,18 +5,18 @@ const Player = (props) => {
     let player, turn, className
 
     if(props.you){
-        className = "lst__plyr-you flx algn-itms--cntr"
+        className = "plyrs__plyr-you flx algn-itms--cntr"
         player = (<React.Fragment>you</React.Fragment>)
     }
     else{
-        className = "lst__plyr flx algn-itms--cntr"
+        className = "plyrs__plyr flx algn-itms--cntr"
         player = (<React.Fragment>player{props.player}</React.Fragment>)
     }
     if(props.player === props.turn){
-        turn = (<div className={"lst__trn flx--mdl " + props.progress}>{props.seconds}</div>)
+        turn = (<div className={"plyrs__trn flx--mdl " + props.progress}>{props.seconds}</div>)
     }
     else{
-        turn = (<div className={"lst__trn flx--mdl " + props.progress}></div>)
+        turn = (<div className={"plyrs__trn flx--mdl " + props.progress}></div>)
     }
     return <li className={className}>{player}{turn}</li>
 }

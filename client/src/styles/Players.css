@@ -9,7 +9,7 @@
     font-size: 50%;
 }
 
-.lst__trn {
+.plyrs__trn {
     width: 33%;
     margin-left: auto;
     margin-right: auto;
@@ -17,10 +17,10 @@
     font-family: 'Jersey';
 }
 
-.lst__plyr {
+.plyrs__plyr {
     width: 38%;
 }
 
-.lst__plyr-you {
+.plyrs__plyr-you {
     width: 24%;
 }

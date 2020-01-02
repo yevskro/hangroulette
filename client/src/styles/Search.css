@@ -1,5 +1,6 @@
 .srch {
     border-radius: 10% 25% 10% 25%;
+    border: 1px solid;
     font-size: 100%;
 }
 
@@ -8,10 +9,9 @@
     height: 100%;
 }
 
-.srch-styl-1 {
+.srch-prmry {
     border: 1px solid RGB(6,6,6);
     background-color: RGBA(6,6,6, 0.5);
-    color: red;  
 }
 
 .no-srch {

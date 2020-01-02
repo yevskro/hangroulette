@@ -5,82 +5,79 @@
     margin: 0px 3px;
 }
 
-.scrl-btn{
+.scrl__btn{
     height: 10%;
     border-radius: 25%;
     transition: border-width 0.2s;
 }
 
-.scrl-btn-dwn, .scrl-btn-up {
+.scrl__ptr-dwn, .scrl__ptr-up {
     width: 0; 
     height: 0; 
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
 }
 
-.scrl-btn-up {
+.scrl__ptr-up {
     border-bottom: 4px solid;
 }
 
-.scrl-btn-dwn { 
+.scrl__ptr-dwn { 
     border-top: 4px solid;
 }
 
-.scrl-btn-up-red, .scrl-btn-dwn-red {
-    color: red;
-}
 
-.scrl-btn-styl-1{
+.scrl__btn-prmry{
     border: 2px solid RGB(233,233,233);
     background-color: RGB(6,6,6);
 }
 
-.scrl-btn:hover{
+.scrl__btn:hover{
     border-color: RGB(100,100,100);
 }
 
-.scrl-bdy {
+.scrl__bdy {
     height: 77%;
     display: flex;
     overflow: hidden;
     flex-wrap: wrap;
 }
 
-.scrl-itm {
+.scrl__itm {
     height: 18%;
     position: relative;
     transition: top 2s, width 0.2s;
     font-size: 100%;
 }
 
-.scrl-itm-styl-1{
+.scrl__itm-prmry{
     border: 2px solid RGB(168, 161, 161);
     border-radius: 25%;
     background-color: RGB(6,6,6);
 }
 
-.scrl-itm:hover {
+.scrl__itm:hover {
     color: red;   
     border-color: RGB(100,100,100);
 }
 
-.scrl-itm-big {
+.scrl__itm-big {
     width: 85%;
 }
 
-.scrl-itm-big:hover{
+.scrl__itm-big:hover{
     width: 90%;
 }
 
-.scrl-itm-sml:hover{
+.scrl__itm-sml:hover{
     width: 70%;
 }
 
-.scrl-itm-sml{
+.scrl__itm-sml{
     width: 75%;
 }
 
-.scrl-itm-cntnt {
+.scrl__cntnt {
     animation: 0.25s ease-out 0s 1 becomeVisible;
 }
 
@@ -94,31 +91,31 @@
 }
 
 @media only screen and (min-width: 400px){
-    .scrl-btn-dwn, .scrl-btn-up {
+    .scrl__ptr-dwn, .scrl__ptr-up {
         width: 0; 
         height: 0; 
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
     }
-    .scrl-btn-up {
+    .scrl__ptr-up {
         border-bottom: 8px solid;
     }
-    .scrl-btn-dwn { 
+    .scrl__ptr-dwn { 
         border-top: 8px solid;
     }
 }
 
 @media only screen and (min-width: 800px){
-    .scrl-btn-dwn, .scrl-btn-up {
+    .scrl__ptr-dwn, .scrl__ptr-up {
         width: 0; 
         height: 0; 
         border-left: 16px solid transparent;
         border-right: 16px solid transparent;
     }
-    .scrl-btn-up {
+    .scrl__ptr-up {
         border-bottom: 16px solid;
     }
-    .scrl-btn-dwn { 
+    .scrl__ptr-dwn { 
         border-top: 16px solid;
     }
 }

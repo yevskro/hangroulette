@@ -3,20 +3,20 @@ import "../../../../../styles/Players.css"
 
 const Player = (props) => {
     let player, turn, className
-    
+
     if(props.you){
-        className = "plyr-you flx algn-itms--cntr"
+        className = "lst__plyr-you flx algn-itms--cntr"
         player = (<React.Fragment>you</React.Fragment>)
     }
     else{
-        className = "plyr flx algn-itms--cntr"
+        className = "lst__plyr flx algn-itms--cntr"
         player = (<React.Fragment>player{props.player}</React.Fragment>)
     }
     if(props.player === props.turn){
-        turn = (<div className={"trn trn-styl-1 flx--mdl " + props.progress}>{props.seconds}</div>)
+        turn = (<div className={"lst__trn flx--mdl " + props.progress}>{props.seconds}</div>)
     }
     else{
-        turn = (<div className={"trn trn-styl-1 flx--mdl " + props.progress}></div>)
+        turn = (<div className={"lst__trn flx--mdl " + props.progress}></div>)
     }
     return <li className={className}>{player}{turn}</li>
 }
@@ -25,13 +25,13 @@ const generatePlayers = (player, players, turn, seconds) => {
     const list = []
     let classGuessTime = ""
     if(seconds > 7){
-        classGuessTime = "prg-good"
+        classGuessTime = "clr--grn"
     }
     else if (seconds > 3){
-        classGuessTime = "prg-caution"
+        classGuessTime = "clr--ylw"
     }
     else {
-        classGuessTime = "prg-bad"
+        classGuessTime = "clr--rd"
     }
     
     for(let i = 0; i < players; i++){
@@ -47,7 +47,7 @@ const generatePlayers = (player, players, turn, seconds) => {
 }
 
 const Players = (props) => <div className="plyrs-contnr plyrs-cntnr-styl-1 flx flt--rght algn-itms--cntr">
-                                <ul className="plyrs-lst flx--row">
+                                <ul className="plyrs__lst flx--row">
                                     {generatePlayers(props.player, props.players, props.turn, props.seconds)}
                                 </ul>
                             </div>

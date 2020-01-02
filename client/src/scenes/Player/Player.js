@@ -7,8 +7,8 @@ import GameModel, {
          PlayersModel 
         }                   from '../../../../models/Game'
 import PlayerModel          from '../../../../models/Player'
-import playerFactory       from '../../factory/player'
-import GameClient           from './scenes/GameClient'
+import playerFactory       from '../../factory/Player'
+import GameClient           from './scenes/GameClient/GameClient.js'
 
 class Player extends Component {
     constructor(props){

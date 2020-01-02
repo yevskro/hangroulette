@@ -1,25 +1,18 @@
 .gm-btn {
     height: 13%;
     margin: 3% 14%;
+    font-size: 50%;
 }
 
-.gm-btn-styl-1{
-    font-size: 50%;
-    color: RGB(233,233,233);
-}
 .gm-btn:hover {
     color: RGB(100,100,100);
 }
 
-.gm-btn-rght-arrw{
+.gm-btn__ptr{
     width: 0;
     height: 0;
     border-top: 5px solid transparent;
     border-bottom: 5px solid transparent;
     border-left: 7px solid;
     margin-right: 1%;
-}
-
-.gm-btn-rght-arrw-red{
-    color: red;
 }

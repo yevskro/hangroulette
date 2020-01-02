@@ -2,12 +2,24 @@
     visibility: hidden;
     margin: -100px;
     animation: 0.3s ease-out 0s 1 shiftLetter forwards;
-}
-
-.ltr-lrg {
     font-size: 93%;
 }
 
-.ltr-wrng {
-    color: red;
-}
+@keyframes shiftLetter {
+    0% {
+        visibility: visible;
+        margin: -100px;
+    }
+    100% {
+        visibility: visible;
+        margin: 6px auto;
+        /* 3 differenct effects we can do 
+            1. margin: 6px;
+            2. margin: 6px auto;
+            3. remove margin add
+                display: flex;
+                justify-content: center;
+                align-items: center;
+        */
+    }
+  }

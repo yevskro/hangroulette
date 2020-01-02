@@ -4,7 +4,7 @@
   "description": "hangman",
   "main": "0",
   "scripts": {
-    "server": "nodemon --exec babel-node server/app.js",
+    "server": "nodemon --exec babel-node server/Server.js",
     "client": "webpack-dev-server --mode development",
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "build": "webpack --mode development",

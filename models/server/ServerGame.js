@@ -97,10 +97,9 @@ export default class ServerGameModel extends GameModel{
         this.newModelFromCorrectGuess = (guess) => {
             /* guess is correct, change the visible word for clients */
             let newHiddenWord = ""
-            for(let index = 0; index < _serverWord.length; index++){
+            for(let index in _serverWord){
                 _serverWord[index] === guess ? newHiddenWord += guess : newHiddenWord += hiddenWord[index]
             }
-            
             const newCorrect = mdlGuesses.correct() + guess
             const newMdlGuesses = new GuessesModel(newCorrect, mdlGuesses.wrong())
             if(!newHiddenWord.includes('_')){

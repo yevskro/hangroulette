@@ -94,34 +94,30 @@ export default class ServerGameModel extends GameModel{
             return false
         }
 
-        this.guess = (guess) => {
-            const invalidGuessError = this.didClientSendInvalidGuess(guess)
-            if(invalidGuessError){
-                return invalidGuess
-            }
-            
-            if(_serverWord.includes(guess)){
+        this.newModelFromCorrectGuess = (guess) => {
             /* guess is correct, change the visible word for clients */
-                let newHiddenWord = ""
-                for(let index = 0; index < _serverWord.length; index++){
-                    if(_serverWord[index] === guess){
-                        newHiddenWord += guess
-                    }
-                    else{
-                        newHiddenWord += hiddenWord[index]
-                    }
+            let newHiddenWord = ""
+            for(let index = 0; index < _serverWord.length; index++){
+                if(_serverWord[index] === guess){
+                    newHiddenWord += guess
                 }
-
-                const newCorrect = mdlGuesses.correct() + guess
-                const newMdlGuesses = new GuessesModel(newCorrect, mdlGuesses.wrong())
-                if(!newHiddenWord.includes('_')){
-                /* game is won, return with new guesses state and won status */
-                    return new ServerGameModel(newMdlGuesses, mdlPlayers, newHiddenWord, GAMESTATUS.WON, _serverWord)
+                else{
+                    newHiddenWord += hiddenWord[index]
                 }
-                /* game is still playing, return with new guesses */
-                const newMdlPlayers = new PlayersModel(mdlPlayers.players(),mdlPlayers.nextTurn())
-                return new ServerGameModel(newMdlGuesses,newMdlPlayers, newHiddenWord, GAMESTATUS.PLAYING, _serverWord)
             }
+
+            const newCorrect = mdlGuesses.correct() + guess
+            const newMdlGuesses = new GuessesModel(newCorrect, mdlGuesses.wrong())
+            if(!newHiddenWord.includes('_')){
+            /* game is won, return with new guesses state and won status */
+                return new ServerGameModel(newMdlGuesses, mdlPlayers, newHiddenWord, GAMESTATUS.WON, _serverWord)
+            }
+            /* game is still playing, return with new guesses */
+            const newMdlPlayers = new PlayersModel(mdlPlayers.players(),mdlPlayers.nextTurn())
+            return new ServerGameModel(newMdlGuesses,newMdlPlayers, newHiddenWord, GAMESTATUS.PLAYING, _serverWord)
+        }
+
+        this.newModelFromWrongGuess = (guess) => {
             /* if we are here then there was an incorrect guess */
             const newWrong = mdlGuesses.wrong() + guess
             const newMdlGuesses = new GuessesModel(mdlGuesses.correct(), newWrong)
@@ -132,6 +128,18 @@ export default class ServerGameModel extends GameModel{
             /* game is still playing, return with new guesses */
             const newMdlPlayers = new PlayersModel(mdlPlayers.players(),mdlPlayers.nextTurn())
             return new ServerGameModel(newMdlGuesses, newMdlPlayers, this.word(), GAMESTATUS.PLAYING, _serverWord)
+        }
+
+        this.guess = (guess) => {
+            const invalidGuessError = this.didClientSendInvalidGuess(guess)
+            if(invalidGuessError){
+                return invalidGuessError
+            }
+            /* valid guess */
+            if(_serverWord.includes(guess)){
+                return this.newModelFromCorrectGuess(guess)/* correct */
+            }
+            return this.newModelFromWrongGuess(guess)/* wrong */
         }
 
         this.serverWord = () => {

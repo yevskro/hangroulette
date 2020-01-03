@@ -195,11 +195,17 @@ export default class ServerGame{
                                 with corrupt data or out of sync game logic
                     */
                     const newSrvSession = _action(client, action, srvSession)
-                    if(newSrvSession instanceof ServerGameError){
-                        srvSession.errorPlayer(client, newSrvSession.error)
-                        client.close()
-                    }
-                    else{
+                    /*
+                        if we decide to disconnect the user because of client corrupted 
+                        data, uncomment.
+                        i made the decision since the code is robust on how it handles
+                        corrupted data we can just ignore it and let the client keep playing
+                        if(newSrvSession instanceof ServerGameError){
+                            srvSession.errorPlayer(client, newSrvSession.error)
+                            client.close()
+                        }
+                    }*/
+                    if(!(newSrvSession instanceof ServerGameError)){
                         srvSession = newSrvSession
                     }
                 }

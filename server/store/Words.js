@@ -1,6 +1,6 @@
 const LineByLine = require('n-readlines');
 
-class WordsService{
+class WordsStore{
     constructor(wordFile, wonFile, lostFile){
         this.randomWord = () => {
             return words[Math.floor(Math.random() * (words.length - 1))]
@@ -20,7 +20,7 @@ class WordsService{
                 liner = new LineByLine(__dirname + file)
             }
             catch(e){
-                console.log(`WordService did not load ${file}.`)
+                console.log(`WordStore did not load ${file}.`)
                 console.log(e)
                 return
             }
@@ -28,26 +28,26 @@ class WordsService{
                 ++lineNumber
                 line = line.toString('ascii')
                 if(line.length > WORD_LENGTH){
-                    console.log(`WordService warning: a word '${line}' of length ${line.length} at line number ${lineNumber} in file ${file} was found with more than allowed length of ${WORD_LENGTH}. Word is skipped over.`)
+                    console.log(`WordStore warning: a word '${line}' of length ${line.length} at line number ${lineNumber} in file ${file} was found with more than allowed length of ${WORD_LENGTH}. Word is skipped over.`)
                 }
                 else {
                     toArray.push(line)
                 }
             }
-            console.log(`WordService ${file} loaded...`)
+            console.log(`WordStore ${file} loaded...`)
         }
         const words = []
         const lostMsg = []
         const wonMsg = []
         const WORD_LENGTH = 40
 
-        console.log("WordService loading...")
+        console.log("WordStore loading...")
         loadFromFileTo(wordFile, words)
         loadFromFileTo(wonFile, wonMsg)
         loadFromFileTo(lostFile, lostMsg) 
     }
 }
 
-const wordsService = new WordsService("/words.txt", "/won.txt", "/lost.txt")
+const wordsStore = new WordsStore("/Words/words.txt", "/Words/won.txt", "/Words/lost.txt")
 
-export default wordsService
+export default wordsStore

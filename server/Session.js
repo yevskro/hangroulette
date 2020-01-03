@@ -1,7 +1,7 @@
 import SessionModel, { ScoreModel } from '../models/Session'
 import { GAMESTATUS, PlayersModel, GuessesModel } from '../models/Game'
 import ServerGameModel, { ServerGameError, SGERRORS } from '../models/server/ServerGame'
-import wordsService from './services/Words/Words'
+import wordsStore from './store/Words'
 
 export default class ServerSession{
     static sessionErrorJSON(error){
@@ -163,10 +163,10 @@ export default class ServerSession{
             /* new game feedback to the players */
             let gameOverMsg
             if(gameStatus === GAMESTATUS.WON){
-                gameOverMsg = wordsService.randomWonMsg()
+                gameOverMsg = wordsStore.randomWonMsg()
             }
             else{
-                gameOverMsg = wordsService.randomLostMsg()
+                gameOverMsg = wordsStore.randomLostMsg()
             }
 
             const restartTurn = () => {
@@ -177,7 +177,7 @@ export default class ServerSession{
                     /* end of the timer */
                     _stopTimerRestartGame()
                     /* start new game with a word */
-                    const newWord = wordsService.randomWord()
+                    const newWord = wordsStore.randomWord()
                     newMdlGame = new ServerGameModel(new GuessesModel("", ""),
                                                         mdlGame.mdlPlayers(),
                                                         ServerGameModel.convertWordToHidden(newWord),

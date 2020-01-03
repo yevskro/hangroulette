@@ -12,7 +12,7 @@ import { GAMESTATUS,
    }     from '../models/Game'
 
 import ServerGameModel from '../models/server/ServerGame'
-import wordsService from './services/Words/Words'
+import wordsStore from './store/Words'
 
 export default class ServerGame{
     constructor(MAXCLIENTS, PORT, MAXCONNECTIONSPERUSER, UNIQUEPLAY){
@@ -59,7 +59,7 @@ export default class ServerGame{
             const sessionIndex = _bestSessionFromIndex(0, client)
 
             if(sessionIndex === _NOFOUNDSESSION){
-                const newSession = _createSession(wordsService.randomWord())
+                const newSession = _createSession(wordsStore.randomWord())
                 _sessions.push(newSession)
                 return newSession
             }

@@ -12,7 +12,7 @@
     }
     100% {
         visibility: visible;
-        margin: 6px auto;
+        margin: 24% auto 0 auto;
         /* 3 differenct effects we can do 
             1. margin: 6px;
             2. margin: 6px auto;

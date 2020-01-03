@@ -17,7 +17,7 @@
 }
 /* 200px 150px 12px - 400px 300px 24px 800px 600px 48px */
 /* 12px 24 48px*/
-@media only screen and (min-width: 400px){
+@media only screen and (min-width: 375px){
     .gm{
         width: 400px;
         height: 300px;

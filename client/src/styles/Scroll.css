@@ -95,7 +95,7 @@
     height: 1.5em;
 }
 
-@media only screen and (min-width: 400px){
+@media only screen and (min-width: 375px){
     .scrl__ptr-dwn, .scrl__ptr-up {
         width: 0; 
         height: 0; 

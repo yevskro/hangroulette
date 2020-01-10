@@ -1,7 +1,7 @@
 "use strict"
-import express from 'express'
-import path from 'path'
-import ServerGame from './Game'
+import express      from 'express'
+import path         from 'path'
+import ServerGame   from './Game'
 
 const port = process.env.PORT || 80
 const app = express()

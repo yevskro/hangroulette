@@ -12,6 +12,6 @@ app.get('*', (req, res) => {
     res.redirect('http://frogtoprincejs.io');
 })
 
-const serverGame = new ServerGame(10, 5001, 5, false)
+const serverGame = new ServerGame(10, 5000, 5, false)
 app.listen(port)
 console.log("http server launched")

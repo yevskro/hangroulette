@@ -17,8 +17,7 @@
   },
   "keywords": [
     "react",
-    "express",
-    "postgresql"
+    "express"
   ],
   "author": "Yevgeniy Skroznikov",
   "license": "MIT",

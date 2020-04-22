@@ -24,7 +24,7 @@ class Player extends Component {
 
     componentDidMount(){
         window.WebSocket    = window.WebSocket || window.MozWebSocket;
-        this.wsGameClient   = new WebSocket('ws://72.225.121.91:5001');
+        this.wsGameClient   = new WebSocket('ws://85.187.151.42:30001');
 
         this.wsGameClient.onmessage = (msg) => {
             this.setStateFromJson(msg.data)
